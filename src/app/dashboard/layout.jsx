@@ -25,7 +25,7 @@ const DashboardLayout = ({ children }) => {
 
   useEffect(() => {
     if (status === "loading") return; // Yuklanayotgan paytda hech narsa qilmaydi
-    // if (!session) router.push("/auth/login"); // Agar foydalanuvchi login qilmagan bo'lsa, bosh sahifaga yo'naltiradi
+    if (!session) router.push("/auth/login"); // Agar foydalanuvchi login qilmagan bo'lsa, bosh sahifaga yo'naltiradi
   }, [session, status, router]);
 
   if (status === "loading") {

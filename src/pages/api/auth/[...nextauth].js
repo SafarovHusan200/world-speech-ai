@@ -54,12 +54,6 @@ export default NextAuth({
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      authorization: {
-        params: {
-          redirect_uri:
-            "https://worldspeechai.com/api/v1/auth/o/google-oauth2/",
-        },
-      },
     }),
     CredentialsProvider({
       name: "Credentials",
@@ -98,7 +92,6 @@ export default NextAuth({
   ],
   callbacks: {
     async jwt({ token, user }) {
-      console.log(user);
       if (user?.accessToken && user?.refreshToken) {
         token.accessToken = user.accessToken;
         token.refreshToken = user.refreshToken;
@@ -122,13 +115,15 @@ export default NextAuth({
               "Content-Type": "application/json",
             },
             body: JSON.stringify({
-              email: "husan@example.com",
-              password: "12345678Hp", // This should be changed to a more secure approach
+              email: "admin@mail.ru",
+              password: "52340091Hh", // This should be changed to a more secure approach
             }),
           }
         );
 
         const data = await response.json();
+
+        console.log(data);
 
         if (data.refresh && data.access) {
           return true;

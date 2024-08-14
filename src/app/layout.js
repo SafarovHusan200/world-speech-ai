@@ -15,7 +15,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <link rel="icon" href="/logo-Vector.png" type="image/png" />
       <body>
-        <NextTopLoader />
+        <NextTopLoader showSpinner={false} />
         <ClientQueryProvider>
           <ClientLayout>{children}</ClientLayout>
         </ClientQueryProvider>
