@@ -1,0 +1,28 @@
+.policy {
+  width: 100%;
+  padding: 47px 0;
+  background-color: #fff;
+  background-color: #fff;
+}
+@media (max-width: 576px) {
+  .policy {
+    padding: 20px 0;
+  }
+}
+.policy .container {
+  flex-direction: column;
+  align-items: flex-start;
+}
+.policy .container .policy__word {
+  color: #7b8a99;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 19px; /* 19.2px */
+}
+@media (max-width: 576px) {
+  .policy .container .policy__word {
+    font-size: 14px;
+    line-height: 17px;
+  }
+}/*# sourceMappingURL=policy.css.map */

@@ -1,0 +1,169 @@
+.header {
+  width: 100%;
+  padding: 20px 0;
+  background-color: #fff;
+  position: sticky;
+  top: -100px;
+  z-index: 2;
+  transition: all 0.4s ease;
+}
+.header.stick {
+  top: 0;
+  background: transparent;
+}
+@media (max-width: 1250px) {
+  .header {
+    padding: 10px 0;
+  }
+}
+.header .header_block {
+  width: 100%;
+  padding: 23px 20px;
+  border-radius: 10px;
+  border: 1px solid rgba(18, 18, 18, 0.1);
+  background: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+@media (max-width: 1250px) {
+  .header .header_block {
+    padding: 13px 10px;
+  }
+}
+.header .navbar {
+  transition: all 0.4s ease;
+}
+.header .navbar .close_menu {
+  display: none;
+}
+.header .navbar ul {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+}
+.header .navbar ul li a {
+  color: #121212;
+  font-family: "Helvetica Neue", sans-serif;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 22px; /* 21.6px */
+  letter-spacing: 0.72px;
+}
+.header .navbar .menu__bottom {
+  display: none;
+}
+@media (max-width: 1250px) {
+  .header .navbar {
+    max-width: 320px;
+    width: 100%;
+    height: 100vh;
+    flex-direction: column;
+    justify-content: space-between;
+    background: #fff;
+    box-shadow: 0 0 15px gray;
+    position: absolute;
+    top: 0;
+    right: -350px;
+    padding: 10px 10px 28px 10px;
+    opacity: 0;
+    visibility: hidden;
+    display: none;
+  }
+  .header .navbar.active {
+    right: 0;
+    opacity: 1;
+    visibility: visible;
+    display: flex;
+  }
+  .header .navbar .row {
+    width: 100%;
+    text-align: right;
+    display: flex;
+    justify-content: flex-end;
+    padding: 20px;
+  }
+  .header .navbar .row .close_menu {
+    display: block;
+    padding: 0;
+    background: none;
+  }
+  .header .navbar .row .close_menu img {
+    width: 25px;
+  }
+  .header .navbar ul {
+    flex-direction: column;
+    padding: 15px;
+    gap: 25px;
+  }
+}
+@media (max-width: 676px) {
+  .header .navbar .row {
+    padding: 10px;
+  }
+  .header .navbar .menu__bottom {
+    display: block;
+    margin-bottom: 10px;
+  }
+  .header .navbar .menu__bottom .auth {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+  }
+}
+.header .actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 21px;
+}
+.header .actions .auth {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 21px;
+}
+@media (max-width: 676px) {
+  .header .actions .auth {
+    display: none;
+  }
+}
+.header .actions .open_menu {
+  display: none;
+  background: none;
+  padding: 0;
+}
+@media (max-width: 1250px) {
+  .header .actions .open_menu {
+    display: block;
+  }
+}
+.header .actions .open_menu img {
+  width: 45px;
+}
+@media (max-width: 576px) {
+  .header {
+    padding: 0;
+  }
+  .header .container {
+    padding: 0;
+  }
+  .header .header_block {
+    padding: 13px 10px;
+    border: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 0;
+    background: #fff;
+  }
+  .header .header_block .logo {
+    width: 130px;
+  }
+  .header .header_block .logo img {
+    width: 100%;
+  }
+  .header .header_block .actions .open_menu img {
+    width: 24px;
+    height: 24px;
+  }
+}/*# sourceMappingURL=header.css.map */

@@ -1,0 +1,155 @@
+.feedback {
+  width: 100%;
+  background: #fff;
+  padding-bottom: 80px;
+
+  padding-top: 120px;
+  margin-top: -120px;
+
+  @media (max-width: 1200px) {
+    padding-top: 100px;
+    margin-top: -100px;
+  }
+
+  @media (max-width: 920px) {
+    padding-bottom: 40px;
+
+    padding-top: 80px;
+    margin-top: -80px;
+  }
+
+  .container {
+    flex-direction: column;
+  }
+
+  .feedback__cards {
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+
+    margin-top: 50px;
+
+    position: relative;
+
+    @media (max-width: 576px) {
+      margin-top: 30px;
+    }
+
+    /* Custom styles for Swiper navigation arrows */
+
+    .feedback .feedback__cards .swiper {
+      left: 10px;
+      position: relative;
+
+      padding-bottom: 80px;
+    }
+    .swiper-slide,
+    .swiper-ios .swiper-slide,
+    .swiper-wrapper {
+      transform: translate3d(0px, 0, 0);
+      padding-bottom: 40px;
+
+      @media (max-width: 576px) {
+        padding-bottom: 30px;
+      }
+    }
+    .swiper-button-next,
+    .swiper-button-prev {
+      color: #000; /* Change arrow color */
+      background-color: #fff; /* Background color of buttons */
+      border-radius: 50%; /* Rounded shape */
+      width: 40px; /* Width of the button */
+      height: 40px; /* Height of the button */
+      display: flex; /* Centering arrow icon */
+      align-items: center; /* Centering arrow icon */
+      justify-content: center; /* Centering arrow icon */
+    }
+
+    /* Arrow icons */
+    .swiper-button-next::after,
+    .swiper-button-prev::after {
+      font-size: 20px; /* Size of the arrow icon */
+    }
+
+    /* Next button - position */
+    .swiper-button-next {
+      right: 10px;
+      top: auto;
+      bottom: 0px;
+
+      @media (max-width: 576px) {
+        right: 40px;
+      }
+    }
+
+    /* Prev button - position */
+    .swiper-button-prev {
+      left: auto;
+      top: auto;
+      bottom: 0;
+      right: 50px; /* Distance from the left edge */
+
+      @media (max-width: 576px) {
+        left: 40px;
+        top: auto;
+        bottom: 0;
+        right: auto;
+      }
+    }
+
+    .feedback__card {
+      display: flex;
+      max-width: 420px;
+      width: 100%;
+      min-height: 355px;
+      padding: 20px 15px;
+      flex-direction: column;
+      align-items: flex-start;
+
+      transition: 0.25s;
+
+      border-radius: 5px;
+      border: 1px solid rgba(0, 0, 0, 0.2);
+      backdrop-filter: blur(15px);
+
+      @media (max-width: 576px) {
+        max-width: 100%;
+      }
+
+      &--name {
+        color: #1a1a1a;
+        font-size: 22px;
+        font-weight: 400;
+        margin-bottom: 12px;
+      }
+
+      &--date {
+        color: #1a1a1a;
+        font-size: 16px;
+        font-weight: 400;
+        margin-bottom: 30px;
+      }
+
+      &--descr {
+        overflow: hidden;
+        color: #7b8a99;
+
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 17px; /* 16.8px */
+
+        margin-bottom: 50px;
+      }
+
+      &--btn {
+        padding: 0;
+        color: #007bff;
+        background: none;
+        font-size: 16px;
+
+        font-weight: 400;
+      }
+    }
+  }
+}
