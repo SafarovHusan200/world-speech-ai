@@ -1,35 +1,52 @@
-// src/hooks/useHttp.js
-
-import { useState, useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import axios from "axios";
+import { useSession } from "next-auth/react";
 
 const useHttp = () => {
-  const [isLoading, setIsLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const { data: session } = useSession();
 
-  const sendRequest = useCallback(async (requestConfig, applyData) => {
-    setIsLoading(true);
-    setError(null);
-    try {
-      const response = await axios({
-        url: requestConfig.url,
-        method: requestConfig.method ? requestConfig.method : "GET",
-        headers: requestConfig.headers ? requestConfig.headers : {},
-        data: requestConfig.body ? requestConfig.body : null,
-      });
+  const request = useCallback(
+    async (url, method = "GET", body = null, customHeaders = {}) => {
+      setLoading(true);
+      const token = session?.accessToken || null;
 
-      applyData(response.data);
-    } catch (err) {
-      setError(err.message || "Something went wrong!");
-    }
-    setIsLoading(false);
-  }, []);
+      const headers = {
+        "Content-Type": "application/json",
+        ...customHeaders,
+      };
 
-  return {
-    isLoading,
-    error,
-    sendRequest,
-  };
+      if (token) {
+        headers.Authorization = `Bearer ${token}`;
+      }
+
+      try {
+        const response = await axios({
+          url,
+          method,
+          headers,
+          data: body,
+        });
+        setLoading(false);
+        return response.data || response;
+      } catch (error) {
+        setLoading(false);
+        console.log(error);
+        setError(
+          error.response.data?.error ||
+            error.response.data?.code ||
+            "An error occurred"
+        );
+        throw error.response?.data?.error || "An error occurred";
+      }
+    },
+    [session]
+  );
+
+  const clearError = useCallback(() => setError(null), []);
+
+  return { loading, error, request, clearError };
 };
 
 export default useHttp;

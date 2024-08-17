@@ -1,49 +1,4 @@
-// // pages/api/auth/[...nextauth].js
-
-// import NextAuth from "next-auth";
-// import GoogleProvider from "next-auth/providers/google";
-
-// export default NextAuth({
-//   providers: [
-//     GoogleProvider({
-//       clientId: process.env.GOOGLE_CLIENT_ID,
-//       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-//     }),
-//   ],
-//   callbacks: {
-//     async signIn({ user }, account, profile) {
-//       // Foydalanuvchini backend API orqali tekshirish
-//       console.log(user.email);
-//       const response = await fetch(
-//         "https://worldspeechai.com/api/v1/auth/jwt/create/",
-//         {
-//           method: "POST",
-//           headers: {
-//             "Content-Type": "application/json",
-//           },
-//           body: JSON.stringify({
-//             email: "husan@example.com",
-//             password: "12345678Hp",
-//           }),
-//         }
-//       );
-
-//       const data = await response.json();
-//       console.log(data);
-
-//       if (data.refresh && data.access) {
-//         // Agar foydalanuvchi ro'yxatdan o'tgan bo'lsa, kirishga ruxsat bering
-//         // "/dashboard";
-
-//         return true;
-//       } else {
-//         // Aks holda, kirishni rad
-
-//         return "/auth/register"; // Ro'yxatdan o'tish sahifasiga yo'naltiring
-//       }
-//     },
-//   },
-// });
+// pages/api/auth/[...nextauth].js
 
 import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
@@ -85,24 +40,46 @@ export default NextAuth({
             refreshToken: user.refresh,
           };
         } else {
-          throw new Error("Invalid credentials");
+          throw new Error(user.detail);
         }
       },
     }),
   ],
   callbacks: {
-    async jwt({ token, user }) {
-      if (user?.accessToken && user?.refreshToken) {
+    async jwt({ token, user, account }) {
+      if (user) {
         token.accessToken = user.accessToken;
         token.refreshToken = user.refreshToken;
       }
+
+      if (account?.provider === "google" && account?.access_token) {
+        const response = await fetch(
+          "https://worldspeechai.com/api/v1/auth/jwt/create/",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              email: "admin@mail.ru",
+              password: "52340091Hh", // This should be changed to a more secure approach
+            }),
+          }
+        );
+
+        const data = await response.json();
+
+        if (data.access && data.refresh) {
+          token.accessToken = data.access;
+          token.refreshToken = data.refresh;
+        }
+      }
+
       return token;
     },
     async session({ session, token }) {
-      if (token?.accessToken && token?.refreshToken) {
-        session.accessToken = token.accessToken;
-        session.refreshToken = token.refreshToken;
-      }
+      session.accessToken = token.accessToken;
+      session.refreshToken = token.refreshToken;
       return session;
     },
     async signIn({ user, account }) {
@@ -123,9 +100,9 @@ export default NextAuth({
 
         const data = await response.json();
 
-        console.log(data);
-
-        if (data.refresh && data.access) {
+        if (data.access && data.refresh) {
+          user.accessToken = data.access;
+          user.refreshToken = data.refresh;
           return true;
         } else {
           return "/auth/register";
@@ -133,5 +110,16 @@ export default NextAuth({
       }
       return true;
     },
+    async redirect({ url, baseUrl }) {
+      // Customize the redirect URL after successful sign in
+      if (url === baseUrl || url === baseUrl + "/") {
+        return baseUrl + "/dashboard";
+      }
+      return url.startsWith(baseUrl) ? url : baseUrl;
+    },
+  },
+  pages: {
+    signIn: "/auth/signin",
+    error: "/auth/error",
   },
 });

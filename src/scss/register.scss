@@ -175,6 +175,9 @@
           flex-direction: column;
           align-items: stretch;
 
+          .ant-form-item {
+            margin-bottom: 10px;
+          }
           .ant-col {
             max-width: 340px;
             margin: 0 auto;

@@ -5,17 +5,11 @@ import "../../../styles/register.css";
 import { useAuth } from "@/app/hooks/context/AuthContext";
 import { Button, Form, Input } from "antd";
 import { useRouter } from "next/navigation";
+import axios from "axios";
 
 const Register = () => {
   const router = useRouter();
-  const { email, setEmail } = useAuth();
-
-  const handleSubmit = (e) => {
-    e.preventDefault(); // To'g'ri sintaksis
-    console.log(email); // emailni ko'rsatish
-
-    alert("true");
-  };
+  const { setEmail } = useAuth();
 
   const validateMessages = {
     required: "пользователя требуется!!",
@@ -31,10 +25,9 @@ const Register = () => {
   const onFinish = async (values) => {
     setEmail(values.email);
 
-    console.log(email);
-
     router.push("/auth/register/password");
   };
+
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
   };
@@ -63,19 +56,6 @@ const Register = () => {
               <span>Войти через Google</span>
             </button>
             <p className="or">или</p>
-            {/* <form className="register__form" onSubmit={handleSubmit}>
-              <input
-                type="email"
-                className="form__input"
-                placeholder="Почта"
-                onChange={(e) => setEmail(e.target.value)}
-                value={email} // Formada emailni ko'rsatish
-              />
-
-              <button type="submit" className="btn-primary">
-                Продолжить с почтой
-              </button>
-            </form> */}
 
             <Form
               name="basic"
@@ -94,7 +74,6 @@ const Register = () => {
               autoComplete="off"
             >
               <Form.Item
-                // label="Username"
                 name={"email"}
                 rules={[
                   {

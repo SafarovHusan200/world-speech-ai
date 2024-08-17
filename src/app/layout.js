@@ -1,7 +1,7 @@
 // src/app/layout.js
 
 import ClientLayout from "./client-layout";
-import ClientQueryProvider from "./ClientQueryProvider";
+import ClientQueryProvider from "./hooks/ClientQueryProvider";
 import "../styles/global.css";
 import NextTopLoader from "nextjs-toploader";
 

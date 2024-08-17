@@ -111,11 +111,15 @@
         font-weight: 500;
         line-height: 21.6px; /* 21.6px */
         padding: 10px;
-        border-radius: 4px;
+        border-radius: 5px;
         cursor: pointer;
 
+        &.active {
+          background-color: #dae0e5;
+        }
+
         &:hover {
-          background-color: #e2e6ea;
+          background-color: #dae0e5;
         }
       }
     }

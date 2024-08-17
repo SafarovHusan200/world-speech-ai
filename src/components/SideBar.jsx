@@ -3,10 +3,12 @@
 import React, { useState } from "react";
 import "../styles/sidebar.css";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const Sidebar = ({ sidebar, handleScroll }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
+  const pathname = usePathname();
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
   };
@@ -66,7 +68,12 @@ const Sidebar = ({ sidebar, handleScroll }) => {
         <ul>
           {menuData.map((menu, i) => (
             <li key={i} onClick={() => handleScroll()}>
-              <Link href={menu.url}>{menu.name}</Link>
+              <Link
+                className={pathname === menu.url ? "active" : ""}
+                href={menu.url}
+              >
+                {menu.name}
+              </Link>
             </li>
           ))}
         </ul>

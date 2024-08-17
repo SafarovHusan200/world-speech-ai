@@ -8,6 +8,7 @@ import "../../styles/dashboard.css";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
 import Loading from "@/components/Loading";
+import { DashboardProvider } from "../hooks/context/dashboardContext";
 
 const DashboardLayout = ({ children }) => {
   const { data: session, status } = useSession();
@@ -21,7 +22,7 @@ const DashboardLayout = ({ children }) => {
   function handleScroll() {
     setSidebar(false);
   }
-  console.log("session-data:", session);
+  // console.log("session-data:", session);
 
   useEffect(() => {
     if (status === "loading") return; // Yuklanayotgan paytda hech narsa qilmaydi
@@ -54,7 +55,9 @@ const DashboardLayout = ({ children }) => {
             </button>
           </div>
 
-          <Suspense fallback={<Loading />}>{children}</Suspense>
+          <Suspense fallback={<Loading />}>
+            <DashboardProvider>{children}</DashboardProvider>
+          </Suspense>
         </div>
       </div>
     </div>

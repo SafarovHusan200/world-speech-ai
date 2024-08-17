@@ -7,6 +7,7 @@ import Header from "@/components/Header";
 import React from "react";
 import Loading from "@/components/Loading";
 import { useRouter } from "next/navigation";
+import { AuthProvider } from "../hooks/context/AuthContext";
 
 const AuthLayout = ({ children }) => {
   const { data: session, status } = useSession();
@@ -27,7 +28,7 @@ const AuthLayout = ({ children }) => {
   return (
     <>
       <Header />
-      {children}
+      <AuthProvider>{children}</AuthProvider>
     </>
   );
 };

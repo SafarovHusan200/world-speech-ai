@@ -5,6 +5,8 @@ import { Button, Checkbox, Form, Input, message } from "antd";
 import { signIn } from "next-auth/react";
 
 import { useRouter } from "next/navigation";
+import axios from "axios";
+import { useAuth } from "@/app/hooks/context/AuthContext";
 const validateMessages = {
   required: "пользователя требуется!!",
   types: {
@@ -17,9 +19,9 @@ const validateMessages = {
 };
 
 const Login = () => {
-  const [error, setError] = useState();
-
+  const { setEmail } = useAuth();
   const router = useRouter();
+
   const onFinish = async (values) => {
     const { email, password } = values;
     const result = await signIn("credentials", {
@@ -28,11 +30,31 @@ const Login = () => {
       password,
     });
 
-    console.log(result);
+    if (
+      result.status >= 400 &&
+      result.error === "Incorrect username or password."
+    ) {
+      message.error(result.error);
+    } else if (
+      result.status >= 400 &&
+      result.error === "Account is not active."
+    ) {
+      message.warning(result.error);
 
-    if (result.error) {
-      message.error("Login eror");
-      setError(result.error);
+      try {
+        const res = await axios.post(
+          "https://worldspeechai.com/api/v1/users/send_activation_code/",
+          { email }
+        );
+        console.log(res);
+        if (res.status === 200) {
+          setEmail(email);
+          router.push("/auth/register/code");
+        }
+      } catch (error) {
+        console.log(error);
+        message.error(error.response.data.email);
+      }
     } else {
       message.success("Login success");
       router.push("/dashboard");
@@ -40,6 +62,14 @@ const Login = () => {
   };
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
+  };
+
+  const handleLogin = async () => {
+    const response = await fetch(
+      "https://worldspeechai.com/api/v1/auth/o/google-oauth2/?redirect_uri=https://worldspeechai.com/api/v1/auth/o/google-oauth2/"
+    );
+    const data = await response.json();
+    window.location.href = data.authorization_url;
   };
 
   return (
@@ -57,6 +87,10 @@ const Login = () => {
 
               <p className="login__block--content__descr">Добро пожаловать</p>
 
+              {/* <button className="with__google" onClick={() => handleLogin()}>
+                <img src="/google-icon.svg" alt="" />
+                <span>Войти через Google</span>
+              </button> */}
               <button
                 className="with__google"
                 onClick={() =>
@@ -69,7 +103,10 @@ const Login = () => {
                 <img src="/google-icon.svg" alt="" />
                 <span>Войти через Google</span>
               </button>
+
               <p className="or">или</p>
+
+              {/* =================== */}
 
               <Form
                 name="basic"
@@ -134,6 +171,8 @@ const Login = () => {
                 </Form.Item>
               </Form>
 
+              {/* ======================= */}
+
               <div className="have__got--account">
                 <p>
                   Еще нет аккаунта? -
@@ -142,7 +181,7 @@ const Login = () => {
               </div>
 
               <div className="offer__and__policy">
-                <Link href={"/forgot"}>Не помню пароль</Link>
+                <Link href={"/auth/login/send-email"}>Не помню пароль</Link>
               </div>
               {/* ============ */}
             </div>

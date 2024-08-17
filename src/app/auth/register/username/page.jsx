@@ -8,7 +8,10 @@ import { useRouter } from "next/navigation";
 import { useAuth } from "@/app/hooks/context/AuthContext";
 import { Button, Form, Input, message } from "antd";
 import axios from "axios";
-import useHttp from "@/app/hooks/useHttp";
+
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { useSession } from "next-auth/react";
+import Loading from "@/components/Loading";
 
 const RegisterUsername = () => {
   const validateMessages = {
@@ -22,87 +25,68 @@ const RegisterUsername = () => {
     },
   };
 
-  const { setUsername, password, email } = useAuth();
+  const { session } = useSession();
 
+  const { setUsername, password, email } = useAuth();
   const router = useRouter();
 
-  const { sendRequest, isLoading, error } = useHttp();
+  const { mutate, isPending, isError, isSuccess } = useMutation({
+    mutationFn: async (data) => {
+      try {
+        const response = await axios.post(data.url, data.body, {
+          headers: {
+            accept: "application/json",
+            "Content-Type": "application/json",
+          },
+        });
+        console.log("res", response);
 
-  // const onFinish = async (values) => {
-  //   const { username } = values;
+        return response;
+      } catch (err) {
+        if (err?.response.data?.email) {
+          message.error(err?.response.data?.email);
 
-  //   const isUsername = username.split(" ").length === 1;
+          console.log(err?.response.data?.email);
+          if (
+            err?.response.data?.email[0] ===
+            "Пользователь с таким Email уже существует."
+          ) {
+            router.push("/auth/login");
+          } else {
+            router.push("/auth/register");
+          }
+        }
+        if (err?.response.data?.password) {
+          err?.response.data?.password.map((err) => {
+            message.error(err);
+          });
+          router.push("/auth/register/password");
+        }
+        throw err.response.data;
+      }
+    },
 
-  //   if (username && isUsername) {
-  //     setUsername(username);
+    onSuccess: (response) => {
+      if (response.status === 201) {
+        message.success("Congratulations🎉. send code email address ");
+        router.push("/auth/register/code");
+      }
+    },
+  });
 
-  //     if (email && password) {
-  //       console.log(email);
-  //       console.log(password);
-  //       console.log(username);
-
-  //       const response = await axios.post(
-  //         "https://worldspeechai.com/api/v1/users/",
-  //         {
-  //           email,
-  //           password,
-  //           username,
-  //         }
-  //       );
-
-  //       console.log(response);
-
-  //       if (response.status === 201) {
-  //         message.success("Поздравляем регистрация прошла успешно");
-  //       } else {
-  //         message.error("error");
-  //       }
-  //     } else {
-  //       message.error("no");
-  //     }
-
-  //     // router.push("/auth/register/username");
-  //   } else {
-  //     message.error("неправильный пароль");
-  //   }
-  // };
-
-  const onFinish = async (values) => {
+  const onFinish = (values) => {
     const { username } = values;
-
     const isUsername = username.split(" ").length === 1;
 
     if (username && isUsername) {
       setUsername(username);
 
       if (email && password) {
-        console.log(email);
-        console.log(password);
-        console.log(username);
-
-        sendRequest(
-          {
-            url: "https://worldspeechai.com/api/v1/users/",
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: {
-              email,
-              password,
-              username,
-            },
-          },
-          (data) => {
-            console.log(data);
-            if (data.id) {
-              message.success("Поздравляем регистрация прошла успешно");
-              router.push("/auth/login");
-            } else {
-              message.error("Ошибка при регистрации");
-            }
-          }
-        );
+        mutate({
+          url: "https://worldspeechai.com/api/v1/users/",
+          token: session?.accessToken, // Replace this with the actual token if needed
+          body: { email, password, username },
+        });
       } else {
         message.error("Пожалуйста, введите email и пароль");
       }
@@ -122,6 +106,14 @@ const RegisterUsername = () => {
       router.push("/auth/register/password");
     }
   });
+
+  if (isPending)
+    return (
+      <div>
+        <Loading />
+      </div>
+    );
+
   return (
     <div className="register">
       <div className="container">

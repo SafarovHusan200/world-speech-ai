@@ -1,21 +1,18 @@
 "use client";
 
-import React, { useState } from "react";
-import { Button, Form, Input, InputNumber, Switch } from "antd";
+import React, { useEffect, useState } from "react";
+import { Button, Form, Input, InputNumber, Switch, message } from "antd";
 import "../../../styles/settings.css";
 import Link from "next/link";
-import { signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
+import { URLS } from "@/constants/url";
+import { baseAPI } from "@/constants/domain";
+
+import useHttp from "@/app/hooks/useHttp";
+import { useDashboard } from "@/app/hooks/context/dashboardContext";
+import CopyText from "@/components/CopyText";
 
 const Setting = () => {
-  const layout = {
-    labelCol: {
-      span: 8,
-    },
-    wrapperCol: {
-      span: 16,
-    },
-  };
-
   /* eslint-disable no-template-curly-in-string */
   const validateMessages = {
     required: "пользователя требуется!!",
@@ -27,15 +24,77 @@ const Setting = () => {
       range: "${label} must be between ${min} and ${max}",
     },
   };
-  /* eslint-enable no-template-curly-in-string */
+
+  const { request, loading, error } = useHttp();
+  const { setUser, user } = useDashboard();
 
   const [autoPayment, setAutoPayment] = useState(true);
   const [newsletter, setNewsletter] = useState(false);
-  const [fileFormat, setFileFormat] = useState("txt");
+  const [fileFormat, setFileFormat] = useState("pdf");
 
-  const handleToggle = (setter) => () => setter((prev) => !prev);
+  let url = `${baseAPI + URLS.profile}`;
+
+  const handleToggle = (setter) => () => {
+    setter((prevState) => {
+      console.log(!prevState);
+
+      url = `${baseAPI + URLS.auto_payment}`;
+      request(url, "PATCH", { auto_payment: !prevState })
+        .then((response) => {
+          message.success("Auto payment: " + response?.auto_payment);
+          setUser(response);
+          return response;
+        })
+        .catch((error) => {
+          console.error("Error fetching data:", error);
+          return error;
+        });
+
+      return !prevState;
+    });
+  };
+
   const onFinish = (values) => {
     console.log(values);
+  };
+
+  const getUserData = async () => {
+    request(url, "GET")
+      .then((response) => {
+        setUser(response);
+        console.log(response);
+        return response;
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+        return error;
+      });
+  };
+
+  useEffect(() => {
+    if (user) {
+      setAutoPayment(user?.auto_payment);
+      setFileFormat(user?.preferred_format);
+      console.log(user);
+    } else {
+      getUserData();
+    }
+  }, [user]);
+
+  const handleFileType = (type) => {
+    console.log(type);
+
+    setFileFormat(type);
+    request(url, "PATCH", { preferred_format: type })
+      .then((response) => {
+        message.success("Preferred format: " + response?.preferred_format);
+        setUser(response);
+        return response;
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+        return error;
+      });
   };
 
   return (
@@ -57,7 +116,7 @@ const Setting = () => {
             },
           ]}
         >
-          <Input placeholder="Никнейм" />
+          <Input placeholder={user?.username || "Никнейм"} />
         </Form.Item>
         <Form.Item
           name={["user", "email"]}
@@ -70,7 +129,7 @@ const Setting = () => {
             },
           ]}
         >
-          <Input placeholder="example@google.com" />
+          <Input placeholder={user?.email || "example@google.com"} />
         </Form.Item>
 
         <Form.Item>
@@ -125,7 +184,7 @@ const Setting = () => {
               name="fileFormat"
               id="txt"
               checked={fileFormat === "txt"}
-              onChange={() => setFileFormat("txt")}
+              onChange={() => handleFileType("txt")}
             />
             <label htmlFor="txt">
               <b>.txt</b>
@@ -137,12 +196,12 @@ const Setting = () => {
             <input
               type="radio"
               name="fileFormat"
-              id="doc"
-              checked={fileFormat === "doc"}
-              onChange={() => setFileFormat("doc")}
+              id="word"
+              checked={fileFormat === "word"}
+              onChange={() => handleFileType("word")}
             />
 
-            <label htmlFor="doc">
+            <label htmlFor="word">
               <b>.doc</b>
               <b>Экспорт в формате Microsoft Word</b>
             </label>
@@ -154,7 +213,7 @@ const Setting = () => {
               name="fileFormat"
               id="pdf"
               checked={fileFormat === "pdf"}
-              onChange={() => setFileFormat("pdf")}
+              onChange={() => handleFileType("pdf")}
             />
             <label htmlFor="pdf">
               <b>.pdf</b>
@@ -169,11 +228,14 @@ const Setting = () => {
         </div>
         <div className="settings-item__btn">
           <p className="api-key">API key</p>
-          <p className="key">b0e1a815-aaf9-4c52-8102-9bb4db9b06b5</p>
-          <div className="settings-item">
+          {/* <p className="key">{user?.api_key}</p> */}
+
+          <CopyText text={user?.api_key} />
+
+          {/* <div className="settings-item">
             <button className="btn-primary">Скопировать</button>
             <Link href="#documentation">Документация</Link>
-          </div>
+          </div> */}
         </div>
         <div className="settings-item">
           <button onClick={() => signOut()} className="btn btn-outline">

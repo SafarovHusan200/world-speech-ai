@@ -74,9 +74,17 @@ const MeetingForm = () => {
                 <option>Telemost</option>
               </select>
               <label>Ссылка на конференцию</label>
-              <input type="text" placeholder="Zoom, Google Meet, Telemost" />
+              <input
+                type="text"
+                placeholder="Zoom, Google Meet, Telemost"
+                autocomplete="current-text"
+              />
               <label>Пароль</label>
-              <input type="password" placeholder="Только для Zoom" />
+              <input
+                type="password"
+                placeholder="Только для Zoom"
+                autocomplete="current-password"
+              />
 
               <div className="row row1">
                 <Link href={"#!"}>Только для Zoom</Link>
