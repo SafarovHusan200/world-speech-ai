@@ -104,46 +104,48 @@
     border: 0.405px solid rgba(0, 0, 0, 0.1);
   }
 }
-.dashbord__content--left .upload-section .file__upload {
+.dashbord__content--left .upload-section .ant-upload-wrapper .ant-upload-drag {
   border-radius: 20px;
   border: 1px solid rgba(18, 18, 18, 0.1);
   padding: 56px 15px;
   height: 100%;
+}
+.dashbord__content--left .upload-section .ant-upload-wrapper .ant-upload-drag .ant-upload-drag-container {
   display: flex;
   flex-direction: column;
-  text-align: center;
-  align-items: center;
+  text-align: center !important;
+  align-items: center !important;
 }
 @media (max-width: 576px) {
-  .dashbord__content--left .upload-section .file__upload {
+  .dashbord__content--left .upload-section .ant-upload-wrapper .ant-upload-drag {
     border-radius: 8.108px;
     border: 0.405px solid rgba(18, 18, 18, 0.1);
     padding: 47px 10px;
   }
 }
-.dashbord__content--left .upload-section .file__upload img {
+.dashbord__content--left .upload-section .ant-upload-wrapper .ant-upload-drag img {
   display: block;
   margin-bottom: 20px;
   height: 110px;
   width: 110px;
 }
 @media (max-width: 576px) {
-  .dashbord__content--left .upload-section .file__upload img {
+  .dashbord__content--left .upload-section .ant-upload-wrapper .ant-upload-drag img {
     margin-bottom: 10px;
     width: 44px;
     height: 44px;
   }
 }
-.dashbord__content--left .upload-section .file__upload .btn-primary {
+.dashbord__content--left .upload-section .ant-upload-wrapper .ant-upload-drag .btn-primary {
   display: block;
   margin-bottom: 30px;
 }
 @media (max-width: 576px) {
-  .dashbord__content--left .upload-section .file__upload .btn-primary {
+  .dashbord__content--left .upload-section .ant-upload-wrapper .ant-upload-drag .btn-primary {
     display: none;
   }
 }
-.dashbord__content--left .upload-section .file__upload .drag__and__drop {
+.dashbord__content--left .upload-section .ant-upload-wrapper .ant-upload-drag .drag__and__drop {
   color: #121212;
   font-family: "Montserrat";
   font-size: 22px;
@@ -153,7 +155,7 @@
   margin-bottom: 20px;
 }
 @media (max-width: 576px) {
-  .dashbord__content--left .upload-section .file__upload .drag__and__drop {
+  .dashbord__content--left .upload-section .ant-upload-wrapper .ant-upload-drag .drag__and__drop {
     color: #121212;
     font-size: 14px;
     font-style: normal;
@@ -161,7 +163,7 @@
     line-height: 120%; /* 16.8px */
   }
 }
-.dashbord__content--left .upload-section .file__upload .spekers {
+.dashbord__content--left .upload-section .ant-upload-wrapper .ant-upload-drag .spekers {
   display: flex;
   gap: 10px;
   color: #007bff;
@@ -173,7 +175,7 @@
   margin-bottom: 56px;
 }
 @media (max-width: 576px) {
-  .dashbord__content--left .upload-section .file__upload .spekers {
+  .dashbord__content--left .upload-section .ant-upload-wrapper .ant-upload-drag .spekers {
     font-size: 12px;
     font-style: normal;
     font-weight: 600;
@@ -181,7 +183,7 @@
     margin-bottom: 0px;
   }
 }
-.dashbord__content--left .upload-section .file__upload .file__type {
+.dashbord__content--left .upload-section .ant-upload-wrapper .ant-upload-drag .file__type {
   color: #7a7a7a;
   font-family: "Montserrat", sans-serif;
   font-size: 16px;
@@ -190,7 +192,7 @@
   line-height: 120%; /* 19.2px */
 }
 @media (max-width: 576px) {
-  .dashbord__content--left .upload-section .file__upload .file__type {
+  .dashbord__content--left .upload-section .ant-upload-wrapper .ant-upload-drag .file__type {
     display: none;
   }
 }

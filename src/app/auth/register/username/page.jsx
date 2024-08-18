@@ -11,7 +11,6 @@ import axios from "axios";
 
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
-import Loading from "@/components/Loading";
 
 const RegisterUsername = () => {
   const validateMessages = {
@@ -107,13 +106,6 @@ const RegisterUsername = () => {
     }
   });
 
-  if (isPending)
-    return (
-      <div>
-        <Loading />
-      </div>
-    );
-
   return (
     <div className="register">
       <div className="container">
@@ -168,6 +160,7 @@ const RegisterUsername = () => {
                   type="primary"
                   htmlType="submit"
                   className="btn-primary"
+                  loading={isPending}
                 >
                   Зарегистрироваться
                 </Button>

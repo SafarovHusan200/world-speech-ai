@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import "../../../styles/register.css";
 import { useAuth } from "@/app/hooks/context/AuthContext";
 import { Button, Form, Input } from "antd";
@@ -10,6 +10,7 @@ import axios from "axios";
 const Register = () => {
   const router = useRouter();
   const { setEmail } = useAuth();
+  const [loading, setLoading] = useState(false);
 
   const validateMessages = {
     required: "пользователя требуется!!",
@@ -23,9 +24,11 @@ const Register = () => {
   };
 
   const onFinish = async (values) => {
+    setLoading(true);
     setEmail(values.email);
 
     router.push("/auth/register/password");
+    setLoading(false);
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -97,6 +100,7 @@ const Register = () => {
                   type="primary"
                   htmlType="submit"
                   className="btn btn-primary"
+                  loading={loading}
                 >
                   Продолжить с почтой
                 </Button>

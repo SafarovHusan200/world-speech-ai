@@ -4,10 +4,11 @@ import { useAuth } from "@/app/hooks/context/AuthContext";
 import { Button, Form, Input, message } from "antd";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import React from "react";
+import React, { useState } from "react";
 
 const SendEmailMessage = () => {
   const router = useRouter();
+  const [loading, setLoading] = useState(false);
 
   const { setEmail } = useAuth();
 
@@ -24,6 +25,7 @@ const SendEmailMessage = () => {
 
   const onFinish = async (values) => {
     setEmail(values.email);
+    setLoading(true);
 
     try {
       const res = await axios.post(
@@ -34,9 +36,12 @@ const SendEmailMessage = () => {
       if (res.status === 200) {
         message.success("code send email ");
         router.push("/auth/login/forgot");
+        setLoading(false);
       }
     } catch (error) {
-      console.log("error", error);
+      message.error(error.response?.data?.email[0]);
+
+      setLoading(false);
     }
   };
 
@@ -60,18 +65,6 @@ const SendEmailMessage = () => {
               <p className="login__block--content__descr">
                 Введите привязанный email
               </p>
-
-              {/* <form className="login__form">
-                <input
-                  type="email"
-                  className="form__input"
-                  placeholder="Почта"
-                />
-
-                <button className="btn-primary send-email__btn">
-                  Продолжить
-                </button>
-              </form> */}
 
               <Form
                 name="basic"
@@ -113,6 +106,7 @@ const SendEmailMessage = () => {
                     type="primary"
                     htmlType="submit"
                     className="btn btn-primary"
+                    loading={loading}
                   >
                     Продолжить
                   </Button>

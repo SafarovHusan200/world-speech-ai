@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import "../../../../styles/login.css";
 import { Alert, Button, Form, Input, message } from "antd";
 import axios from "axios";
@@ -11,6 +11,7 @@ const ForgotPassword = () => {
   const router = useRouter();
 
   const { email, setEmail } = useAuth();
+  const [loading, setLoading] = useState(false);
 
   const validateMessages = {
     required: "пользователя требуется!!",
@@ -23,8 +24,10 @@ const ForgotPassword = () => {
     },
   };
   const onFinish = async (values) => {
+    setLoading(true);
     const { code, password, password2 } = values;
     if (password !== password2) {
+      setLoading(false);
       return message.warning("Passwords do not match");
     }
 
@@ -41,6 +44,7 @@ const ForgotPassword = () => {
     } catch (error) {
       handleErrorResponse(error, code, password);
     }
+    setLoading(false);
   };
 
   const handleErrorResponse = async (error, code, password) => {
@@ -49,7 +53,6 @@ const ForgotPassword = () => {
       error.response?.data?.error ||
       "An error occurred";
     await message.error(errorMessage);
-    console.log("error", error);
 
     if (!email) {
       const currentEmail = prompt("Email:");
@@ -58,9 +61,11 @@ const ForgotPassword = () => {
         retryPasswordRecovery(currentEmail, code, password);
       }
     }
+    setLoading(false);
   };
 
   const retryPasswordRecovery = async (email, code, password) => {
+    setLoading(true);
     try {
       const res = await axios.post(
         "https://worldspeechai.com/api/v1/users/password_recovery/",
@@ -69,12 +74,14 @@ const ForgotPassword = () => {
       if (res.status === 200) {
         message.success("Profile activated🎉");
         router.push("/auth/login");
+        setLoading(false);
       }
     } catch (retryError) {
       const retryErrorMessage =
         retryError.response?.data?.error || "An error occurred";
       await message.error(retryErrorMessage);
-      console.log("retryError", retryError);
+
+      setLoading(false);
     }
   };
 
@@ -166,6 +173,7 @@ const ForgotPassword = () => {
                     type="primary"
                     htmlType="submit"
                     className="btn-primary"
+                    loading={loading}
                   >
                     Продолжить с почтой
                   </Button>

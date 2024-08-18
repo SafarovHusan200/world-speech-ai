@@ -1,7 +1,8 @@
 "use client";
 import Link from "next/link";
 import React, { useState } from "react";
-import { Button, Checkbox, Form, Input, message } from "antd";
+import { Button, Form, Input, message } from "antd";
+import { PoweroffOutlined } from "@ant-design/icons";
 import { signIn } from "next-auth/react";
 
 import { useRouter } from "next/navigation";
@@ -20,9 +21,11 @@ const validateMessages = {
 
 const Login = () => {
   const { setEmail } = useAuth();
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
 
   const onFinish = async (values) => {
+    setLoading(true);
     const { email, password } = values;
     const result = await signIn("credentials", {
       redirect: false,
@@ -35,6 +38,7 @@ const Login = () => {
       result.error === "Incorrect username or password."
     ) {
       message.error(result.error);
+      setLoading(false);
     } else if (
       result.status >= 400 &&
       result.error === "Account is not active."
@@ -49,13 +53,16 @@ const Login = () => {
         console.log(res);
         if (res.status === 200) {
           setEmail(email);
+          setLoading(false);
           router.push("/auth/register/code");
         }
       } catch (error) {
         console.log(error);
         message.error(error.response.data.email);
+        setLoading(false);
       }
     } else {
+      setLoading(false);
       message.success("Login success");
       router.push("/dashboard");
     }
@@ -163,6 +170,8 @@ const Login = () => {
                 >
                   <Button
                     type="primary"
+                    loading={loading}
+                    // onClick={() => enterLoading(1)}
                     htmlType="submit"
                     className="btn-primary"
                   >
