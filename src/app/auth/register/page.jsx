@@ -39,7 +39,8 @@ const Register = () => {
 
   const handleGoogle = () => {
     const url =
-      "https://worldspeechai.com/api/v1/auth/o/google-oauth2/?redirect_uri=https://worldspeechai.com/api/v1/auth/o/google-oauth2/";
+      // "https://worldspeechai.com/api/v1/auth/o/google-oauth2/?redirect_uri=https://worldspeechai.com/api/v1/auth/o/google-oauth2/";
+      "https://worldspeechai.com/api/v1/auth/o/google-oauth2/?redirect_uri=https://world-speech-ai.netlify.app/api/auth/callback/google";
     try {
       request(url, "GET")
         .then((response) => {
