@@ -1,29 +1,78 @@
 "use client";
 
-import React, { useEffect } from "react";
-import MeetingForm from "@/components/MeetingForm";
-import { useSession } from "next-auth/react";
+import React, { useEffect, useState } from "react";
+
 import { URLS } from "@/constants/url";
 import { baseAPI } from "@/constants/domain";
-import { useQuery } from "@tanstack/react-query";
+
 import useHttp from "../hooks/useHttp";
 import Link from "next/link";
 import "../../styles/meetingForm.css";
 import DraggerComponent from "@/components/Drag-and-Drop";
 
-const Dashboard = () => {
-  const { request, loading, error } = useHttp();
-  const { data: session, status } = useSession();
-  const url = `${baseAPI + URLS.profile}`;
-  console.log(url);
+import { useDashboard } from "../hooks/context/dashboardContext";
+import { useRouter } from "next/navigation";
+import { message } from "antd";
 
-  const { data, isLoading, isError } = useQuery({
-    queryFn: () => request(url, "GET"),
-    queryKey: ["movies"],
-    enabled: !!session, // Only run the query if the session exists
+// import { Option } from "antd/es/mentions";
+
+const Dashboard = () => {
+  const { setUser } = useDashboard();
+  const { request, loading, error } = useHttp();
+  const url = `${baseAPI + URLS.profile}`;
+
+  const [formData, setFormData] = useState({
+    meeting_name: "",
+    meeting_type: "Telemost",
+    meeting_url: "",
+    password: "",
   });
 
-  console.log(data);
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const getMeData = async () => {
+    const res = await request(url, "GET")
+      .then((response) => {
+        setUser(response);
+        return response;
+      })
+      .catch((err) => {
+        return err;
+      });
+  };
+
+  const submitForm = async (e) => {
+    e.preventDefault();
+
+    const formDataObj = new FormData();
+    formDataObj.append("meeting_name", formData.meeting_name);
+    formDataObj.append("meeting_type", formData.meeting_type);
+    formDataObj.append("meeting_url", formData.meeting_url);
+    formDataObj.append("password", formData.password);
+
+    const url = baseAPI + URLS.send_url;
+
+    try {
+      const response = await request(url, "POST", formDataObj);
+
+      if (response.status === "Processing") {
+        message.success("URL successfully sent");
+      }
+    } catch (err) {
+      message.error("Failed to send URL");
+    }
+  };
+
+  useEffect(() => {
+    getMeData();
+  }, []);
+
   return (
     <div className="dashbord__content">
       <div className="dashbord__content--left">
@@ -58,13 +107,13 @@ const Dashboard = () => {
               Отправить бота на конференцию
               <div className="links">
                 <Link href={"#!"}>
-                  <img src="camera-icon.svg" alt="camera" />
+                  <img src="/camera-icon.svg" alt="camera" />
                 </Link>
                 <Link href={"#!"}>
-                  <img src="zoom-icon.svg" alt="camera" />
+                  <img src="/zoom-icon.svg" alt="camera" />
                 </Link>
                 <Link href={"#!"}>
-                  <img src="meeting-icon.svg" alt="camera" />
+                  <img src="/meeting-icon.svg" alt="camera" />
                 </Link>
               </div>
             </h3>
@@ -72,45 +121,65 @@ const Dashboard = () => {
               Наш бот подключится к вашей встрече и автоматически запишет важный
               разговор, преобразует аудио в текст и подготовит отчет
             </p>
-            <form className="form">
+            <form className="form" onSubmit={submitForm}>
               <label>Название</label>
               <input
                 type="text"
+                name="meeting_name"
                 placeholder="Например: Созвон с Ильей по сайту"
+                required
+                value={formData.name}
+                onChange={handleChange}
               />
               <label>Площадка</label>
-              <select>
-                <option>Telemost</option>
+              <select
+                name="meeting_type"
+                value={formData.platform}
+                onChange={handleChange}
+              >
+                <option value="Telemost">Telemost</option>
+                <option value="Zoom">Zoom</option>
+                <option value="Zoom">Yandex</option>
+                <option value="Zoom">Google</option>
               </select>
+
               <label>Ссылка на конференцию</label>
               <input
                 type="text"
+                name="meeting_url"
                 placeholder="Zoom, Google Meet, Telemost"
-                autocomplete="current-text"
+                autoComplete="current-text"
+                required
+                value={formData.conferenceLink}
+                onChange={handleChange}
               />
               <label>Пароль</label>
               <input
                 type="password"
-                placeholder="Только для Zoom"
-                autocomplete="current-password"
+                name="password"
+                autoComplete="current-password"
+                required
+                value={formData.password}
+                onChange={handleChange}
               />
 
               <div className="row row1">
                 <Link href={"#!"}>Только для Zoom</Link>
-
                 <span>Если нету, оставьте поле пустым</span>
               </div>
               <div className="row row2">
-                <button className="btn-primary">Отправить</button>
+                <button type="submit" className="btn-primary">
+                  Отправить
+                </button>
                 <div className="links">
                   <Link href={"#!"}>
-                    <img src="camera-icon.svg" alt="camera" />
+                    <img src="/camera-icon.svg" alt="camera" />
                   </Link>
                   <Link href={"#!"}>
-                    <img src="zoom-icon.svg" alt="camera" />
+                    <img src="/zoom-icon.svg" alt="camera" />
                   </Link>
                   <Link href={"#!"}>
-                    <img src="meeting-icon.svg" alt="camera" />
+                    <img src="/meeting-icon.svg" alt="camera" />
                   </Link>
                 </div>
               </div>

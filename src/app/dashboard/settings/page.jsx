@@ -11,6 +11,7 @@ import { baseAPI } from "@/constants/domain";
 import useHttp from "@/app/hooks/useHttp";
 import { useDashboard } from "@/app/hooks/context/dashboardContext";
 import CopyText from "@/components/CopyText";
+import moment from "moment";
 
 const Setting = () => {
   /* eslint-disable no-template-curly-in-string */
@@ -31,13 +32,14 @@ const Setting = () => {
   const [autoPayment, setAutoPayment] = useState(true);
   const [newsletter, setNewsletter] = useState(false);
   const [fileFormat, setFileFormat] = useState("pdf");
+  const [pay, setPay] = useState();
+  const { data: session } = useSession();
+  console.log(session);
 
-  let url = `${baseAPI + URLS.profile}`;
+  let url;
 
   const handleToggle = (setter) => () => {
     setter((prevState) => {
-      console.log(!prevState);
-
       url = `${baseAPI + URLS.auto_payment}`;
       request(url, "PATCH", { auto_payment: !prevState })
         .then((response) => {
@@ -55,14 +57,62 @@ const Setting = () => {
   };
 
   const onFinish = (values) => {
-    console.log(values);
+    console.log(values.user);
+    const obj = {
+      name: values.user.name,
+      email: values.user.email,
+    };
+    url = `${baseAPI + URLS.profile}`;
+    request(url, "PATCH", obj)
+      .then((response) => {
+        setUser(response);
+        message.success("Update successfully");
+        return response;
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+        return error;
+      });
   };
 
   const getUserData = async () => {
+    url = `${baseAPI + URLS.profile}`;
     request(url, "GET")
       .then((response) => {
         setUser(response);
+
+        return response;
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+        return error;
+      });
+  };
+
+  const getPaymentHistory = () => {
+    url = `${baseAPI + URLS.payment_history}`;
+    request(url, "GET")
+      .then((response) => {
         console.log(response);
+
+        setPay(response);
+
+        return response;
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+        return error;
+      });
+  };
+
+  const handleFileType = (type) => {
+    console.log(type);
+    url = `${baseAPI + URLS.profile}`;
+    setFileFormat(type);
+    request(url, "PATCH", { preferred_format: type })
+      .then((response) => {
+        message.success("Preferred format: " + response?.preferred_format);
+        setUser(response);
         return response;
       })
       .catch((error) => {
@@ -76,26 +126,11 @@ const Setting = () => {
       setAutoPayment(user?.auto_payment);
       setFileFormat(user?.preferred_format);
       console.log(user);
+      getPaymentHistory();
     } else {
       getUserData();
     }
   }, [user]);
-
-  const handleFileType = (type) => {
-    console.log(type);
-
-    setFileFormat(type);
-    request(url, "PATCH", { preferred_format: type })
-      .then((response) => {
-        message.success("Preferred format: " + response?.preferred_format);
-        setUser(response);
-        return response;
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-        return error;
-      });
-  };
 
   return (
     <div className="settings">
@@ -116,7 +151,7 @@ const Setting = () => {
             },
           ]}
         >
-          <Input placeholder={user?.username || "Никнейм"} />
+          <Input placeholder={user?.name || "Никнейм"} />
         </Form.Item>
         <Form.Item
           name={["user", "email"]}
@@ -257,18 +292,18 @@ const Setting = () => {
             </thead>
 
             <tbody>
-              <tr>
-                <td>#2939323923</td>
-                <td>Май 12, 2024 по Июнь 12, 2024</td>
-                <td>Оплачено</td>
-                <td>9,99$</td>
-              </tr>
-              <tr>
-                <td>#2939323923</td>
-                <td>Май 12, 2024 по Июнь 12, 2024</td>
-                <td>Оплачено</td>
-                <td>9,99$</td>
-              </tr>
+              {pay?.map((payme) => (
+                <tr key={pay.payment_id}>
+                  <td>{payme.payment_id}</td>
+                  <td>
+                    {moment(payme.purchased_at).format(
+                      "MMMM Do YYYY, h:mm:ss "
+                    )}
+                  </td>
+                  <td>Оплачено</td>
+                  <td>{payme.plan_price}$</td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>

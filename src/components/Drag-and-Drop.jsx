@@ -1,14 +1,16 @@
-import { InboxOutlined } from "@ant-design/icons";
 import { message, Upload } from "antd";
 import React from "react";
-import axios from "axios";
 import { useSession } from "next-auth/react";
+import useHttp from "@/app/hooks/useHttp";
+import { baseAPI } from "@/constants/domain";
+import { URLS } from "@/constants/url";
 
 const { Dragger } = Upload;
 
 const DraggerComponent = () => {
-  const { data: session } = useSession();
+  const { request, loading, error } = useHttp();
 
+  const url = baseAPI + URLS.file_upload;
   const uploadProps = {
     name: "file",
     multiple: true,
@@ -17,23 +19,19 @@ const DraggerComponent = () => {
         const formData = new FormData();
         formData.append("file", file);
 
-        const response = await axios.post(
-          "https://worldspeechai.com/api/v1/upload/",
-          formData,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-              Authorization: `Bearer ${session?.accessToken}`,
-            },
-          }
-        );
+        const response = await request(url, "POST", formData, {
+          "Content-Type": "multipart/form-data",
+        });
 
-        onSuccess(response.data);
+        onSuccess(response);
         message.success(`${file.name} file uploaded successfully.`);
       } catch (error) {
-        console.error("Upload error:", error);
+        message.error(
+          error.response?.data?.error ||
+            error.response?.data?.code ||
+            "An error occurred"
+        );
         onError(error);
-        message.error(`${file.name} file upload failed.`);
       }
     },
     onDrop(e) {
@@ -43,17 +41,6 @@ const DraggerComponent = () => {
 
   return (
     <Dragger {...uploadProps}>
-      {/* <p className="ant-upload-drag-icon">
-        <InboxOutlined />
-      </p>
-      <p className="ant-upload-text">
-        Click or drag file to this area to upload
-      </p>
-      <p className="ant-upload-hint">
-        Support for a single or bulk upload. Strictly prohibit from uploading
-        company data or other band files
-      </p> */}
-
       <img src="/upload.svg" alt="icon" />
       <label htmlFor="file" className="btn btn-primary">
         Загрузить файлы

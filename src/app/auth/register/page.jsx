@@ -6,11 +6,13 @@ import { useAuth } from "@/app/hooks/context/AuthContext";
 import { Button, Form, Input } from "antd";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import useHttp from "@/app/hooks/useHttp";
 
 const Register = () => {
   const router = useRouter();
   const { setEmail } = useAuth();
   const [loading, setLoading] = useState(false);
+  const { request, err } = useHttp();
 
   const validateMessages = {
     required: "пользователя требуется!!",
@@ -35,6 +37,23 @@ const Register = () => {
     console.log("Failed:", errorInfo);
   };
 
+  const handleGoogle = () => {
+    const url =
+      "https://worldspeechai.com/api/v1/auth/o/google-oauth2/?redirect_uri=https://worldspeechai.com/api/v1/auth/o/google-oauth2/";
+    try {
+      request(url, "GET")
+        .then((response) => {
+          console.log(response);
+          window.location.href = response.authorization_url;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <div className="register">
       <div className="container">
@@ -54,7 +73,7 @@ const Register = () => {
               учетную запись, если у вас ее еще нет
             </p>
 
-            <button className="with__google">
+            <button className="with__google" onClick={() => handleGoogle()}>
               <img src="/google-icon.svg" alt="" />
               <span>Войти через Google</span>
             </button>

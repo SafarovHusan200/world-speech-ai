@@ -8,6 +8,7 @@ import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import { useAuth } from "@/app/hooks/context/AuthContext";
+import useHttp from "@/app/hooks/useHttp";
 const validateMessages = {
   required: "пользователя требуется!!",
   types: {
@@ -23,6 +24,7 @@ const Login = () => {
   const { setEmail } = useAuth();
   const [loading, setLoading] = useState(false);
   const router = useRouter();
+  const { request } = useHttp();
 
   const onFinish = async (values) => {
     setLoading(true);
@@ -72,11 +74,20 @@ const Login = () => {
   };
 
   const handleLogin = async () => {
-    const response = await fetch(
-      "https://worldspeechai.com/api/v1/auth/o/google-oauth2/?redirect_uri=https://worldspeechai.com/api/v1/auth/o/google-oauth2/"
-    );
-    const data = await response.json();
-    window.location.href = data.authorization_url;
+    const url =
+      "https://worldspeechai.com/api/v1/auth/o/google-oauth2/?redirect_uri=https://worldspeechai.com/api/v1/auth/o/google-oauth2/";
+    try {
+      request(url, "GET")
+        .then((response) => {
+          console.log(response);
+          window.location.href = response.authorization_url;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -94,11 +105,11 @@ const Login = () => {
 
               <p className="login__block--content__descr">Добро пожаловать</p>
 
-              {/* <button className="with__google" onClick={() => handleLogin()}>
+              <button className="with__google" onClick={() => handleLogin()}>
                 <img src="/google-icon.svg" alt="" />
                 <span>Войти через Google</span>
-              </button> */}
-              <button
+              </button>
+              {/* <button
                 className="with__google"
                 onClick={() =>
                   signIn("google", {
@@ -109,7 +120,7 @@ const Login = () => {
               >
                 <img src="/google-icon.svg" alt="" />
                 <span>Войти через Google</span>
-              </button>
+              </button> */}
 
               <p className="or">или</p>
 
@@ -171,7 +182,6 @@ const Login = () => {
                   <Button
                     type="primary"
                     loading={loading}
-                    // onClick={() => enterLoading(1)}
                     htmlType="submit"
                     className="btn-primary"
                   >

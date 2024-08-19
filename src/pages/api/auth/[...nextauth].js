@@ -54,6 +54,7 @@ export default NextAuth({
 
       if (account?.provider === "google" && account?.access_token) {
         const response = await fetch(
+          // "https://worldspeechai.com/api/v1/auth/o/google-oauth2/?redirect_uri=https://worldspeechai.com/api/v1/auth/o/google-oauth2/",
           "https://worldspeechai.com/api/v1/auth/jwt/create/",
           {
             method: "POST",
@@ -83,11 +84,13 @@ export default NextAuth({
       return session;
     },
     async signIn({ user, account }) {
+      console.log("ishladi", user);
       if (account.provider === "google") {
         const response = await fetch(
           "https://worldspeechai.com/api/v1/auth/jwt/create/",
+          // "https://worldspeechai.com/api/v1/auth/o/google-oauth2/?redirect_uri=https://worldspeechai.com/api/v1/auth/o/google-oauth2/",
           {
-            method: "POST",
+            method: "GET",
             headers: {
               "Content-Type": "application/json",
             },
@@ -100,6 +103,7 @@ export default NextAuth({
 
         const data = await response.json();
 
+        console.log(data);
         if (data.access && data.refresh) {
           user.accessToken = data.access;
           user.refreshToken = data.refresh;
@@ -123,3 +127,5 @@ export default NextAuth({
     error: "/auth/error",
   },
 });
+
+// ================================================================

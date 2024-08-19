@@ -13,10 +13,10 @@ const Footer = () => {
           </div>
 
           <div className="row footer_mobile--link">
-            <Link href={"#!"}>
+            <Link href={"https://t.me/Worldspeechai/5"}>
               <img src="/tg_icon.svg" alt="" />
             </Link>
-            <Link href={"#!"}>
+            <Link href={"http://www.youtube.com/@Worldspeechai1 "}>
               <img src="/youtube_icon.svg" alt="" />
             </Link>
           </div>

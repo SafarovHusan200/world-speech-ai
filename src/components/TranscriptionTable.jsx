@@ -29,7 +29,7 @@ const TranscriptionTable = ({ transcriptions }) => {
       key: "duration",
       render: (text) =>
         text !== "None"
-          ? `${Math.floor(text / 60)}:${Math.round(text % 60)} sec`
+          ? `${Math.floor(text / 60)}:${Math.round(text % 60)} `
           : "No Duration",
     },
     {

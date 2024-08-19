@@ -12,4 +12,13 @@ export const URLS = {
   activeProfile: "/api/v1/users/activate_account/",
 
   tarif: "/api/v1/plans/",
+  payment_history: "/api/v1/users/history/",
+
+  send_url: "/api/v1/send_url/",
+  file_upload: "/api/v1/upload/",
+
+  transcriptions: "/api/v1/transcriptions/",
+
+  update_user: "/api/v1/users/",
+  purchases_create: "/api/v1/purchases/",
 };

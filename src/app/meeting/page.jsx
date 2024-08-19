@@ -36,7 +36,7 @@ const Meeting = () => {
           <p className="or">или</p>
           <MeetingCard
             // number={1}
-            img={["/cloud-upload.svg"]}
+            img={["/cloud-upload.svg"]} 
             name={" Загрузите запись встречи"}
             description={"Поддерживаем аудио и видео форматы"}
           />

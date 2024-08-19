@@ -96,7 +96,7 @@
       background: #fff;
       max-width: 740px;
       width: 100%;
-      max-height: 590px;
+      height: auto;
       flex-shrink: 0;
       padding: 25px;
 
@@ -112,6 +112,7 @@
         border: 1px solid rgba(18, 18, 18, 0.1);
         padding: 56px 15px;
         height: 100%;
+        background: none;
 
         .ant-upload-drag-container {
           display: flex;
@@ -336,6 +337,7 @@
             margin-bottom: 20px;
 
             outline: none;
+            background: none;
 
             option {
               padding: 10px 12px;
@@ -351,6 +353,7 @@
               box-shadow: 0 0 5px #007bff85;
             }
           }
+          /* styles.css */
 
           input {
             border-radius: 10px;
