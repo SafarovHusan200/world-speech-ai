@@ -77,18 +77,18 @@ const Login = () => {
   const handleLogin = async () => {
     const url =
       // "https://worldspeechai.com/api/v1/auth/o/google-oauth2/?redirect_uri=https://worldspeechai.com/api/v1/auth/o/google-oauth2/";
-      "https://worldspeechai.com/api/v1/auth/o/google-oauth2/?redirect_uri=https://world-speech-ai.netlify.app/api/auth/callback/google";
+      "https://worldspeechai.com/api/v1/auth/o/google-oauth2/?redirect_uri=https://world-speech-ai.netlify.app/auth/login";
     try {
       request(url, "GET")
         .then((response) => {
-          console.log(response);
+          console.log(response, "success");
           window.location.href = response.authorization_url;
         })
         .catch((err) => {
-          console.log(err);
+          console.log(err, "error");
         });
     } catch (err) {
-      console.log(err);
+      console.log(err, "err 2");
     }
   };
 
@@ -127,11 +127,11 @@ const Login = () => {
 
               <p className="login__block--content__descr">Добро пожаловать</p>
 
-              {/* <button className="with__google" onClick={() => handleLogin()}>
+              <button className="with__google" onClick={() => handleLogin()}>
                 <img src="/google-icon.svg" alt="" />
                 <span>Войти через Google</span>
-              </button> */}
-              <button
+              </button>
+              {/* <button
                 className="with__google"
                 onClick={() =>
                   signIn("google", {
@@ -142,7 +142,7 @@ const Login = () => {
               >
                 <img src="/google-icon.svg" alt="" />
                 <span>Войти через Google</span>
-              </button>
+              </button> */}
 
               <p className="or">или</p>
 
