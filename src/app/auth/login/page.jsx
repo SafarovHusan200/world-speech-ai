@@ -2,10 +2,10 @@
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { Button, Form, Input, message } from "antd";
-import { PoweroffOutlined } from "@ant-design/icons";
+
 import { signIn } from "next-auth/react";
 
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import axios from "axios";
 import { useAuth } from "@/app/hooks/context/AuthContext";
 import useHttp from "@/app/hooks/useHttp";
