@@ -8,7 +8,7 @@ export const getTokens = async (code) => {
       code: code,
       client_id: process.env.GOOGLE_CLIENT_ID,
       client_secret: process.env.GOOGLE_CLIENT_SECRET,
-      redirect_uri: "http://localhost:3000/api/auth/callback/google",
+      redirect_uri: "https://world-speech-ai.netlify.app/auth/login",
       grant_type: "authorization_code",
     }),
   });
