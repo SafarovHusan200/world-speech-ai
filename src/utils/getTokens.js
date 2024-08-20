@@ -22,5 +22,3 @@ export const getTokens = async (code) => {
     console.error("Error:", data);
   }
 };
-
-// Misol uchun, auth code ni olingandan so'ng chaqirish:

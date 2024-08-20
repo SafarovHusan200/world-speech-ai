@@ -97,7 +97,15 @@ const Login = () => {
     const code = searchParams.get("code");
 
     if (code) {
-      let token = getTokens(code);
+      let token = getTokens(code)
+        .then((response) => {
+          // Bu yerda access_token va refresh_token olindi
+          console.log(response);
+          return response;
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
       console.log("Authorization Code:", code);
       console.log("tokenlar => ", token);
       // Ushbu code ni keyinchalik foydalanish uchun saqlashingiz yoki boshqa amallarni bajarishingiz mumkin
