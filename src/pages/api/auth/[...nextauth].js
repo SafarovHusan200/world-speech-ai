@@ -182,7 +182,7 @@ export default NextAuth({
   callbacks: {
     async jwt({ token, user, account }) {
       // Save tokens for credentials and Google providers
-      console.log("manan", user);
+      console.log("mana", user);
       if (user) {
         token.accessToken = user.accessToken || token.accessToken;
         token.refreshToken = user.refreshToken || token.refreshToken;

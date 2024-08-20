@@ -44,7 +44,7 @@ const Register = () => {
       request(url, "GET")
         .then((response) => {
           console.log(response, "success");
-          // window.location.href = response.authorization_url;
+          window.location.href = response.authorization_url;
         })
         .catch((err) => {
           console.log(err, "error");
