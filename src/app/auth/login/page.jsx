@@ -2,7 +2,6 @@
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { Button, Form, Input, message } from "antd";
-
 import { signIn } from "next-auth/react";
 
 import { useRouter } from "next/navigation";
@@ -98,9 +97,9 @@ const Login = () => {
     const code = searchParams.get("code");
 
     if (code) {
-      let token = getTokens(getTokens(code));
-      console.log(token);
+      let token = getTokens(code);
       console.log("Authorization Code:", code);
+      console.log("tokenlar => ", token);
       // Ushbu code ni keyinchalik foydalanish uchun saqlashingiz yoki boshqa amallarni bajarishingiz mumkin
     } else {
       console.error("Code parametri yo'q");

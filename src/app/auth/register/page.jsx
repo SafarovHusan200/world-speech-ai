@@ -5,7 +5,6 @@ import "../../../styles/register.css";
 import { useAuth } from "@/app/hooks/context/AuthContext";
 import { Button, Form, Input } from "antd";
 import { useRouter } from "next/navigation";
-import axios from "axios";
 import useHttp from "@/app/hooks/useHttp";
 
 const Register = () => {
@@ -35,36 +34,6 @@ const Register = () => {
 
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
-  };
-
-  const getSessionId = async () => {
-    try {
-      const response = await fetch(
-        "https://worldspeechai.com/api/v1/auth/o/google-oauth2/?redirect_uri=https://world-speech-ai.netlify.app/api/auth/callback/google",
-        {
-          method: "GET",
-          credentials: "include", // Bu qator cookie'larni avtomatik ravishda qo'shadi va javobdan olishga imkon beradi
-        }
-      );
-
-      // Barcha sarlavhalarni olish
-      const headers = response.headers;
-
-      // 'set-cookie' sarlavhasidan sessionid olish
-      const cookies = headers.get("set-cookie");
-      console.log("headers", headers);
-      console.log(cookies); // Bu yerda siz 'set-cookie' sarlavhasidagi barcha cookie'larni ko'rishingiz mumkin
-
-      // Cookie ichidan sessionid ni ajratish
-      const sessionId = cookies
-        ?.split(";")
-        .find((cookie) => cookie.trim()?.startsWith("sessionid="))
-        ?.split("=")[1];
-
-      console.log("Session ID:", sessionId);
-    } catch (error) {
-      console.error("Error fetching the session ID:", error);
-    }
   };
 
   const handleGoogle = () => {
