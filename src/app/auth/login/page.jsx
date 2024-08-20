@@ -1,14 +1,16 @@
 "use client";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Form, Input, message } from "antd";
 import { PoweroffOutlined } from "@ant-design/icons";
 import { signIn } from "next-auth/react";
 
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import axios from "axios";
 import { useAuth } from "@/app/hooks/context/AuthContext";
 import useHttp from "@/app/hooks/useHttp";
+import { getTokens } from "@/utils/getTokens";
+
 const validateMessages = {
   required: "пользователя требуется!!",
   types: {
@@ -91,6 +93,20 @@ const Login = () => {
     }
   };
 
+  useEffect(() => {
+    const searchParams = new URLSearchParams(window.location.search);
+    const code = searchParams.get("code");
+
+    if (code) {
+      let token = getTokens(getTokens(code));
+      console.log(token);
+      console.log("Authorization Code:", code);
+      // Ushbu code ni keyinchalik foydalanish uchun saqlashingiz yoki boshqa amallarni bajarishingiz mumkin
+    } else {
+      console.error("Code parametri yo'q");
+    }
+  }, []);
+
   return (
     <div className="login">
       <div className="container">
@@ -106,11 +122,11 @@ const Login = () => {
 
               <p className="login__block--content__descr">Добро пожаловать</p>
 
-              <button className="with__google" onClick={() => handleLogin()}>
+              {/* <button className="with__google" onClick={() => handleLogin()}>
                 <img src="/google-icon.svg" alt="" />
                 <span>Войти через Google</span>
-              </button>
-              {/* <button
+              </button> */}
+              <button
                 className="with__google"
                 onClick={() =>
                   signIn("google", {
@@ -121,7 +137,7 @@ const Login = () => {
               >
                 <img src="/google-icon.svg" alt="" />
                 <span>Войти через Google</span>
-              </button> */}
+              </button>
 
               <p className="or">или</p>
 

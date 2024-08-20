@@ -37,21 +37,52 @@ const Register = () => {
     console.log("Failed:", errorInfo);
   };
 
+  const getSessionId = async () => {
+    try {
+      const response = await fetch(
+        "https://worldspeechai.com/api/v1/auth/o/google-oauth2/?redirect_uri=https://world-speech-ai.netlify.app/api/auth/callback/google",
+        {
+          method: "GET",
+          credentials: "include", // Bu qator cookie'larni avtomatik ravishda qo'shadi va javobdan olishga imkon beradi
+        }
+      );
+
+      // Barcha sarlavhalarni olish
+      const headers = response.headers;
+
+      // 'set-cookie' sarlavhasidan sessionid olish
+      const cookies = headers.get("set-cookie");
+      console.log("headers", headers);
+      console.log(cookies); // Bu yerda siz 'set-cookie' sarlavhasidagi barcha cookie'larni ko'rishingiz mumkin
+
+      // Cookie ichidan sessionid ni ajratish
+      const sessionId = cookies
+        ?.split(";")
+        .find((cookie) => cookie.trim()?.startsWith("sessionid="))
+        ?.split("=")[1];
+
+      console.log("Session ID:", sessionId);
+    } catch (error) {
+      console.error("Error fetching the session ID:", error);
+    }
+  };
+
   const handleGoogle = () => {
     const url =
       // "https://worldspeechai.com/api/v1/auth/o/google-oauth2/?redirect_uri=https://worldspeechai.com/api/v1/auth/o/google-oauth2/";
-      "https://worldspeechai.com/api/v1/auth/o/google-oauth2/?redirect_uri=https://world-speech-ai.netlify.app/api/auth/callback/google";
+      "https://worldspeechai.com/api/v1/auth/o/google-oauth2/?redirect_uri=http://localhost:3000/api/auth/callback/google";
     try {
       request(url, "GET")
         .then((response) => {
-          console.log(response);
-          window.location.href = response.authorization_url;
+          // console.log(response, "success");
+          // window.location.href = response.authorization_url;
+          getSessionId();
         })
         .catch((err) => {
-          console.log(err);
+          console.log(err, "error");
         });
     } catch (err) {
-      console.log(err);
+      console.log(err, "err 2");
     }
   };
 
