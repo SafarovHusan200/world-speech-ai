@@ -74,9 +74,8 @@ const Register = () => {
     try {
       request(url, "GET")
         .then((response) => {
-          // console.log(response, "success");
+          console.log(response, "success");
           // window.location.href = response.authorization_url;
-          getSessionId();
         })
         .catch((err) => {
           console.log(err, "error");
