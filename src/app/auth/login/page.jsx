@@ -8,7 +8,6 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import { useAuth } from "@/app/hooks/context/AuthContext";
 import useHttp from "@/app/hooks/useHttp";
-import { getTokens } from "@/utils/getTokens";
 
 const validateMessages = {
   required: "пользователя требуется!!",
@@ -93,23 +92,17 @@ const Login = () => {
   };
 
   useEffect(() => {
-    const searchParams = new URLSearchParams(window.location.search);
-    const code = searchParams.get("code");
+    const currentUrl = window.location.href;
+    console.log("Current URL:", currentUrl);
 
-    if (code) {
-      let token = getTokens(code)
-        .then((response) => {
-          console.log(response);
-          return response;
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-        });
-      console.log("Authorization Code:", code);
-      console.log("tokenlar => ", token);
-    } else {
-      console.error("Code parametri yo'q");
-    }
+    axios
+      .post(currentUrl, {})
+      .then((response) => {
+        console.log("Server Response:", response.data);
+      })
+      .catch((err) => {
+        console.error("Request Error:", err);
+      });
   }, []);
 
   return (
