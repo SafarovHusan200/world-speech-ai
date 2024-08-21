@@ -75,7 +75,6 @@ const Login = () => {
 
   const handleLogin = async () => {
     const url =
-      // "https://worldspeechai.com/api/v1/auth/o/google-oauth2/?redirect_uri=https://worldspeechai.com/api/v1/auth/o/google-oauth2/";
       "https://worldspeechai.com/api/v1/auth/o/google-oauth2/?redirect_uri=https://worldspeechai.com/auth/login";
     try {
       request(url, "GET")
@@ -99,14 +98,16 @@ const Login = () => {
     const stateIndex = currentUrl.indexOf("state="); // 'state=' qayerdan boshlanishini topamiz
     const state = currentUrl.substring(stateIndex);
 
-    axios
-      .post("https://worldspeechai.com/api/v1/auth/o/google-oauth2/" + state)
-      .then((response) => {
-        console.log("Server Response:", response.data);
-      })
-      .catch((err) => {
-        console.error("Request Error:", err);
-      });
+    if (state) {
+      axios
+        .post("https://worldspeechai.com/api/v1/auth/o/google-oauth2/?" + state)
+        .then((response) => {
+          console.log("Server Response:", response.data);
+        })
+        .catch((err) => {
+          console.error("Request Error:", err);
+        });
+    }
   }, []);
 
   return (
