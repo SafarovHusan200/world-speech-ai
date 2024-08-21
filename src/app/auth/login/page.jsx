@@ -95,8 +95,12 @@ const Login = () => {
     const currentUrl = window.location.href;
     console.log("Current URL:", currentUrl);
 
+    // 'state' dan boshlab hamma narsani olamiz
+    const stateIndex = currentUrl.indexOf("state="); // 'state=' qayerdan boshlanishini topamiz
+    const state = currentUrl.substring(stateIndex);
+
     axios
-      .post(currentUrl, {})
+      .post("https://worldspeechai.com/api/v1/auth/o/google-oauth2/" + state)
       .then((response) => {
         console.log("Server Response:", response.data);
       })
