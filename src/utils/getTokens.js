@@ -1,4 +1,6 @@
 export const getTokens = async (code) => {
+  console.log("ID => ", process.env.GOOGLE_CLIENT_ID);
+  console.log("Secret => ", process.env.process.env.GOOGLE_CLIENT_SECRET);
   const response = await fetch("https://oauth2.googleapis.com/token", {
     method: "POST",
     headers: {

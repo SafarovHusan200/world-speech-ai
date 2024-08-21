@@ -77,7 +77,7 @@ const Login = () => {
   const handleLogin = async () => {
     const url =
       // "https://worldspeechai.com/api/v1/auth/o/google-oauth2/?redirect_uri=https://worldspeechai.com/api/v1/auth/o/google-oauth2/";
-      "https://worldspeechai.com/api/v1/auth/o/google-oauth2/?redirect_uri=https://world-speech-ai.netlify.app/auth/login";
+      "https://worldspeechai.com/api/v1/auth/o/google-oauth2/?redirect_uri=https://https://worldspeechai.com/auth/login";
     try {
       request(url, "GET")
         .then((response) => {
