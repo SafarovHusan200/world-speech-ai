@@ -1,6 +1,4 @@
 export const getTokens = async (code) => {
-  console.log("ID => ", process.env.GOOGLE_CLIENT_ID);
-  console.log("Secret => ", process.env.process.env.GOOGLE_CLIENT_SECRET);
   const response = await fetch("https://oauth2.googleapis.com/token", {
     method: "POST",
     headers: {
@@ -8,8 +6,9 @@ export const getTokens = async (code) => {
     },
     body: new URLSearchParams({
       code: code,
-      client_id: process.env.GOOGLE_CLIENT_ID,
-      client_secret: process.env.GOOGLE_CLIENT_SECRET,
+      client_id:
+        "329961613669-in9rlgg2a9dojff05bmiimkvrfhupp7g.apps.googleusercontent.com",
+      client_secret: "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",
       redirect_uri: "https://world-speech-ai.netlify.app/auth/login",
       grant_type: "authorization_code",
     }),
