@@ -7,7 +7,7 @@ export const URLS = {
   updateMe: "/api/v1/users/me/", //update: pdf || word || txt
   sendCodeForPassword: "/api/v1/users/send_recovery_code/", //Parolni tiklash kodi yuborish:
   updatePassword: "/api/v1/users/password_recovery/", //
-  auto_payment: "api/v1/users/update_auto_payment/",
+  auto_payment: "/api/v1/users/update_auto_payment/",
   sendCodeForActive: "/api/v1/users/send_activation_code/",
   activeProfile: "/api/v1/users/activate_account/",
 

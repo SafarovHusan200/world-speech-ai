@@ -110,6 +110,16 @@ const Login = () => {
         .post("https://worldspeechai.com/api/v1/auth/o/google-oauth2/?" + state)
         .then((response) => {
           console.log("Server Response:", response.data);
+
+          if (response.data.access && response.data.refresh) {
+            localStorage.setItem("token", JSON.stringify(response.data.access));
+            localStorage.setItem(
+              "refresh",
+              JSON.stringify(response.data.refresh)
+            );
+            localStorage.setItem("isLogin", JSON.stringify(true));
+            router.push("/dashboard");
+          }
         })
         .catch((err) => {
           console.error("Request Error:", err);
