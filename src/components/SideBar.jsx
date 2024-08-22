@@ -4,9 +4,15 @@ import React, { useState } from "react";
 import "../styles/sidebar.css";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useDashboard } from "@/app/hooks/context/dashboardContext";
 
 const Sidebar = ({ sidebar, handleScroll }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
+
+  const { user } = useDashboard();
+  console.log("sidebardagi => ", user);
+  const time = user?.total_minutes * 60;
+  const progres = time ? time / 9 : 100;
 
   const pathname = usePathname();
   const toggleDropdown = () => {
@@ -82,10 +88,10 @@ const Sidebar = ({ sidebar, handleScroll }) => {
       <div className="sidebar__bottom">
         <div className="row">
           <p>Осталось минут</p>
-          <span>140 из 300</span>
+          <span>{time} из 900</span>
         </div>
         <div className="progress-bar">
-          <div className="progress" style={{ width: "47%" }}></div>
+          <div className="progress" style={{ width: `${progres}%` }}></div>
         </div>
         <Link href={"/dashboard/tarif"} className="btn btn-outline">
           Расширить тариф

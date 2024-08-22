@@ -55,27 +55,27 @@ const DashboardLayout = ({ children }) => {
 
   return (
     <div className="dashboard">
-      <div className="container">
-        <Sidebar sidebar={sidebar} handleScroll={handleScroll} />
+      <DashboardProvider>
+        <div className="container">
+          <Sidebar sidebar={sidebar} handleScroll={handleScroll} />
 
-        <div className="dashboard__main" onScroll={() => handleScroll()}>
-          <div className="sidebar-header">
-            <Link href="/dashboard" className="logo">
-              <img src="/logo-full-icon.svg" alt="icon" />
-            </Link>
-            <button className="sidebar-header-open" onClick={handleClick}>
-              <img
-                src={sidebar ? "/close-menu.svg" : "/menu-icon.svg"}
-                alt="icon"
-              />
-            </button>
+          <div className="dashboard__main" onScroll={() => handleScroll()}>
+            <div className="sidebar-header">
+              <Link href="/dashboard" className="logo">
+                <img src="/logo-full-icon.svg" alt="icon" />
+              </Link>
+              <button className="sidebar-header-open" onClick={handleClick}>
+                <img
+                  src={sidebar ? "/close-menu.svg" : "/menu-icon.svg"}
+                  alt="icon"
+                />
+              </button>
+            </div>
+
+            <Suspense fallback={<Loading />}>{children}</Suspense>
           </div>
-
-          <Suspense fallback={<Loading />}>
-            <DashboardProvider>{children}</DashboardProvider>
-          </Suspense>
         </div>
-      </div>
+      </DashboardProvider>
     </div>
   );
 };

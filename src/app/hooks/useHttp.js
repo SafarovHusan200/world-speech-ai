@@ -129,7 +129,7 @@ const useHttp = () => {
       } catch (error) {
         setLoading(false);
 
-        console.log("1-eror", error.response.data?.detail);
+        console.log("1-eror", error);
 
         if (
           error.response.data?.detail ===
