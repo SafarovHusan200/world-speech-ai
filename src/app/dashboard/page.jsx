@@ -1,20 +1,14 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-
 import { URLS } from "@/constants/url";
 import { baseAPI } from "@/constants/domain";
-
 import useHttp from "../hooks/useHttp";
 import Link from "next/link";
 import "../../styles/meetingForm.css";
 import DraggerComponent from "@/components/Drag-and-Drop";
-
 import { useDashboard } from "../hooks/context/dashboardContext";
-import { useRouter } from "next/navigation";
 import { message } from "antd";
-
-// import { Option } from "antd/es/mentions";
 
 const Dashboard = () => {
   const { setUser } = useDashboard();
@@ -40,6 +34,7 @@ const Dashboard = () => {
     const res = await request(url, "GET")
       .then((response) => {
         setUser(response);
+
         return response;
       })
       .catch((err) => {
@@ -122,8 +117,9 @@ const Dashboard = () => {
               разговор, преобразует аудио в текст и подготовит отчет
             </p>
             <form className="form" onSubmit={submitForm}>
-              <label>Название</label>
+              <label htmlFor="name">Название</label>
               <input
+                id="name"
                 type="text"
                 name="meeting_name"
                 placeholder="Например: Созвон с Ильей по сайту"

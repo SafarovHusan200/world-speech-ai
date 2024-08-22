@@ -2,7 +2,6 @@
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { Button, Form, Input, message } from "antd";
-import { signIn } from "next-auth/react";
 
 import { useRouter } from "next/navigation";
 import axios from "axios";
@@ -22,30 +21,27 @@ const validateMessages = {
 
 const Login = () => {
   const { setEmail } = useAuth();
-  const [loading, setLoading] = useState(false);
+
   const router = useRouter();
-  const { request } = useHttp();
+  const { request, loading } = useHttp();
 
   const onFinish = async (values) => {
-    setLoading(true);
     const { email, password } = values;
-    const result = await signIn("credentials", {
-      redirect: false,
-      email,
-      password,
-    });
+    const result = await request(
+      "https://worldspeechai.com/api/v1/auth/jwt/create/",
+      "POST",
+      {
+        email,
+        password,
+      }
+    );
 
-    if (
-      result.status >= 400 &&
-      result.error === "Incorrect username or password."
-    ) {
-      message.error(result.error);
-      setLoading(false);
-    } else if (
-      result.status >= 400 &&
-      result.error === "Account is not active."
-    ) {
-      message.warning(result.error);
+    const err = result.error || result.code || null;
+
+    console.log("res => ", err);
+
+    if (err === "Account is not active.") {
+      message.warning(err);
 
       try {
         const res = await axios.post(
@@ -55,20 +51,30 @@ const Login = () => {
         console.log(res);
         if (res.status === 200) {
           setEmail(email);
-          setLoading(false);
+
           router.push("/auth/register/code");
         }
       } catch (error) {
         console.log(error);
         message.error(error.response.data.email);
-        setLoading(false);
       }
+    } else if (err) {
+      message.error(err);
     } else {
-      setLoading(false);
+      if (result && result.access && result.refresh) {
+        // Tokenni localStorage-ga saqlash
+        localStorage.setItem("token", JSON.stringify(result.access));
+        localStorage.setItem("refresh", JSON.stringify(result.refresh));
+        localStorage.setItem("isLogin", JSON.stringify(true));
+      } else {
+        message.error(result.detail);
+        return err;
+      }
       message.success("Login success");
       router.push("/dashboard");
     }
   };
+
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
   };
@@ -96,9 +102,10 @@ const Login = () => {
 
     // 'state' dan boshlab hamma narsani olamiz
     const stateIndex = currentUrl.indexOf("state="); // 'state=' qayerdan boshlanishini topamiz
-    const state = currentUrl.substring(stateIndex);
+    console.log("stateIndex => ", stateIndex);
 
-    if (state) {
+    if (stateIndex !== -1) {
+      const state = currentUrl.substring(stateIndex);
       axios
         .post("https://worldspeechai.com/api/v1/auth/o/google-oauth2/?" + state)
         .then((response) => {

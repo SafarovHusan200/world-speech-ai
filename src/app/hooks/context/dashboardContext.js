@@ -3,13 +3,20 @@ import { createContext, useContext, useState } from "react";
 const AuthContext = createContext();
 
 export const DashboardProvider = ({ children }) => {
+  const [isLogin, setIsLogin] = useState(false);
   const [user, setUser] = useState("");
   const [password, setPassword] = useState("");
-  const [username, setUsername] = useState("");
 
   return (
     <AuthContext.Provider
-      value={{ user, setUser, password, setPassword, username, setUsername }}
+      value={{
+        isLogin,
+        setIsLogin,
+        user,
+        setUser,
+        password,
+        setPassword,
+      }}
     >
       {children}
     </AuthContext.Provider>

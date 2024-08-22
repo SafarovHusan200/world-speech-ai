@@ -10,7 +10,6 @@ import { Button, Form, Input, message } from "antd";
 import axios from "axios";
 
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { useSession } from "next-auth/react";
 
 const RegisterUsername = () => {
   const validateMessages = {
@@ -23,8 +22,6 @@ const RegisterUsername = () => {
       range: "${label} must be between ${min} and ${max}",
     },
   };
-
-  const { session } = useSession();
 
   const { setUsername, password, email } = useAuth();
   const router = useRouter();
@@ -83,7 +80,7 @@ const RegisterUsername = () => {
       if (email && password) {
         mutate({
           url: "https://worldspeechai.com/api/v1/users/",
-          token: session?.accessToken, // Replace this with the actual token if needed
+          token: JSON.parse(localStorage.getItem("token")), // Replace this with the actual token if needed
           body: { email, password, username },
         });
       } else {

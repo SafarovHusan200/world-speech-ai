@@ -2,18 +2,24 @@
 import Sidebar from "@/components/SideBar";
 import React, { useState, useEffect, Suspense } from "react";
 
-import { useRouter } from "next/navigation";
-
 import "../../styles/dashboard.css";
 import Link from "next/link";
-import { useSession } from "next-auth/react";
+
 import Loading from "@/components/Loading";
 import { DashboardProvider } from "../hooks/context/dashboardContext";
+import useHttp from "../hooks/useHttp";
+import { URLS } from "@/constants/url";
+import { baseAPI } from "@/constants/domain";
+import { useRouter } from "next/navigation";
 
 const DashboardLayout = ({ children }) => {
-  const { data: session, status } = useSession();
-  const router = useRouter();
   const [sidebar, setSidebar] = useState(false);
+  const { request, loading, error } = useHttp();
+  const isLogin =
+    typeof window !== "undefined"
+      ? localStorage.getItem("isLogin") || null
+      : null;
+  const router = useRouter();
 
   const handleClick = () => {
     setSidebar(!sidebar);
@@ -22,20 +28,30 @@ const DashboardLayout = ({ children }) => {
   function handleScroll() {
     setSidebar(false);
   }
-  // console.log("session-data:", session);
+
+  const isLoginUser = async () => {
+    const url = baseAPI + URLS.profile;
+    request(url, "GET")
+      .then((response) => {
+        console.log("respionse", response);
+      })
+      .catch((err) => {
+        console.log("uxladi", err);
+        localStorage.setItem("isLogin", JSON.stringify(false));
+        localStorage.clear("token");
+        localStorage.clear("refresh");
+        router.push("/auth/login");
+      });
+  };
 
   useEffect(() => {
-    if (status === "loading") return; // Yuklanayotgan paytda hech narsa qilmaydi
-    if (!session) router.push("/auth/login"); // Agar foydalanuvchi login qilmagan bo'lsa, bosh sahifaga yo'naltiradi
-  }, [session, status, router]);
+    isLoginUser();
 
-  if (status === "loading") {
-    return (
-      <div>
-        <Loading />
-      </div>
-    );
-  }
+    if (!isLogin) {
+      router.push("/auth/login");
+      localStorage.setItem("isLogin", JSON.stringify(false));
+    }
+  }, []);
 
   return (
     <div className="dashboard">

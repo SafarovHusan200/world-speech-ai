@@ -8,13 +8,12 @@ import { Button, Form, Input, message } from "antd";
 import CountdownTimer from "@/components/CountdownTimer";
 import { useAuth } from "@/app/hooks/context/AuthContext";
 import { useMutation } from "@tanstack/react-query";
-import { useSession } from "next-auth/react";
+
 import axios from "axios";
 
 const Code = () => {
   const router = useRouter();
   const { email } = useAuth();
-  const { session } = useSession();
 
   const validateMessages = {
     required: "пользователя требуется!!",

@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { Button, Form, Input, InputNumber, Switch, message } from "antd";
 import "../../../styles/settings.css";
 import Link from "next/link";
-import { signOut, useSession } from "next-auth/react";
+
 import { URLS } from "@/constants/url";
 import { baseAPI } from "@/constants/domain";
 
@@ -12,6 +12,7 @@ import useHttp from "@/app/hooks/useHttp";
 import { useDashboard } from "@/app/hooks/context/dashboardContext";
 import CopyText from "@/components/CopyText";
 import moment from "moment";
+import { useRouter } from "next/navigation";
 
 const Setting = () => {
   /* eslint-disable no-template-curly-in-string */
@@ -26,15 +27,14 @@ const Setting = () => {
     },
   };
 
+  const router = useRouter();
   const { request, loading, error } = useHttp();
   const { setUser, user } = useDashboard();
 
   const [autoPayment, setAutoPayment] = useState(true);
   const [newsletter, setNewsletter] = useState(false);
   const [fileFormat, setFileFormat] = useState("pdf");
-  const [pay, setPay] = useState();
-  const { data: session } = useSession();
-  console.log(session);
+  const [pay, setPay] = useState([]);
 
   let url;
 
@@ -57,7 +57,6 @@ const Setting = () => {
   };
 
   const onFinish = (values) => {
-    console.log(values.user);
     const obj = {
       name: values.user.name,
       email: values.user.email,
@@ -95,7 +94,11 @@ const Setting = () => {
       .then((response) => {
         console.log(response);
 
-        setPay(response);
+        if (response?.code === "user_not_fount") {
+          console.log("payment", response);
+        } else {
+          setPay(response);
+        }
 
         return response;
       })
@@ -119,6 +122,42 @@ const Setting = () => {
         console.error("Error fetching data:", error);
         return error;
       });
+  };
+
+  const handleCalendar = () => {
+    const url = baseAPI + URLS.calendar;
+    console.log(user);
+
+    if (user?.is_subscribed_to_calendar) {
+      request(url, "DELETE")
+        .then((res) => {
+          console.log(res);
+          message.success(res.status);
+          getUserData();
+        })
+        .catch((err) => {
+          console.log("calendar1", err);
+          message.error(err.response.data?.error);
+        });
+    } else {
+      request(url, "POST")
+        .then((res) => {
+          console.log(res);
+          message.success(res.status);
+          getUserData();
+        })
+        .catch((err) => {
+          console.log("calendar2", err);
+          message.error(err.response.data?.error);
+        });
+    }
+  };
+
+  const Logout = () => {
+    router.push("/auth/login");
+    localStorage.clear("token");
+    localStorage.clear("refresh");
+    localStorage.setItem("isLogin", JSON.stringify(false));
   };
 
   useEffect(() => {
@@ -258,8 +297,14 @@ const Setting = () => {
         </div>
         <div className="settings-item__btn ">
           <p className="calendar">Google Calendar</p>
-          <p className="not">Отсутствует</p>
-          <Link href={"#!"}>Подключить</Link>
+          <p className="not">
+            {user.is_subscribed_to_calendar
+              ? `Подключен  ${user?.email}`
+              : "Отсутствует"}
+          </p>
+          <Link href={"#!"} onClick={() => handleCalendar()}>
+            {user.is_subscribed_to_calendar ? "Отключить" : "Подключить"}
+          </Link>
         </div>
         <div className="settings-item__btn">
           <p className="api-key">API key</p>
@@ -273,7 +318,7 @@ const Setting = () => {
           </div> */}
         </div>
         <div className="settings-item">
-          <button onClick={() => signOut()} className="btn btn-outline">
+          <button className="btn btn-outline" onClick={() => Logout()}>
             Выйти
           </button>
         </div>
@@ -292,18 +337,19 @@ const Setting = () => {
             </thead>
 
             <tbody>
-              {pay?.map((payme) => (
-                <tr key={pay.payment_id}>
-                  <td>{payme.payment_id}</td>
-                  <td>
-                    {moment(payme.purchased_at).format(
-                      "MMMM Do YYYY, h:mm:ss "
-                    )}
-                  </td>
-                  <td>Оплачено</td>
-                  <td>{payme.plan_price}$</td>
-                </tr>
-              ))}
+              {pay?.length > 0 &&
+                pay?.map((payme) => (
+                  <tr key={pay.payment_id}>
+                    <td>{payme.payment_id}</td>
+                    <td>
+                      {moment(payme.purchased_at).format(
+                        "MMMM Do YYYY, h:mm:ss "
+                      )}
+                    </td>
+                    <td>Оплачено</td>
+                    <td>{payme.plan_price}$</td>
+                  </tr>
+                ))}
             </tbody>
           </table>
         </div>

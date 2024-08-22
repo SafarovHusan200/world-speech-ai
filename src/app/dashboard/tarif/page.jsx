@@ -55,11 +55,11 @@ const Tarif = () => {
         <span>-15%</span>
       </div>
 
-      {tarif &&
-        tarif?.length > 0 &&
-        tarif?.map((t) => (
-          <div key={t.id} className="tarif__items">
-            <div className="tarif__item">
+      <div className="tarif__items">
+        {tarif &&
+          tarif?.length > 0 &&
+          tarif?.map((t) => (
+            <div key={t.id} className="tarif__item">
               <div className="tarif__item--top__text">Начальный</div>
               <div className="tarif__item--name">{t.price} ₽</div>
               <div className="tarif__item--time">{t.minutes} минут</div>
@@ -100,8 +100,8 @@ const Tarif = () => {
                 Купить
               </button>
             </div>
-          </div>
-        ))}
+          ))}
+      </div>
 
       {!tarif && tarif?.length === 0 && <TarifCard />}
     </div>

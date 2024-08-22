@@ -1,7 +1,14 @@
+"use client";
+
 import React from "react";
 import "../styles/tarif.css";
+import { useRouter } from "next/navigation";
 
 const TarifCard = () => {
+  const router = useRouter();
+  const handleTarif = () => {
+    router.push("/auth/login");
+  };
   return (
     <div className="tarif__items">
       <div className="tarif__item">
@@ -38,7 +45,12 @@ const TarifCard = () => {
           </li>
         </ul>
 
-        <button className="tarif__item--btn btn-outline">Купить</button>
+        <button
+          className="tarif__item--btn btn-outline"
+          onClick={() => handleTarif()}
+        >
+          Купить
+        </button>
       </div>
       <div className="tarif__item">
         <div className="tarif__item--top__text orange">Обычная</div>
@@ -74,7 +86,12 @@ const TarifCard = () => {
           </li>
         </ul>
 
-        <button className="tarif__item--btn btn-outline">Купить</button>
+        <button
+          className="tarif__item--btn btn-outline"
+          onClick={() => handleTarif()}
+        >
+          Купить
+        </button>
       </div>
       <div className="tarif__item">
         <div className="tarif__item--top__text pro">Про</div>
@@ -110,7 +127,12 @@ const TarifCard = () => {
           </li>
         </ul>
 
-        <button className="tarif__item--btn btn-outline">Купить</button>
+        <button
+          className="tarif__item--btn btn-outline"
+          onClick={() => handleTarif()}
+        >
+          Купить
+        </button>
       </div>
       <div className="tarif__item">
         <div className="tarif__item--top__text ultra">Ультра</div>
@@ -146,7 +168,12 @@ const TarifCard = () => {
           </li>
         </ul>
 
-        <button className="tarif__item--btn btn-outline">Купить</button>
+        <button
+          className="tarif__item--btn btn-outline"
+          onClick={() => handleTarif()}
+        >
+          Купить
+        </button>
       </div>
     </div>
   );

@@ -2,15 +2,13 @@
 
 import React from "react";
 import "../styles/hero.css";
-import { useSession } from "next-auth/react";
+
 import { useRouter } from "next/navigation";
 
 const Hero = () => {
   const router = useRouter();
-  const { data: session } = useSession();
-  const handleTranscription = () => {
-    console.log(session);
 
+  const handleTranscription = () => {
     router.push("/auth/login");
   };
   return (

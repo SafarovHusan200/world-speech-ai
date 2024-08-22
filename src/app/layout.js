@@ -1,6 +1,5 @@
 // src/app/layout.js
 
-import ClientLayout from "./client-layout";
 import ClientQueryProvider from "./hooks/ClientQueryProvider";
 import "../styles/global.css";
 import NextTopLoader from "nextjs-toploader";
@@ -16,9 +15,7 @@ export default function RootLayout({ children }) {
       <link rel="icon" href="/logo-Vector.png" type="image/png" />
       <body>
         <NextTopLoader showSpinner={false} />
-        <ClientQueryProvider>
-          <ClientLayout>{children}</ClientLayout>
-        </ClientQueryProvider>
+        <ClientQueryProvider>{children}</ClientQueryProvider>
       </body>
     </html>
   );

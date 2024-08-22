@@ -21,4 +21,5 @@ export const URLS = {
 
   update_user: "/api/v1/users/",
   purchases_create: "/api/v1/purchases/",
+  calendar: "/api/v1/calendar/subscribe/", // post/deletes
 };

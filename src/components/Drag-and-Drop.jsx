@@ -1,6 +1,6 @@
 import { message, Upload } from "antd";
 import React from "react";
-import { useSession } from "next-auth/react";
+
 import useHttp from "@/app/hooks/useHttp";
 import { baseAPI } from "@/constants/domain";
 import { URLS } from "@/constants/url";
@@ -27,9 +27,7 @@ const DraggerComponent = () => {
         message.success(`${file.name} file uploaded successfully.`);
       } catch (error) {
         message.error(
-          error.response?.data?.error ||
-            error.response?.data?.code ||
-            "An error occurred"
+          error || error.response?.data?.code || "An error occurred"
         );
         onError(error);
       }

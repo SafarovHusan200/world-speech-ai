@@ -2,17 +2,15 @@
 
 // import React, { useCallback, useState } from "react";
 // import axios from "axios";
-// import { useSession } from "next-auth/react";
 
 // const useHttp = () => {
 //   const [loading, setLoading] = useState(false);
 //   const [error, setError] = useState(null);
-//   const { data: session } = useSession();
+//   const token = JSON.parse(localStorage.getItem("token")) || null;
 
 //   const request = useCallback(
 //     async (url, method = "GET", body = null, customHeaders = {}) => {
 //       setLoading(true);
-//       const token = session?.accessToken || null;
 
 //       const headers = {
 //         "Content-Type": "application/json",
@@ -35,21 +33,24 @@
 //       } catch (error) {
 //         setLoading(false);
 
-//         error.response.data?.code === "token_not_valid"; // session?.refreshToken orqali accessTokenni yangilaydigan funcsiya tuzib ber
+//         console.log(error.response.data?.detail);
+//         // error.response.data?.code === "token_not_valid"; // session?.refreshToken orqali accessTokenni yangilaydigan funcsiya tuzib ber
 
 //         setError(
 //           error.response.data?.error ||
 //             error.response.data?.code ||
+//             error.response.data?.detail ||
 //             "An error occurred"
 //         );
 //         throw (
 //           error.response.data?.error ||
 //           error.response.data?.code ||
+//           error.response.data?.detail ||
 //           "An error occurred"
 //         );
 //       }
 //     },
-//     [session]
+//     [token]
 //   );
 
 //   const clearError = useCallback(() => setError(null), []);
@@ -58,53 +59,62 @@
 // };
 
 // export default useHttp;
-
 "use client";
 
 import React, { useCallback, useState } from "react";
 import axios from "axios";
-import { useSession, signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 const useHttp = () => {
+  const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const { data: session } = useSession();
+  const token =
+    typeof window !== "undefined"
+      ? JSON.parse(localStorage.getItem("token")) || null
+      : null; // localStorage faqat client-side da mavjud
 
-  const refreshAccessToken = async (refreshToken) => {
+  // Yangi accessToken olish uchun funksiyani yaratish
+  const refreshAccessToken = async () => {
     try {
+      const refreshToken = JSON.parse(localStorage.getItem("refresh"));
+      console.log("refreshToken", refreshToken);
       const response = await axios.post(
         "https://worldspeechai.com/api/v1/auth/jwt/refresh/",
-        { refresh: refreshToken }
+        {
+          refresh: refreshToken,
+        }
       );
 
-      if (response.data?.access) {
-        // Update session with new access token
-        const newSession = {
-          ...session,
-          accessToken: response.data.access,
-        };
+      const newAccessToken = response.data.access;
+      localStorage.setItem("token", JSON.stringify(newAccessToken));
 
-        await signIn("credentials", { session: newSession, redirect: false });
-        return response.data.access;
-      }
+      return newAccessToken;
     } catch (error) {
-      console.error("Failed to refresh access token:", error);
-      throw new Error("Failed to refresh access token");
+      router.push("/auth/login");
+      console.error("Refresh token failed:", error);
+      localStorage.clear("token");
+      localStorage.clear("refresh");
+      localStorage.setItem("isLogin", JSON.stringify(false));
+      // Agar refreshToken ham yaroqsiz bo'lsa, foydalanuvchini qayta login qilishga yo'naltirish
+      // window.location.href = "/login"; // Optional: login sahifasiga yo'naltirish
+      throw error;
     }
   };
 
   const request = useCallback(
     async (url, method = "GET", body = null, customHeaders = {}) => {
       setLoading(true);
-      const token = session?.accessToken || null;
 
       const headers = {
         "Content-Type": "application/json",
         ...customHeaders,
       };
 
-      if (token) {
-        headers.Authorization = `Bearer ${token}`;
+      let authToken = token;
+
+      if (authToken) {
+        headers.Authorization = `Bearer ${authToken}`;
       }
 
       try {
@@ -118,12 +128,19 @@ const useHttp = () => {
         return response.data || response;
       } catch (error) {
         setLoading(false);
+
+        console.log("1-eror", error.response.data?.detail);
+
         if (
-          error.response?.data?.code === "token_not_valid" &&
-          session?.refreshToken
+          error.response.data?.detail ===
+            "Учетные данные не были предоставлены." ||
+          error.response.data?.code === "token_not_valid"
         ) {
           try {
-            const newToken = await refreshAccessToken(session.refreshToken);
+            // Yangi accessToken olish
+            const newToken = await refreshAccessToken();
+            console.log("newToken", newToken);
+            // Yangi token bilan so'rovni qayta yuborish
             headers.Authorization = `Bearer ${newToken}`;
             const retryResponse = await axios({
               url,
@@ -131,25 +148,29 @@ const useHttp = () => {
               headers,
               data: body,
             });
+            setLoading(false);
             return retryResponse.data || retryResponse;
           } catch (refreshError) {
             setError(
               refreshError.response?.data?.error ||
                 refreshError.response?.data?.code ||
+                refreshError.response?.data?.detail ||
                 "An error occurred"
             );
             throw refreshError;
           }
+        } else {
+          setError(
+            error.response?.data?.error ||
+              error.response?.data?.code ||
+              error.response?.data?.detail ||
+              "An error occurred"
+          );
+          throw error;
         }
-        setError(
-          error.response?.data?.error ||
-            error.response?.data?.code ||
-            "An error occurred"
-        );
-        throw error;
       }
     },
-    [session, refreshAccessToken]
+    [token]
   );
 
   const clearError = useCallback(() => setError(null), []);

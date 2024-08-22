@@ -1,30 +1,44 @@
 "use client";
 
-import { useSession } from "next-auth/react";
 import { useEffect } from "react";
-
 import Header from "@/components/Header";
 import React from "react";
-import Loading from "@/components/Loading";
-import { useRouter } from "next/navigation";
 import { AuthProvider } from "../hooks/context/AuthContext";
+import useHttp from "../hooks/useHttp";
+import { baseAPI } from "@/constants/domain";
+import { URLS } from "@/constants/url";
+import { useRouter } from "next/navigation";
 
 const AuthLayout = ({ children }) => {
-  const { data: session, status } = useSession();
   const router = useRouter();
+  const isUser =
+    typeof window !== "undefined"
+      ? JSON.parse(localStorage.getItem("isLogin")) || null
+      : null; // localStorage faqat client-side da mavjud
+  const { request, loading, error } = useHttp();
+
+  const isLoginUser = async () => {
+    const url = baseAPI + URLS.profile;
+    request(url, "GET")
+      .then((response) => {
+        console.log("respionse", response.id);
+        console.log("respionse", response.email);
+        if (response.id && response.email) {
+          localStorage.setItem("isLogin", JSON.stringify(true));
+          router.push("/dashboard");
+        }
+      })
+      .catch((err) => {
+        console.log("uxladi", err);
+        localStorage.setItem("isLogin", JSON.stringify(false));
+      });
+  };
 
   useEffect(() => {
-    if (status === "loading") return; // Yuklanayotgan paytda hech narsa qilmaydi
-    if (session) router.push("/dashboard"); // Agar foydalanuvchi login qilgan bo'lsa, dashboard sahifasiga yo'naltiradi
-  }, [session, status, router]);
-
-  if (status === "loading") {
-    return (
-      <div>
-        <Loading />{" "}
-      </div>
-    );
-  }
+    if (isUser) {
+      isLoginUser();
+    }
+  }, []);
   return (
     <>
       <Header />
