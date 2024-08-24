@@ -87,8 +87,9 @@ const ProjectNewsOne = () => {
         <div className="cards">
           {/* Example static cards. Replace with dynamic data if necessary */}
 
-          {fullNews?.map((n) => (
+          {fullNews?.map((n, i) => (
             <NewsCard
+              key={i}
               img={n.image || "/news-img.jpg"}
               name={
                 n.title || "Название новости Название новостиНазвание новости"

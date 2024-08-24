@@ -132,9 +132,9 @@ const useHttp = () => {
         console.log("1-eror", error);
 
         if (
-          error.response.data?.detail ===
+          error.response?.data?.detail ===
             "Учетные данные не были предоставлены." ||
-          error.response.data?.code === "token_not_valid"
+          error.response?.data?.code === "token_not_valid"
         ) {
           try {
             // Yangi accessToken olish
@@ -161,13 +161,13 @@ const useHttp = () => {
           }
         } else {
           let err =
-            error.response.data.error ||
-            error.response.data?.code ||
-            error.response.data.detail ||
+            error?.response?.data.error ||
+            error?.response?.data?.code ||
+            error?.response?.data.detail ||
             "An error occurred";
           setError(err);
-
-          throw err;
+          console.log("2-eror", err);
+          return err;
         }
       }
     },

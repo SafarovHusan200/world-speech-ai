@@ -414,8 +414,8 @@ const Setting = () => {
 
             <tbody>
               {pay?.length > 0 &&
-                pay?.map((payme) => (
-                  <tr key={payme.payment_id}>
+                pay?.map((payme, i) => (
+                  <tr key={i}>
                     <td>{payme.payment_id}</td>
                     <td>
                       {moment(payme.purchased_at).format(

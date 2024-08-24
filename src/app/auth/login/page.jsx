@@ -67,7 +67,7 @@ const Login = () => {
         localStorage.setItem("refresh", JSON.stringify(result.refresh));
         localStorage.setItem("isLogin", JSON.stringify(true));
       } else {
-        message.error(result.detail);
+        message.error(result);
         return err;
       }
       message.success("Login success");
