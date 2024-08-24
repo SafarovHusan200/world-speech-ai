@@ -22,4 +22,7 @@ export const URLS = {
   update_user: "/api/v1/users/",
   purchases_create: "/api/v1/purchases/",
   calendar: "/api/v1/calendar/subscribe/", // post/deletes
+  news: "/api/v1/news/ ",
+  support: "/api/v1/support/",
+  statistic: "/api/v1/users/statistics/",
 };

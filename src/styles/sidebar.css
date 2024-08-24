@@ -63,6 +63,9 @@
 .sidebar .dropdown .dropdown-content-item:hover {
   background-color: #e2e6ea;
 }
+.sidebar .dropdown .dropdown-content-item input {
+  display: none;
+}
 .sidebar .dropdown .dropdown-content-item img {
   width: 32px;
   height: 32px;
@@ -70,6 +73,13 @@
 .sidebar .dropdown .dropdown-content-item a {
   color: black;
   padding: 10px 0px;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+}
+.sidebar .dropdown .dropdown-content-item label {
+  padding: 0;
+  color: black;
   text-decoration: none;
   display: flex;
   align-items: center;

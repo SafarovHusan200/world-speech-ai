@@ -17,7 +17,7 @@ const DashboardLayout = ({ children }) => {
   const { request, loading, error } = useHttp();
   const isLogin =
     typeof window !== "undefined"
-      ? localStorage.getItem("isLogin") || null
+      ? JSON.parse(localStorage.getItem("isLogin")) || null
       : null;
   const router = useRouter();
 

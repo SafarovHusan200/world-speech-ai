@@ -12,6 +12,10 @@ import { URLS } from "@/constants/url";
 const MyTranscriptions = () => {
   const { request, loading, error } = useHttp();
   const [transcriptions, setTranscriptions] = useState([]);
+  const token =
+    typeof window !== "undefined"
+      ? JSON.parse(localStorage.getItem("token")) || null
+      : null;
 
   const getMyTranscriptions = async () => {
     const url = baseAPI + URLS.transcriptions;
@@ -60,6 +64,51 @@ const MyTranscriptions = () => {
       sendAudioFile(selectedFile);
     }
   };
+
+  useEffect(() => {
+    const socket = new WebSocket(
+      `wss://worldspeechai.com/ws/connect/?token=${token}`
+    );
+
+    socket.onopen = () => {};
+
+    socket.onmessage = (event) => {
+      const data = JSON.parse(event.data);
+
+      if (data.type === "transcription_result") {
+        if (data.data.status === "processing") {
+          getMyTranscriptions();
+        }
+        if (data.data.status === "completed") {
+          message.success(`${data.data.name} ${data.data.status}`);
+          getMyTranscriptions();
+        }
+      }
+    };
+
+    socket.onclose = (event) => {
+      if (event.wasClean) {
+        console.log(
+          `[close] Connection closed cleanly, code=${event.code} reason=${event.reason}`
+        );
+      } else {
+        console.error("[close] Connection died. Reconnecting...");
+        // WebSocket avtomatik ravishda qayta ulanadi
+        // initializeWebSocket(); // Bu qator kerak emas, yangi soket avtomatik ishga tushadi
+      }
+    };
+
+    socket.onerror = (error) => {
+      console.error(`[error]`, error); // To'liq error ob'ektini konsolga chiqarish
+    };
+
+    // Cleanup: komponent unmount qilinganda ulanishni yopish
+    return () => {
+      if (socket) {
+        socket.close();
+      }
+    };
+  }, [token]); // tokenni dependency arrayda saqlash kerak bo'lishi mumkin
 
   return (
     <div className="transcription">

@@ -6,11 +6,17 @@ import Link from "next/link";
 const Header = () => {
   const [menu, setMenu] = useState(false);
   const [stick, setStick] = useState(false);
+  const [isLogin, setIsLogin] = useState(false);
 
   const toggleMenu = () => setMenu(!menu);
   const closeMenu = () => setMenu(false);
 
   useEffect(() => {
+    const login =
+      typeof window !== "undefined"
+        ? JSON.parse(localStorage.getItem("isLogin")) || null
+        : null;
+    setIsLogin(login);
     const handleScroll = () => {
       setStick(window.scrollY > 150);
       closeMenu();
@@ -62,24 +68,40 @@ const Header = () => {
 
             <div className="menu__bottom">
               <div className="auth">
-                <Link href="/auth/login" className="btn btn-outline">
-                  Вход
-                </Link>
-                <Link href="/auth/register" className="btn btn-primary">
-                  Регистрация
-                </Link>
+                {isLogin ? (
+                  <Link href="/dashboard" className="btn btn-outline">
+                    Панель управления
+                  </Link>
+                ) : (
+                  <>
+                    <Link href="/auth/login" className="btn btn-outline">
+                      Вход
+                    </Link>
+                    <Link href="/auth/register" className="btn btn-primary">
+                      Регистрация
+                    </Link>
+                  </>
+                )}
               </div>
             </div>
           </nav>
 
           <div className="actions">
             <div className="auth">
-              <Link href="/auth/login" className="btn btn-outline">
-                Вход
-              </Link>
-              <Link href="/auth/register" className="btn btn-primary">
-                Регистрация
-              </Link>
+              {isLogin ? (
+                <Link href="/dashboard" className="btn btn-outline">
+                  Панель управления
+                </Link>
+              ) : (
+                <>
+                  <Link href="/auth/login" className="btn btn-outline">
+                    Вход
+                  </Link>
+                  <Link href="/auth/register" className="btn btn-primary">
+                    Регистрация
+                  </Link>
+                </>
+              )}
             </div>
 
             <button className="open_menu" onClick={toggleMenu}>

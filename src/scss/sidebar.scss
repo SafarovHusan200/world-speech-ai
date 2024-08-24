@@ -76,6 +76,10 @@
           background-color: #e2e6ea;
         }
 
+        input {
+          display: none;
+        }
+
         img {
           width: 32px;
           height: 32px;
@@ -84,6 +88,13 @@
         a {
           color: black;
           padding: 10px 0px;
+          text-decoration: none;
+          display: flex;
+          align-items: center;
+        }
+        label {
+          padding: 0;
+          color: black;
           text-decoration: none;
           display: flex;
           align-items: center;

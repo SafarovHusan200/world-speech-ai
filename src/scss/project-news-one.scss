@@ -18,15 +18,16 @@
     width: 100%;
     height: 400px;
 
+    object-fit: cover;
     border-radius: 10px;
 
     border-radius: 7.143px 7.143px 0px 0px;
-    background: linear-gradient(
-        180deg,
-        rgba(65, 65, 65, 0) 58.85%,
-        rgba(38, 38, 38, 0.2) 100%
-      ),
-      url("/project__news-one.jpg") lightgray 50% / cover no-repeat;
+    // background: linear-gradient(
+    //     180deg,
+    //     rgba(65, 65, 65, 0) 58.85%,
+    //     rgba(38, 38, 38, 0.2) 100%
+    //   ),
+    //   url("/project__news-one.jpg") lightgray 50% / cover no-repeat;
 
     overflow: hidden;
     margin-bottom: 50px;

@@ -1,18 +1,26 @@
 "use client";
 // src/components/Sidebar.js
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../styles/sidebar.css";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useDashboard } from "@/app/hooks/context/dashboardContext";
 
+import { message } from "antd";
+import useHttp from "@/app/hooks/useHttp";
+import { baseAPI } from "@/constants/domain";
+import { URLS } from "@/constants/url";
+
 const Sidebar = ({ sidebar, handleScroll }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
-
+  const [workTime, setWorkTime] = useState({
+    initial_minutes: 300,
+    initial_meetings: 9,
+    total_minutes: 0,
+    total_meetings: 0,
+  });
+  const { request } = useHttp();
   const { user } = useDashboard();
-  console.log("sidebardagi => ", user);
-  const time = user?.total_minutes * 60;
-  const progres = time ? time / 9 : 100;
 
   const pathname = usePathname();
   const toggleDropdown = () => {
@@ -38,6 +46,55 @@ const Sidebar = ({ sidebar, handleScroll }) => {
     },
   ];
 
+  const sendAudioFile = async (file) => {
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+
+      const response = await request(
+        "https://worldspeechai.com/api/v1/upload/",
+        "POST",
+        formData,
+        {
+          "Content-Type": "multipart/form-data",
+        }
+      );
+
+      if (response.status == "Processing") {
+        message.success(`${file.name} file uploaded successfully.`);
+      }
+    } catch (error) {
+      message.error(
+        error.response?.data?.error ||
+          error.response?.data?.code ||
+          error ||
+          "An error occurred"
+      );
+    }
+  };
+
+  const handleFileChange = (e) => {
+    const selectedFile = e.target.files[0];
+    if (selectedFile) {
+      sendAudioFile(selectedFile);
+    }
+  };
+
+  const handleTime = async () => {
+    const url = baseAPI + URLS.statistic;
+    request(url, "GET")
+      .then((response) => {
+        setWorkTime(response);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    handleTime();
+  }, [user]);
+
   return (
     <div className="sidebar" style={{ left: sidebar ? "0" : "-250px" }}>
       <div className="sidebar__top">
@@ -54,19 +111,24 @@ const Sidebar = ({ sidebar, handleScroll }) => {
               <div className="dropdown-content-item">
                 <img src="/cloud-upload.svg" alt="svg" />
 
-                <a href="#">Загрузить файл</a>
+                <label htmlFor="transcription__upload">Загрузить файлы</label>
+                <input
+                  type="file"
+                  id="transcription__upload"
+                  onChange={handleFileChange}
+                />
               </div>
               <div className="dropdown-content-item">
                 <img src="/meeting-icon.svg" alt="camera" />
-                <a href="#">Google Meet</a>
+                <a href="https://meet.google.com/landing">Google Meet</a>
               </div>
               <div className="dropdown-content-item">
                 <img src="/zoom-icon.svg" alt="camera" />
-                <a href="#">Zoom</a>
+                <a href="https://zoom.us/">Zoom</a>
               </div>
               <div className="dropdown-content-item">
                 <img src="/camera-icon.svg" alt="" />
-                <a href="#">Telemost</a>
+                <a href="https://telemost.yandex.ru/">Telemost</a>
               </div>
             </div>
           )}
@@ -88,10 +150,19 @@ const Sidebar = ({ sidebar, handleScroll }) => {
       <div className="sidebar__bottom">
         <div className="row">
           <p>Осталось минут</p>
-          <span>{time} из 900</span>
+          <span>
+            {workTime.total_minutes} из {workTime.initial_minutes}
+          </span>
         </div>
         <div className="progress-bar">
-          <div className="progress" style={{ width: `${progres}%` }}></div>
+          <div
+            className="progress"
+            style={{
+              width: `${
+                (workTime.total_minutes * 100) / workTime.initial_minutes
+              }%`,
+            }}
+          ></div>
         </div>
         <Link href={"/dashboard/tarif"} className="btn btn-outline">
           Расширить тариф

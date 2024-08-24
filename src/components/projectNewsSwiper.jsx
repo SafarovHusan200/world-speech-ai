@@ -8,7 +8,8 @@ import "swiper/css/pagination";
 
 import ProjectNewsCardInSwiper from "./projectNewsCardInSwiper";
 
-const ProjectNewsSwiper = () => {
+const ProjectNewsSwiper = ({ newsData }) => {
+  console.log("newsData", newsData);
   return (
     <Swiper
       loop={true}
@@ -19,18 +20,13 @@ const ProjectNewsSwiper = () => {
       autoplay={{ delay: 3000 }}
       // direction={"horizontal"}
     >
-      <SwiperSlide>
-        <ProjectNewsCardInSwiper />
-      </SwiperSlide>
-      <SwiperSlide>
-        <ProjectNewsCardInSwiper />
-      </SwiperSlide>
-      <SwiperSlide>
-        <ProjectNewsCardInSwiper />
-      </SwiperSlide>
-      <SwiperSlide>
-        <ProjectNewsCardInSwiper />
-      </SwiperSlide>
+      {newsData?.map((news) => {
+        return (
+          <SwiperSlide key={news.id}>
+            <ProjectNewsCardInSwiper news={news} />
+          </SwiperSlide>
+        );
+      })}
     </Swiper>
   );
 };

@@ -160,13 +160,14 @@ const useHttp = () => {
             throw refreshError;
           }
         } else {
-          setError(
-            error.response?.data?.error ||
-              error.response?.data?.code ||
-              error.response?.data?.detail ||
-              "An error occurred"
-          );
-          throw error;
+          let err =
+            error.response.data.error ||
+            error.response.data?.code ||
+            error.response.data.detail ||
+            "An error occurred";
+          setError(err);
+
+          throw err;
         }
       }
     },

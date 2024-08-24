@@ -11,6 +11,16 @@ const Hero = () => {
   const handleTranscription = () => {
     router.push("/auth/login");
   };
+
+  const handleWork = () => {
+    const login = JSON.parse(localStorage.getItem("isLogin")) || null;
+
+    if (login) {
+      router.push("/dashboard");
+    } else {
+      router.push("/auth/login");
+    }
+  };
   return (
     <section className="hero">
       <div className="container">
@@ -76,7 +86,9 @@ const Hero = () => {
           </div>
 
           <div className="btns">
-            <button className="btn btn-primary">Начать бесплатно</button>
+            <button className="btn btn-primary" onClick={() => handleWork()}>
+              Начать бесплатно
+            </button>
           </div>
         </div>
       </div>

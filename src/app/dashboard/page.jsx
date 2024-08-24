@@ -64,6 +64,40 @@ const Dashboard = () => {
     }
   };
 
+  const sendAudioFile = async (file) => {
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+
+      const response = await request(
+        "https://worldspeechai.com/api/v1/upload/",
+        "POST",
+        formData,
+        {
+          "Content-Type": "multipart/form-data",
+        }
+      );
+
+      if (response.status == "Processing") {
+        message.success(`${file.name} file uploaded successfully.`);
+      }
+    } catch (error) {
+      message.error(
+        error.response?.data?.error ||
+          error.response?.data?.code ||
+          error ||
+          "An error occurred"
+      );
+    }
+  };
+
+  const handleFileChange = (e) => {
+    const selectedFile = e.target.files[0];
+    if (selectedFile) {
+      sendAudioFile(selectedFile);
+    }
+  };
+
   useEffect(() => {
     getMeData();
   }, []);
@@ -79,12 +113,11 @@ const Dashboard = () => {
             ваших встреч
           </p>
         </div>
-        <div className="upload-section">
-          {/* ============ */}
+        {/* ============ */}
 
-          <DraggerComponent />
-          {/* ============= */}
-        </div>
+        <DraggerComponent />
+
+        {/* ============= */}
 
         <div className="mobile-content">
           <p className="file__type">
@@ -92,6 +125,12 @@ const Dashboard = () => {
           </p>
           <label htmlFor="file" className="btn btn-outline">
             Загрузить файлы
+            <input
+              type="file"
+              id="file"
+              onChange={handleFileChange}
+              className="file-upload-mobile"
+            />
           </label>
         </div>
       </div>
@@ -133,10 +172,9 @@ const Dashboard = () => {
                 value={formData.platform}
                 onChange={handleChange}
               >
-                <option value="Telemost">Telemost</option>
-                <option value="Zoom">Zoom</option>
-                <option value="Zoom">Yandex</option>
-                <option value="Zoom">Google</option>
+                <option value="yandex">Telemost</option>
+                <option value="zoom">Zoom</option>
+                <option value="google">Google Meet</option>
               </select>
 
               <label>Ссылка на конференцию</label>
@@ -154,7 +192,6 @@ const Dashboard = () => {
                 type="password"
                 name="password"
                 autoComplete="current-password"
-                required
                 value={formData.password}
                 onChange={handleChange}
               />

@@ -36,14 +36,24 @@
       }
     }
 
-    .ant-input {
-      width: 250px;
+    input {
+      max-width: 470px;
+      width: 100%;
+      height: 56px;
       box-sizing: border-box;
       margin: 0;
       padding: 8px 16px;
-    }
+      border-radius: 10px;
+      border: 1px solid #b3b3b3;
 
-    input {
+      overflow: hidden;
+      color: #7b8a99;
+
+      font-size: 16px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 160%; /* 25.6px */
+      letter-spacing: 0.32px;
       &::placeholder {
         overflow: hidden;
         color: #7b8a99;
@@ -58,8 +68,15 @@
 
     .btn-primary {
       max-width: 135px;
-      padding: 13px 20px !important;
+      padding: 0 20px !important;
       height: 40px;
+
+      color: #fff;
+
+      font-size: 18px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 120%; /* 21.6px */
 
       @media (max-width: 576px) {
         max-width: 100%;
@@ -248,7 +265,7 @@
         line-height: 120%; /* 19.2px */
       }
 
-      a {
+      .connect-google {
         color: #007bff;
 
         font-size: 16px;
@@ -256,6 +273,7 @@
         font-weight: 500;
         line-height: 120%; /* 19.2px */
         text-decoration-line: underline;
+        cursor: pointer;
       }
 
       .key {

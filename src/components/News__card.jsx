@@ -1,10 +1,12 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
-const NewsCard = ({ img, name, date, descr }) => {
+const NewsCard = ({ id, img, name, date, descr }) => {
   const [isExpanded, setIsExpanded] = useState(false);
+  const router = useRouter();
 
   const descriptionFunction = (descr) => {
     const words = descr?.split(" ");
@@ -15,8 +17,9 @@ const NewsCard = ({ img, name, date, descr }) => {
     return descr;
   };
 
-  const handleClick = () => {
-    setIsExpanded(!isExpanded);
+  const handleClick = (id) => {
+    // setIsExpanded(!isExpanded);
+    router.push(`/project-news/${id}`);
   };
 
   return (
@@ -26,11 +29,7 @@ const NewsCard = ({ img, name, date, descr }) => {
         <div className="news__card--name">{name}</div>
         <div className="news__card--date">{date}</div>
         <div className="news__card--descr">{descriptionFunction(descr)}</div>
-        <Link
-          href={"/project-news/1"}
-          className="news__card--btn"
-          onClick={handleClick}
-        >
+        <Link href={`/project-news/${id}`} className="news__card--btn">
           {isExpanded ? "Скрыть" : "Посмотреть полностью"}
         </Link>
       </div>

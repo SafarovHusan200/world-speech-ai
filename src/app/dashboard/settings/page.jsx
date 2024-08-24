@@ -27,45 +27,29 @@ const Setting = () => {
     },
   };
 
+  const { setUser, user } = useDashboard();
+  const [editUser, setEditUser] = useState({
+    name: user?.name,
+    email: user?.email,
+  });
+
   const router = useRouter();
   const { request, loading, error } = useHttp();
-  const { setUser, user } = useDashboard();
 
   const [autoPayment, setAutoPayment] = useState(true);
   const [newsletter, setNewsletter] = useState(false);
   const [fileFormat, setFileFormat] = useState("pdf");
   const [pay, setPay] = useState([]);
+  const [calendar, setCalendar] = useState(false);
 
   let url;
 
-  const handleToggle = (setter) => () => {
-    setter((prevState) => {
-      url = `${baseAPI + URLS.auto_payment}`;
-      request(url, "PATCH", { auto_payment: !prevState })
-        .then((response) => {
-          message.success("Auto payment: " + response?.auto_payment);
-          setUser(response);
-          return response;
-        })
-        .catch((error) => {
-          console.error("Error fetching data:", error);
-          return error;
-        });
-
-      return !prevState;
-    });
-  };
-
-  const onFinish = (values) => {
-    const obj = {
-      name: values.user.name,
-      email: values.user.email,
-    };
+  const getUserData = async () => {
     url = `${baseAPI + URLS.profile}`;
-    request(url, "PATCH", obj)
+    request(url, "GET")
       .then((response) => {
         setUser(response);
-        message.success("Update successfully");
+
         return response;
       })
       .catch((error) => {
@@ -74,12 +58,33 @@ const Setting = () => {
       });
   };
 
-  const getUserData = async () => {
+  const handleToggle = (setter) => {
+    setAutoPayment(!autoPayment);
+
+    url = `${baseAPI + URLS.auto_payment}`;
+    request(url, "PATCH", { auto_payment: !autoPayment })
+      .then((response) => {
+        message.success(response?.status);
+
+        return response;
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+        return error;
+      });
+  };
+
+  const onFinish = (e) => {
+    e.preventDefault();
+    const obj = {
+      name: editUser.name,
+      email: editUser.email,
+    };
     url = `${baseAPI + URLS.profile}`;
-    request(url, "GET")
+    request(url, "PATCH", obj)
       .then((response) => {
         setUser(response);
-
+        message.success("Update successfully");
         return response;
       })
       .catch((error) => {
@@ -124,7 +129,26 @@ const Setting = () => {
       });
   };
 
+  const handleCalendarConnect = async () => {
+    const url =
+      "https://worldspeechai.com/api/v1/auth/o/google-oauth2/?redirect_uri=https://worldspeechai.com/dashboard/settings";
+
+    try {
+      request(url, "GET")
+        .then((response) => {
+          console.log(response, "success");
+          window.location.href = response.authorization_url;
+        })
+        .catch((err) => {
+          console.log(err, "error");
+        });
+    } catch (err) {
+      console.log(err, "err 2");
+    }
+  };
+
   const handleCalendar = () => {
+    setCalendar(!calendar);
     const url = baseAPI + URLS.calendar;
     console.log(user);
 
@@ -133,11 +157,11 @@ const Setting = () => {
         .then((res) => {
           console.log(res);
           message.success(res.status);
-          getUserData();
         })
         .catch((err) => {
+          setCalendar(false);
           console.log("calendar1", err);
-          message.error(err.response.data?.error);
+          message.error(err.response?.data?.error || err);
         });
     } else {
       request(url, "POST")
@@ -148,9 +172,29 @@ const Setting = () => {
         })
         .catch((err) => {
           console.log("calendar2", err);
-          message.error(err.response.data?.error);
+          setCalendar(false);
+          message.error(err.response?.data?.error || err);
+          // handleCalendarConnect();
         });
     }
+  };
+
+  const subscribedNewsletter = () => {
+    const url = baseAPI + URLS.profile;
+    setNewsletter(!newsletter);
+    console.log(newsletter);
+    request(url, "PATCH", {
+      subscribed_to_newsletter: !newsletter,
+    })
+      .then((res) => {
+        console.log(res);
+        message.success(
+          "subscribed to newsletter " + res.subscribed_to_newsletter
+        );
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const Logout = () => {
@@ -162,63 +206,92 @@ const Setting = () => {
 
   useEffect(() => {
     if (user) {
+      getPaymentHistory();
       setAutoPayment(user?.auto_payment);
       setFileFormat(user?.preferred_format);
-      console.log(user);
-      getPaymentHistory();
+      setCalendar(user?.is_subscribed_to_calendar);
+      setEditUser({ name: user?.name, email: user?.email });
     } else {
       getUserData();
     }
   }, [user]);
 
+  useEffect(() => {
+    const currentUrl = window.location.href;
+    console.log("Current URL:", currentUrl);
+
+    // 'state' dan boshlab hamma narsani olamiz
+    const stateIndex = currentUrl.indexOf("state="); // 'state=' qayerdan boshlanishini topamiz
+    console.log("stateIndex => ", stateIndex);
+
+    if (stateIndex !== -1) {
+      const state = currentUrl.substring(stateIndex);
+      axios
+        .post("https://worldspeechai.com/api/v1/auth/o/google-oauth2/?" + state)
+        .then((response) => {
+          console.log("Server Response:", response.data);
+
+          if (response.data.access && response.data.refresh) {
+            localStorage.setItem("token", JSON.stringify(response.data.access));
+            localStorage.setItem(
+              "refresh",
+              JSON.stringify(response.data.refresh)
+            );
+            localStorage.setItem("isLogin", JSON.stringify(true));
+            // router.push("/dashboard");
+          }
+        })
+        .catch((err) => {
+          console.error("Request Error:", err);
+        });
+    }
+  }, []);
+
   return (
     <div className="settings">
       <div className="section-title">Настройки</div>
 
-      <Form
+      <form
         className="form__username-and-email"
         name="nest-messages"
-        onFinish={onFinish}
-        validateMessages={validateMessages}
+        onSubmit={onFinish}
       >
-        <Form.Item
-          name={["user", "name"]}
-          //   label="Name"
-          rules={[
-            {
-              required: true,
-            },
-          ]}
-        >
-          <Input placeholder={user?.name || "Никнейм"} />
-        </Form.Item>
-        <Form.Item
-          name={["user", "email"]}
-          //   label="Email"
-          rules={[
-            {
-              type: "email",
-
-              required: true,
-            },
-          ]}
-        >
-          <Input placeholder={user?.email || "example@google.com"} />
-        </Form.Item>
-
-        <Form.Item>
-          <Button type="primary" htmlType="submit" className="btn btn-primary">
-            Сохранить
-          </Button>
-        </Form.Item>
-      </Form>
+        <div className="ant-form-item">
+          <input
+            type="text"
+            placeholder={user?.name || "Никнейм"}
+            name="name"
+            onChange={(e) => setEditUser({ ...editUser, name: e.target.value })}
+            value={editUser.name || ""}
+          />
+        </div>
+        <div className="ant-form-item">
+          <input
+            type="text"
+            placeholder={user?.email || "example@google.com"}
+            onChange={(e) =>
+              setEditUser({ ...editUser, email: e.target.value })
+            }
+            value={editUser.email || ""}
+          />
+        </div>
+        <div className="ant-form-item">
+          <button className=" btn-primary">Сохранить</button>
+        </div>
+      </form>
 
       {/*  */}
 
       <div className="form__elements">
         <div className="settings-item">
           <p> Разрешить боту записывать и транскрибировать встречи</p>
-          <input type="checkbox" id="dostup" name="dostup" />
+          <input
+            type="checkbox"
+            id="dostup"
+            name="dostup"
+            checked={calendar}
+            onChange={() => handleCalendar()}
+          />
           <label htmlFor="dostup">
             <span></span>
           </label>
@@ -230,7 +303,7 @@ const Setting = () => {
             name="autoPayment"
             type="checkbox"
             checked={autoPayment}
-            onChange={handleToggle(setAutoPayment)}
+            onChange={() => handleToggle()}
           />
           <label htmlFor="autoPayment">
             <span></span>
@@ -243,7 +316,7 @@ const Setting = () => {
             name="newsletter"
             type="checkbox"
             checked={newsletter}
-            onChange={handleToggle(setNewsletter)}
+            onChange={() => subscribedNewsletter()}
           />
           <label htmlFor="newsletter">
             <span></span>
@@ -302,9 +375,12 @@ const Setting = () => {
               ? `Подключен  ${user?.email}`
               : "Отсутствует"}
           </p>
-          <Link href={"#!"} onClick={() => handleCalendar()}>
+          <span
+            className="connect-google"
+            onClick={() => handleCalendarConnect()}
+          >
             {user.is_subscribed_to_calendar ? "Отключить" : "Подключить"}
-          </Link>
+          </span>
         </div>
         <div className="settings-item__btn">
           <p className="api-key">API key</p>
@@ -339,7 +415,7 @@ const Setting = () => {
             <tbody>
               {pay?.length > 0 &&
                 pay?.map((payme) => (
-                  <tr key={pay.payment_id}>
+                  <tr key={payme.payment_id}>
                     <td>{payme.payment_id}</td>
                     <td>
                       {moment(payme.purchased_at).format(
@@ -347,7 +423,7 @@ const Setting = () => {
                       )}
                     </td>
                     <td>Оплачено</td>
-                    <td>{payme.plan_price}$</td>
+                    <td>{payme.plan_price} ₽</td>
                   </tr>
                 ))}
             </tbody>
