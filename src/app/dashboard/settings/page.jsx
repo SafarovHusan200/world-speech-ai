@@ -136,6 +136,10 @@ const Setting = () => {
     request(url, "GET")
       .then((res) => {
         console.log("uid", res);
+
+        if (res.uid) {
+          setGoogleCalendar(res.uid);
+        }
       })
       .catch((err) => {
         console.log("uuid err,", err);
