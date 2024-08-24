@@ -167,7 +167,7 @@ const useHttp = () => {
             "An error occurred";
           setError(err);
           console.log("2-eror", err);
-          return err;
+          throw err;
         }
       }
     },

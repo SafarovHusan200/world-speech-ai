@@ -25,4 +25,6 @@ export const URLS = {
   news: "/api/v1/news/ ",
   support: "/api/v1/support/",
   statistic: "/api/v1/users/statistics/",
+  google: "/api/v1/auth/link/google/",
+  connect_calendar: "/api/v1/users/social_auth/",
 };

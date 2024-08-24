@@ -13,6 +13,7 @@ import { useDashboard } from "@/app/hooks/context/dashboardContext";
 import CopyText from "@/components/CopyText";
 import moment from "moment";
 import { useRouter } from "next/navigation";
+import axios from "axios";
 
 const Setting = () => {
   /* eslint-disable no-template-curly-in-string */
@@ -41,6 +42,7 @@ const Setting = () => {
   const [fileFormat, setFileFormat] = useState("pdf");
   const [pay, setPay] = useState([]);
   const [calendar, setCalendar] = useState(false);
+  const [googleCalendar, setGoogleCalendar] = useState();
 
   let url;
 
@@ -129,34 +131,59 @@ const Setting = () => {
       });
   };
 
-  const handleCalendarConnect = async () => {
-    const url =
-      "https://worldspeechai.com/api/v1/auth/o/google-oauth2/?redirect_uri=https://worldspeechai.com/dashboard/settings";
+  const haveToCalendar = async () => {
+    const url = baseAPI + URLS.connect_calendar;
+    request(url, "GET")
+      .then((res) => {
+        console.log("uid", res);
+      })
+      .catch((err) => {
+        console.log("uuid err,", err);
+      });
+  };
 
-    try {
-      request(url, "GET")
-        .then((response) => {
-          console.log(response, "success");
-          window.location.href = response.authorization_url;
+  const handleCalendarConnect = async () => {
+    if (!googleCalendar) {
+      const url =
+        "https://worldspeechai.com/api/v1/auth/o/google-oauth2/?redirect_uri=https://worldspeechai.com/dashboard/settings";
+
+      try {
+        request(url, "GET")
+          .then((response) => {
+            console.log(response, "success");
+            window.location.href = response.authorization_url;
+          })
+          .catch((err) => {
+            console.log(err, "error");
+          });
+      } catch (err) {
+        console.log(err, "err 2");
+      }
+    } else {
+      const url = baseAPI + URLS.google;
+
+      request(url, "DELETE")
+        .then((res) => {
+          console.log("nima gap", res);
         })
         .catch((err) => {
-          console.log(err, "error");
+          console.log("errrr", err);
         });
-    } catch (err) {
-      console.log(err, "err 2");
     }
   };
 
   const handleCalendar = () => {
     setCalendar(!calendar);
+    console.log("calendar", calendar);
     const url = baseAPI + URLS.calendar;
     console.log(user);
 
     if (user?.is_subscribed_to_calendar) {
       request(url, "DELETE")
         .then((res) => {
-          console.log(res);
-          message.success(res.status);
+          console.log("cal1=>", res);
+          message.success(res.status || res);
+          getUserData();
         })
         .catch((err) => {
           setCalendar(false);
@@ -166,8 +193,8 @@ const Setting = () => {
     } else {
       request(url, "POST")
         .then((res) => {
-          console.log(res);
-          message.success(res.status);
+          console.log("cal2 =>", res);
+          message.success(res.status || res);
           getUserData();
         })
         .catch((err) => {
@@ -214,6 +241,7 @@ const Setting = () => {
     } else {
       getUserData();
     }
+    haveToCalendar();
   }, [user]);
 
   useEffect(() => {
@@ -371,15 +399,13 @@ const Setting = () => {
         <div className="settings-item__btn ">
           <p className="calendar">Google Calendar</p>
           <p className="not">
-            {user.is_subscribed_to_calendar
-              ? `Подключен  ${user?.email}`
-              : "Отсутствует"}
+            {googleCalendar ? `Подключен  ${googleCalendar}` : "Отсутствует"}
           </p>
           <span
             className="connect-google"
             onClick={() => handleCalendarConnect()}
           >
-            {user.is_subscribed_to_calendar ? "Отключить" : "Подключить"}
+            {googleCalendar ? "Отключить" : "Подключить"}
           </span>
         </div>
         <div className="settings-item__btn">
