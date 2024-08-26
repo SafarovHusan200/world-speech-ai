@@ -119,7 +119,10 @@ const DraggerComponent = () => {
 
   return (
     <div className="upload-section">
-      <Dragger {...uploadProps} disabled={isSpeakersChecked}>
+      <Dragger
+        {...uploadProps}
+        // disabled={isSpeakersChecked}
+      >
         <img src="/upload.svg" alt="icon" />
         <label htmlFor="" className="btn btn-primary">
           Загрузить файлы

@@ -17,7 +17,7 @@ const Dashboard = () => {
 
   const [formData, setFormData] = useState({
     meeting_name: "",
-    meeting_type: "Telemost",
+    meeting_type: "",
     meeting_url: "",
     password: "",
   });

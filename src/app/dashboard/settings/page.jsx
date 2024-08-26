@@ -253,7 +253,7 @@ const Setting = () => {
     if (stateIndex !== -1) {
       const state = currentUrl.substring(stateIndex);
       axios
-        .post("https://worldspeechai.com/api/v1/auth/o/google-oauth2/?" + state)
+        .post("https://worldspeechai.com/api/v1/auth/link/google/?" + state)
         .then((response) => {
           console.log("Server Response:", response.data);
 
