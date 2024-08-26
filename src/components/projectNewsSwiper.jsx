@@ -17,7 +17,7 @@ const ProjectNewsSwiper = ({ newsData }) => {
       spaceBetween={50}
       slidesPerView={1}
       pagination={{ clickable: true }}
-      autoplay={{ delay: 3000 }}
+      // autoplay={{ delay: 3000 }}
       // direction={"horizontal"}
     >
       {newsData?.map((news) => {

@@ -16,18 +16,6 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 
 const Setting = () => {
-  /* eslint-disable no-template-curly-in-string */
-  const validateMessages = {
-    required: "пользователя требуется!!",
-    types: {
-      email: "адрес электронной почты недействителен!!",
-      number: "${label} is not a valid number!",
-    },
-    number: {
-      range: "${label} must be between ${min} and ${max}",
-    },
-  };
-
   const { setUser, user } = useDashboard();
   const [editUser, setEditUser] = useState({
     name: user?.name,
@@ -139,10 +127,15 @@ const Setting = () => {
 
         if (res.uid) {
           setGoogleCalendar(res.uid);
+        } else {
+          setGoogleCalendar(null);
         }
       })
       .catch((err) => {
         console.log("uuid err,", err);
+        if (err === "Social auth record not found") {
+          setGoogleCalendar(null);
+        }
       });
   };
 
@@ -169,6 +162,7 @@ const Setting = () => {
       request(url, "DELETE")
         .then((res) => {
           console.log("nima gap", res);
+          setGoogleCalendar(null);
         })
         .catch((err) => {
           console.log("errrr", err);
@@ -190,7 +184,7 @@ const Setting = () => {
           getUserData();
         })
         .catch((err) => {
-          setCalendar(false);
+          getUserData();
           console.log("calendar1", err);
           message.error(err.response?.data?.error || err);
         });
@@ -203,7 +197,7 @@ const Setting = () => {
         })
         .catch((err) => {
           console.log("calendar2", err);
-          setCalendar(false);
+          getUserData();
           message.error(err.response?.data?.error || err);
           // handleCalendarConnect();
         });

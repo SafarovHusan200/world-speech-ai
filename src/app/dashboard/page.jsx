@@ -172,7 +172,7 @@ const Dashboard = () => {
                 value={formData.platform}
                 onChange={handleChange}
               >
-                <option value="yandex">Telemost</option>
+                <option value="yandex">Yandex</option>
                 <option value="zoom">Zoom</option>
                 <option value="google">Google Meet</option>
               </select>

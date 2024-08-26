@@ -27,10 +27,18 @@ const TranscriptionTable = ({ transcriptions }) => {
       title: "Длительность",
       dataIndex: "duration",
       key: "duration",
-      render: (text) =>
-        text !== "None"
-          ? `${Math.floor(text / 60)}:${Math.round(text % 60)} `
-          : "No Duration",
+      render: (text) => {
+        if (text !== "None") {
+          const minutes = Math.floor(text / 60);
+          const seconds = Math.floor(text % 60)
+            .toString()
+            .padStart(2, "0");
+
+          return `${minutes}:${seconds}`;
+        } else {
+          return "No Duration";
+        }
+      },
     },
     {
       title: "Статус",
@@ -49,7 +57,7 @@ const TranscriptionTable = ({ transcriptions }) => {
             : text === "error"
             ? "red"
             : "#007BFF";
-        return <b style={{ color: color }}>{prog}</b>;
+        return <span style={{ color: color }}>{text}</span>;
       },
     },
 
@@ -65,7 +73,7 @@ const TranscriptionTable = ({ transcriptions }) => {
       key: "result_file",
       render: (text) =>
         text !== "None" ? (
-          <a href={text} target="_blank" rel="noopener noreferrer">
+          <a href={text} target="_blank" rel="noopener noreferrer" download>
             <img src="/download1.svg" alt="icon" />
           </a>
         ) : (

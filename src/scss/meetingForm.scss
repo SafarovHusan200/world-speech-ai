@@ -1,4 +1,5 @@
 // src/components/MeetingForm.scss
+
 .dashbord__content {
   width: 100%;
   padding: 38px 40px;
@@ -201,20 +202,32 @@
         margin-bottom: 5px;
 
         position: absolute;
-        bottom: 140px;
+        // bottom: 140px;
+        top: 354px;
         left: 50%;
         transform: translateX(-50%);
+        width: 100%;
+        justify-content: center;
 
+        @media (max-width: 1190px) {
+          top: 377px;
+        }
+        @media (max-width: 1000px) {
+          top: 354px;
+        }
+        @media (max-width: 802px) {
+          top: 377px;
+        }
+        @media (max-width: 768px) {
+          top: 354px;
+        }
         @media (max-width: 576px) {
-          width: 100%;
-
-          bottom: 100px;
+          top: 170px;
           font-size: 12px;
           font-style: normal;
           font-weight: 600;
           line-height: 120%; /* 14.4px */
           margin-bottom: 0px;
-          justify-content: center;
         }
       }
     }

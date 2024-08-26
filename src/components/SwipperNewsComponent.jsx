@@ -17,55 +17,9 @@ const SwiperNewsComponent = () => {
   const getNews = async () => {
     const url = baseAPI + URLS.news;
     try {
-      // const response = await axios.get(url);
-      // console.log(response);
-      const groupedNews = [];
+      const response = await axios.get(url);
+      console.log(response);
 
-      const response = {
-        data: [
-          {
-            id: 1,
-            title: "Первая новость",
-            description: "Описание",
-            image: "http://worldspeechai.com/media/news_images/images.jpeg",
-            publication_date: "2024-07-29T15:42:10.692220Z",
-          },
-          {
-            id: 2,
-            title: "Первая новость",
-            description: "Описание",
-            image: "http://worldspeechai.com/media/news_images/images.jpeg",
-            publication_date: "2024-07-29T15:42:10.692220Z",
-          },
-          {
-            id: 3,
-            title: "Первая новость",
-            description: "Описание",
-            image: "http://worldspeechai.com/media/news_images/images.jpeg",
-            publication_date: "2024-07-29T15:42:10.692220Z",
-          },
-          {
-            id: 4,
-            title: "Первая новость",
-            description: "Описание",
-            image: "http://worldspeechai.com/media/news_images/images.jpeg",
-            publication_date: "2024-07-29T15:42:10.692220Z",
-          },
-          {
-            id: 5,
-            title: "Первая новость",
-            description: "Описание",
-            image: "http://worldspeechai.com/media/news_images/images.jpeg",
-            publication_date: "2024-07-29T15:42:10.692220Z",
-          },
-        ],
-      };
-      // // Group the news items in chunks of 4
-      // for (let i = 0; i < response.data.length; i += 4) {
-      //   groupedNews.push(response.data.slice(i, i + 4));
-      // }
-
-      // console.log(groupedNews);
       setNewsSlides(response.data);
     } catch (err) {
       console.log(err);

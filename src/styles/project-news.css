@@ -49,6 +49,7 @@
 }
 .project__news .container .swiper .news__card--item__left {
   width: 50%;
+  max-height: 400px;
 }
 @media (max-width: 800px) {
   .project__news .container .swiper .news__card--item__left {
