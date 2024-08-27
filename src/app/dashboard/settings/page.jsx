@@ -252,8 +252,20 @@ const Setting = () => {
 
     if (stateIndex !== -1) {
       const state = currentUrl.substring(stateIndex);
+
+      // localStorage'dagi tokenni olamiz
+      const token = JSON.parse(localStorage.getItem("token"));
+
       axios
-        .post("https://worldspeechai.com/api/v1/auth/link/google/?" + state)
+        .post(
+          "https://worldspeechai.com/api/v1/auth/link/google/?" + state,
+          null,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`, // Bearer tokenni qo'shamiz
+            },
+          }
+        )
         .then((response) => {
           console.log("Server Response:", response.data);
 

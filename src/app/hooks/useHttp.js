@@ -164,7 +164,8 @@ const useHttp = () => {
             error?.response?.data.error ||
             error?.response?.data?.code ||
             error?.response?.data.detail ||
-            "An error occurred";
+            error?.response?.data.non_field_errors;
+          ("An error occurred");
           setError(err);
           console.log("2-eror", err);
           throw err;

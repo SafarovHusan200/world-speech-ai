@@ -17,7 +17,7 @@ const Dashboard = () => {
 
   const [formData, setFormData] = useState({
     meeting_name: "",
-    meeting_type: "",
+    meeting_type: "yandex",
     meeting_url: "",
     password: "",
   });
@@ -60,7 +60,7 @@ const Dashboard = () => {
         message.success("URL successfully sent");
       }
     } catch (err) {
-      message.error("Failed to send URL");
+      message.error(err[0] || "Failed to send URL");
     }
   };
 

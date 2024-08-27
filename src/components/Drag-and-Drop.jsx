@@ -84,17 +84,10 @@ const DraggerComponent = () => {
     name: "file",
     multiple: true,
     customRequest: async ({ file, onSuccess, onError }) => {
-      if (isSpeakersChecked) {
-        message.error(
-          "Upload disabled when 'Разделение на спикеров' is checked."
-        );
-        onError("Upload disabled.");
-        return;
-      }
-
       try {
         const formData = new FormData();
         formData.append("file", file);
+        formData.append("diarization", isSpeakersChecked);
 
         const response = await request(url, "POST", formData, {
           "Content-Type": "multipart/form-data",
@@ -119,10 +112,7 @@ const DraggerComponent = () => {
 
   return (
     <div className="upload-section">
-      <Dragger
-        {...uploadProps}
-        // disabled={isSpeakersChecked}
-      >
+      <Dragger {...uploadProps}>
         <img src="/upload.svg" alt="icon" />
         <label htmlFor="" className="btn btn-primary">
           Загрузить файлы
