@@ -84,6 +84,7 @@ const Sidebar = ({ sidebar, handleScroll }) => {
     const url = baseAPI + URLS.statistic;
     request(url, "GET")
       .then((response) => {
+        console.log(object);
         setWorkTime(response);
       })
       .catch((err) => {
@@ -148,6 +149,23 @@ const Sidebar = ({ sidebar, handleScroll }) => {
       </div>
 
       <div className="sidebar__bottom">
+        <div className="row">
+          <p>Осталось встреч</p>
+          <span>
+            {workTime.total_meetings} из {workTime.initial_meetings}
+          </span>
+        </div>
+        <div className="progress-bar">
+          <div
+            className="progress"
+            style={{
+              width: `${
+                (workTime.total_minutes * 100) / workTime.initial_minutes
+              }%`,
+            }}
+          ></div>
+        </div>
+
         <div className="row">
           <p>Осталось минут</p>
           <span>

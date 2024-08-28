@@ -294,27 +294,39 @@ const Setting = () => {
         name="nest-messages"
         onSubmit={onFinish}
       >
-        <div className="ant-form-item">
-          <input
-            type="text"
-            placeholder={user?.name || "Никнейм"}
-            name="name"
-            onChange={(e) => setEditUser({ ...editUser, name: e.target.value })}
-            value={editUser.name || ""}
-          />
+        <div className="col">
+          <div className="ant-form-item">
+            <label htmlFor="username">
+              <img src="/edit.svg" alt="icon" />
+            </label>
+            <input
+              id="username"
+              type="text"
+              placeholder={user?.name || "Никнейм"}
+              name="name"
+              onChange={(e) =>
+                setEditUser({ ...editUser, name: e.target.value })
+              }
+              value={editUser.name || ""}
+            />
+          </div>
+          <div className="ant-form-item">
+            <input
+              type="text"
+              placeholder={user?.email || "example@google.com"}
+              onChange={(e) =>
+                setEditUser({ ...editUser, email: e.target.value })
+              }
+              value={editUser.email || ""}
+              disabled
+            />
+          </div>
         </div>
-        <div className="ant-form-item">
-          <input
-            type="text"
-            placeholder={user?.email || "example@google.com"}
-            onChange={(e) =>
-              setEditUser({ ...editUser, email: e.target.value })
-            }
-            value={editUser.email || ""}
-          />
-        </div>
-        <div className="ant-form-item">
-          <button className=" btn-primary">Сохранить</button>
+
+        <div className="col">
+          <div className="ant-form-item btns">
+            <button className=" btn-primary">Сохранить</button>
+          </div>
         </div>
       </form>
 

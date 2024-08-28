@@ -25,17 +25,40 @@
     padding: 0;
     width: 100%;
 
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: 0 10px;
+
+    margin-bottom: 30px;
+
+    .col {
+      max-width: 470px;
+      width: 100%;
+    }
     .ant-form-item {
-      margin: 10px 0;
+      width: 100%;
+      margin: 0 0 10px 0;
 
       display: flex;
       justify-content: flex-start;
 
+      position: relative;
+
+      &.btns {
+        margin: 0;
+      }
       @media (max-width: 576px) {
         max-width: 100%;
       }
     }
 
+    label {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
     input {
       max-width: 470px;
       width: 100%;
@@ -64,19 +87,21 @@
         line-height: 160%; /* 25.6px */
         letter-spacing: 0.32px;
       }
+
+      @media (max-width: 576px) {
+        border-radius: 5px;
+      }
     }
 
     .btn-primary {
-      max-width: 135px;
-      padding: 0 20px !important;
-      height: 40px;
-
-      color: #fff;
-
-      font-size: 18px;
-      font-style: normal;
-      font-weight: 500;
-      line-height: 120%; /* 21.6px */
+      max-width: 160px;
+      width: 100%;
+      height: 56px;
+      padding: 13px 20px;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
 
       @media (max-width: 576px) {
         max-width: 100%;

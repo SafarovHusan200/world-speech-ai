@@ -7,11 +7,6 @@ import moment from "moment";
 const TranscriptionTable = ({ transcriptions }) => {
   const columns = [
     {
-      title: "#",
-      dataIndex: "id",
-      key: "id",
-    },
-    {
       title: "Дата",
       dataIndex: "created_at",
       key: "created_at",
