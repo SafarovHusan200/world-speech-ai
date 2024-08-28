@@ -98,11 +98,9 @@ const Login = () => {
 
   useEffect(() => {
     const currentUrl = window.location.href;
-    console.log("Current URL:", currentUrl);
 
     // 'state' dan boshlab hamma narsani olamiz
     const stateIndex = currentUrl.indexOf("state="); // 'state=' qayerdan boshlanishini topamiz
-    console.log("stateIndex => ", stateIndex);
 
     if (stateIndex !== -1) {
       const state = currentUrl.substring(stateIndex);

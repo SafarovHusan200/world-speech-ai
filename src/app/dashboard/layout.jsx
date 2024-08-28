@@ -32,11 +32,8 @@ const DashboardLayout = ({ children }) => {
   const isLoginUser = async () => {
     const url = baseAPI + URLS.profile;
     request(url, "GET")
-      .then((response) => {
-        console.log("respionse", response);
-      })
+      .then((response) => {})
       .catch((err) => {
-        console.log("uxladi", err);
         localStorage.setItem("isLogin", JSON.stringify(false));
         localStorage.clear("token");
         localStorage.clear("refresh");

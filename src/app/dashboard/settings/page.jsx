@@ -87,10 +87,7 @@ const Setting = () => {
     url = `${baseAPI + URLS.payment_history}`;
     request(url, "GET")
       .then((response) => {
-        console.log(response);
-
         if (response?.code === "user_not_fount") {
-          console.log("payment", response);
         } else {
           setPay(response);
         }
@@ -104,7 +101,6 @@ const Setting = () => {
   };
 
   const handleFileType = (type) => {
-    console.log(type);
     url = `${baseAPI + URLS.profile}`;
     setFileFormat(type);
     request(url, "PATCH", { preferred_format: type })
@@ -123,8 +119,6 @@ const Setting = () => {
     const url = baseAPI + URLS.connect_calendar;
     request(url, "GET")
       .then((res) => {
-        console.log("uid", res);
-
         if (res.uid) {
           setGoogleCalendar(res.uid);
         } else {
@@ -132,7 +126,6 @@ const Setting = () => {
         }
       })
       .catch((err) => {
-        console.log("uuid err,", err);
         if (err === "Social auth record not found") {
           setGoogleCalendar(null);
         }
@@ -147,7 +140,6 @@ const Setting = () => {
       try {
         request(url, "GET")
           .then((response) => {
-            console.log(response, "success");
             window.location.href = response.authorization_url;
           })
           .catch((err) => {
@@ -172,31 +164,27 @@ const Setting = () => {
 
   const handleCalendar = () => {
     setCalendar(!calendar);
-    console.log("calendar", calendar);
+
     const url = baseAPI + URLS.calendar;
-    console.log(user);
 
     if (user?.is_subscribed_to_calendar) {
       request(url, "DELETE")
         .then((res) => {
-          console.log("cal1=>", res);
           message.success(res.status || res);
           getUserData();
         })
         .catch((err) => {
           getUserData();
-          console.log("calendar1", err);
+
           message.error(err.response?.data?.error || err);
         });
     } else {
       request(url, "POST")
         .then((res) => {
-          console.log("cal2 =>", res);
           message.success(res.status || res);
           getUserData();
         })
         .catch((err) => {
-          console.log("calendar2", err);
           getUserData();
           message.error(err.response?.data?.error || err);
           // handleCalendarConnect();
@@ -207,19 +195,16 @@ const Setting = () => {
   const subscribedNewsletter = () => {
     const url = baseAPI + URLS.profile;
     setNewsletter(!newsletter);
-    console.log(newsletter);
+
     request(url, "PATCH", {
       subscribed_to_newsletter: !newsletter,
     })
       .then((res) => {
-        console.log(res);
         message.success(
           "subscribed to newsletter " + res.subscribed_to_newsletter
         );
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
   const Logout = () => {
@@ -244,11 +229,9 @@ const Setting = () => {
 
   useEffect(() => {
     const currentUrl = window.location.href;
-    console.log("Current URL:", currentUrl);
 
     // 'state' dan boshlab hamma narsani olamiz
     const stateIndex = currentUrl.indexOf("state="); // 'state=' qayerdan boshlanishini topamiz
-    console.log("stateIndex => ", stateIndex);
 
     if (stateIndex !== -1) {
       const state = currentUrl.substring(stateIndex);
@@ -267,8 +250,6 @@ const Setting = () => {
           }
         )
         .then((response) => {
-          console.log("Server Response:", response.data);
-
           if (response.data.access && response.data.refresh) {
             localStorage.setItem("token", JSON.stringify(response.data.access));
             localStorage.setItem(

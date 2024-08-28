@@ -84,7 +84,6 @@ const Sidebar = ({ sidebar, handleScroll }) => {
     const url = baseAPI + URLS.statistic;
     request(url, "GET")
       .then((response) => {
-        console.log(object);
         setWorkTime(response);
       })
       .catch((err) => {
@@ -94,7 +93,7 @@ const Sidebar = ({ sidebar, handleScroll }) => {
 
   useEffect(() => {
     handleTime();
-  }, [user]);
+  }, []);
 
   return (
     <div className="sidebar" style={{ left: sidebar ? "0" : "-250px" }}>

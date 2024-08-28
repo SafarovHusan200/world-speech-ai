@@ -1,64 +1,3 @@
-// "use client";
-
-// import React, { useCallback, useState } from "react";
-// import axios from "axios";
-
-// const useHttp = () => {
-//   const [loading, setLoading] = useState(false);
-//   const [error, setError] = useState(null);
-//   const token = JSON.parse(localStorage.getItem("token")) || null;
-
-//   const request = useCallback(
-//     async (url, method = "GET", body = null, customHeaders = {}) => {
-//       setLoading(true);
-
-//       const headers = {
-//         "Content-Type": "application/json",
-//         ...customHeaders,
-//       };
-
-//       if (token) {
-//         headers.Authorization = `Bearer ${token}`;
-//       }
-
-//       try {
-//         const response = await axios({
-//           url,
-//           method,
-//           headers,
-//           data: body,
-//         });
-//         setLoading(false);
-//         return response.data || response;
-//       } catch (error) {
-//         setLoading(false);
-
-//         console.log(error.response.data?.detail);
-//         // error.response.data?.code === "token_not_valid"; // session?.refreshToken orqali accessTokenni yangilaydigan funcsiya tuzib ber
-
-//         setError(
-//           error.response.data?.error ||
-//             error.response.data?.code ||
-//             error.response.data?.detail ||
-//             "An error occurred"
-//         );
-//         throw (
-//           error.response.data?.error ||
-//           error.response.data?.code ||
-//           error.response.data?.detail ||
-//           "An error occurred"
-//         );
-//       }
-//     },
-//     [token]
-//   );
-
-//   const clearError = useCallback(() => setError(null), []);
-
-//   return { loading, error, request, clearError };
-// };
-
-// export default useHttp;
 "use client";
 
 import React, { useCallback, useState } from "react";
@@ -78,7 +17,7 @@ const useHttp = () => {
   const refreshAccessToken = async () => {
     try {
       const refreshToken = JSON.parse(localStorage.getItem("refresh"));
-      console.log("refreshToken", refreshToken);
+      // console.log("refreshToken", refreshToken);
       const response = await axios.post(
         "https://worldspeechai.com/api/v1/auth/jwt/refresh/",
         {
@@ -129,7 +68,7 @@ const useHttp = () => {
       } catch (error) {
         setLoading(false);
 
-        console.log("1-eror", error);
+        // console.log("1-eror", error);
 
         if (
           error.response?.data?.detail ===
@@ -139,7 +78,7 @@ const useHttp = () => {
           try {
             // Yangi accessToken olish
             const newToken = await refreshAccessToken();
-            console.log("newToken", newToken);
+            // console.log("newToken", newToken);
             // Yangi token bilan so'rovni qayta yuborish
             headers.Authorization = `Bearer ${newToken}`;
             const retryResponse = await axios({
@@ -167,7 +106,7 @@ const useHttp = () => {
             error?.response?.data.non_field_errors;
           ("An error occurred");
           setError(err);
-          console.log("2-eror", err);
+          // console.log("2-eror", err);
           throw err;
         }
       }

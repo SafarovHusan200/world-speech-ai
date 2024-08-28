@@ -21,8 +21,6 @@ const AuthLayout = ({ children }) => {
     const url = baseAPI + URLS.profile;
     request(url, "GET")
       .then((response) => {
-        console.log("respionse", response.id);
-        console.log("respionse", response.email);
         if (response.id && response.email) {
           localStorage.setItem("isLogin", JSON.stringify(true));
           router.push("/dashboard");
