@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import "../../../styles/project-news-one.css";
 import NewsCard from "@/components/News__card";
 import { baseAPI } from "@/constants/domain";
@@ -16,7 +16,7 @@ const ProjectNewsOne = () => {
 
   const id = pathname.split("/").pop();
 
-  const getNews = async () => {
+  const getNews = useCallback(async () => {
     const url = baseAPI + URLS.news + id;
     try {
       const response = await axios.get(url);
@@ -24,7 +24,7 @@ const ProjectNewsOne = () => {
     } catch (err) {
       console.error("Error fetching news data:", err);
     }
-  };
+  }, [id]); // Add 'id' as a dependency since it's used in getNews
 
   const getallNews = async () => {
     const url = baseAPI + URLS.news;
@@ -38,9 +38,12 @@ const ProjectNewsOne = () => {
   };
 
   useEffect(() => {
-    getNews();
     getallNews();
   }, []);
+
+  useEffect(() => {
+    getNews();
+  }, [getNews]); // Now getNews is a dependency
 
   if (!newsData) {
     return <Loading />;

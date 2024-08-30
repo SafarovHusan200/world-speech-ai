@@ -10,10 +10,10 @@ const useHttp = () => {
   const [error, setError] = useState(null);
   const token =
     typeof window !== "undefined"
-      ? JSON.parse(localStorage.getItem("token")) || null
+      ? localStorage.getItem("token") || null
       : null; // localStorage faqat client-side da mavjud
 
-  // Yangi accessToken olish uchun funksiyani yaratish
+  // Yangi accessTokens olish uchun funksiyani yaratish
   const refreshAccessToken = async () => {
     try {
       const refreshToken = JSON.parse(localStorage.getItem("refresh"));

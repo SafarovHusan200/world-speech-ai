@@ -20,6 +20,28 @@
       font-weight: 500;
       line-height: 19px; /* 19.2px */
 
+      .big {
+        font-weight: 600;
+      }
+
+      ul {
+        list-style: none;
+        li {
+          padding-left: 35px;
+          position: relative;
+          &::before {
+            position: absolute;
+            content: "";
+            left: 20px;
+            top: 5px;
+            width: 5px;
+            height: 5px;
+            border: 2px solid #7b8a99;
+
+            border-radius: 50%;
+          }
+        }
+      }
       @media (max-width: 576px) {
         font-size: 14px;
         line-height: 17px;
