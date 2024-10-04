@@ -106,8 +106,8 @@ const useHttp = () => {
             error?.response?.data.non_field_errors;
           ("An error occurred");
           setError(err);
-          // console.log("2-eror", err);
-          throw err;
+          console.log("2-eror", err);
+          // throw err;
         }
       }
     },

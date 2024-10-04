@@ -23,9 +23,10 @@ const Login = () => {
   const { setEmail } = useAuth();
 
   const router = useRouter();
-  const { request, loading } = useHttp();
+  const { request, loading, error } = useHttp();
 
   const onFinish = async (values) => {
+    console.log("start");
     const { email, password } = values;
     const result = await request(
       "https://worldspeechai.com/api/v1/auth/jwt/create/",
@@ -36,9 +37,8 @@ const Login = () => {
       }
     );
 
-    const err = result.error || result.code || null;
-
-    console.log("res => ", err);
+    console.log("res => ", error);
+    const err = result?.error || result?.code || error || null;
 
     if (err === "Account is not active.") {
       message.warning(err);
