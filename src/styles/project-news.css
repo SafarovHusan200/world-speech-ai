@@ -173,6 +173,9 @@
   }
 }
 .project__news .container .cards .news__card img {
+  width: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
   height: 250px;
   -o-object-position: center;
      object-position: center;

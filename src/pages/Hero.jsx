@@ -24,6 +24,16 @@ const Hero = () => {
   return (
     <section className="hero">
       <div className="container">
+        <img
+          className="hero__right__img"
+          src="/hero__right__img.png"
+          alt="img"
+        />
+        <img
+          className="hero__right__img__mobile"
+          src="/hero__right__img__mobile.png"
+          alt="img"
+        />
         <div className="hero__title">
           Преобразуем аудио в текст: <br /> онлайн-встречи, звонки, файлы
         </div>

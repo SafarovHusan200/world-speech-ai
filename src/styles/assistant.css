@@ -1,0 +1,331 @@
+.assistant {
+  width: 100%;
+  padding: 38px 40px;
+}
+@media (max-width: 1200px) {
+  .assistant {
+    padding: 38px 30px;
+  }
+}
+@media (max-width: 768px) {
+  .assistant {
+    padding: 18px 10px;
+    padding-top: 65px;
+  }
+}
+.assistant .section-title {
+  text-align: left;
+  margin-bottom: 28px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.assistant .section-title img {
+  margin-top: 7px;
+}
+.assistant form {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  gap: 20px;
+  max-width: 960px;
+  margin-bottom: 35px;
+}
+.assistant form.second {
+  margin-bottom: 20px;
+}
+.assistant form .search__row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+.assistant form .search__row.last {
+  gap: 10px;
+}
+.assistant form .search__row input[type=text],
+.assistant form .search__row input[type=number] {
+  width: 470px;
+  height: 56px;
+  padding: 8px 16px;
+  border-radius: 10px;
+  border: 1px solid #b3b3b3;
+  background: #fff;
+  overflow: hidden;
+  color: #7b8a99;
+  font-size: 16px !important;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 160%; /* 25.6px */
+  letter-spacing: 0.32px;
+  color: #000;
+}
+@media (max-width: 500px) {
+  .assistant form .search__row input[type=text],
+  .assistant form .search__row input[type=number] {
+    width: 100%;
+  }
+}
+.assistant form .search__row input[type=text].bitrix,
+.assistant form .search__row input[type=number].bitrix {
+  width: 297px;
+  height: 56px;
+  padding: 8px 16px;
+}
+.assistant form .search__row input[type=text].lida,
+.assistant form .search__row input[type=number].lida {
+  width: 139px;
+}
+.assistant form .search__row input[type=text].search,
+.assistant form .search__row input[type=number].search {
+  height: 46px;
+  max-width: 420px;
+  width: 100%;
+}
+.assistant form .search__row input[type=text]::-moz-placeholder, .assistant form .search__row input[type=number]::-moz-placeholder {
+  color: #7b8a99;
+  font-size: 16px;
+}
+.assistant form .search__row input[type=text]::placeholder,
+.assistant form .search__row input[type=number]::placeholder {
+  color: #7b8a99;
+  font-size: 16px;
+}
+.assistant form .search__row input[type=text].minut,
+.assistant form .search__row input[type=number].minut {
+  display: flex;
+  width: 80px;
+  height: 56px;
+  padding: 8px 16px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 10px;
+}
+.assistant form .search__row input[type=text].hour,
+.assistant form .search__row input[type=number].hour {
+  display: flex;
+  width: 80px;
+  height: 56px;
+  padding: 8px 16px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 10px;
+  position: relative;
+}
+.assistant form .search__row input[type=text].po-date,
+.assistant form .search__row input[type=number].po-date {
+  max-width: 127px;
+  width: 100%;
+}
+.assistant form .search__row input[type=text]::before,
+.assistant form .search__row input[type=number]::before {
+  position: absolute;
+  z-index: 1;
+  content: ":";
+  right: -10px;
+  top: 0;
+  width: 20px;
+  height: 20px;
+  background-color: #007bff;
+}
+.assistant form .search__row input[type=text].name,
+.assistant form .search__row input[type=number].name {
+  padding-right: 30px;
+  position: relative;
+}
+.assistant form .search__row input[type=text].name::before,
+.assistant form .search__row input[type=number].name::before {
+  width: 24px;
+  height: 24px;
+  border: 1px solid;
+  content: "";
+  background: url("/public/searchIcon.svg");
+  background-position: center;
+  background-repeat: no-repeat;
+  position: absolute;
+  right: 10px;
+  top: 0;
+}
+.assistant form .search__row .information {
+  position: relative;
+  width: 29px;
+  height: 29px;
+  border: 1px solid #7b8a99;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+.assistant form .search__row .information .information__head {
+  color: #7b8a99;
+}
+.assistant form .search__row .information .information__body {
+  display: none;
+  position: absolute;
+  z-index: 2;
+  width: 340px;
+  height: 120px;
+  padding: 16px 10px;
+  border-radius: 0px 10px 10px 10px;
+  background: #7b8a99;
+  top: 26px;
+  left: 15px;
+  color: #fff;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: 0.32px;
+}
+.assistant form .search__row .information:hover .information__body {
+  display: block;
+}
+.assistant form .search__row .ant-form-item {
+  position: relative;
+}
+.assistant form .search__row .ant-form-item.ab input {
+  width: 168px;
+  height: 46px;
+  padding: 8px 16px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 10px;
+  border-radius: 60px;
+  border: 1px solid #b3b3b3;
+  background: #fff;
+  padding-left: 45px;
+}
+.assistant form .search__row .ant-form-item.ab input.po-request {
+  width: 194px;
+}
+.assistant form .search__row .ant-form-item label {
+  position: absolute;
+  top: 55%;
+  transform: translateY(-50%);
+  right: 20px;
+}
+.assistant form .search__row .ant-form-item label.ab {
+  right: auto;
+  left: 16px;
+}
+.assistant form .search__row button {
+  display: flex;
+  width: 202px;
+  height: 56px;
+  padding: 13px 24px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  border-radius: 10px;
+  background: #007bff;
+  color: #fff;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: 0.72px;
+}
+.assistant form label {
+  color: #212833;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 160%; /* 25.6px */
+  letter-spacing: 0.32px;
+  display: block;
+  margin-bottom: 5px;
+}
+.assistant form .timing {
+  display: flex;
+  align-items: center;
+}
+.assistant form .timing input {
+  width: 50px;
+  text-align: center;
+}
+.assistant form .timing span {
+  margin: 0 5px;
+  font-size: 18px;
+}
+.assistant hr {
+  opacity: 0.2;
+  margin-bottom: 35px;
+}
+.assistant .table-container {
+  width: 100%;
+}
+.assistant .table-container .search-filter {
+  width: 100%;
+  border: 1px solid;
+}
+.assistant .table-container .table__parent {
+  width: 100%;
+  overflow: auto;
+}
+.assistant .table-container .table {
+  width: 100%;
+  min-width: 1263px;
+  border-collapse: separate; /* Ensures the border-spacing works */
+  border-spacing: 0 15px; /* Adds vertical spacing between rows */
+}
+.assistant .table-container .table thead tr {
+  text-align: left;
+}
+.assistant .table-container .table thead tr th {
+  color: #121212;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 35.971px; /* 179.856% */
+}
+.assistant .table-container .table thead tr th:first-child {
+  padding-left: 10px;
+}
+.assistant .table-container .table thead tr th:last-child {
+  padding-right: 10px;
+}
+.assistant .table-container .table tbody tr {
+  background: #f8f8f8;
+  border-radius: 10px; /* Keep the rounded corners */
+}
+.assistant .table-container .table tbody tr td {
+  color: #7b8a99;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 35.971px; /* 224.819% */
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+.assistant .table-container .table tbody tr td:first-child {
+  border-radius: 10px 0 0 10px;
+  padding-left: 10px;
+}
+.assistant .table-container .table tbody tr td:last-child {
+  border-radius: 0 10px 10px 0;
+  padding-right: 10px;
+}
+.assistant .table-container .table tbody tr td .btns {
+  display: flex;
+  gap: 20px;
+}
+.assistant .table-container .table tbody tr td .btns .btn {
+  display: flex;
+  height: 30px;
+  padding: 13px 20px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  color: #007bff;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 120%; /* 16.8px */
+  border-radius: 10px;
+  border: 1px solid #007bff;
+  background-color: white;
+}/*# sourceMappingURL=assistant.css.map */

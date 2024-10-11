@@ -56,9 +56,15 @@ const TarifCard = () => {
         tarif.map((t) => (
           <div key={t.id} className="tarif__item">
             <div className="tarif__item--top__text">{t.plan_type}</div>
-            <div className="tarif__item--name">{`${t.price} ₽`} </div>
-            <div className="tarif__item--time">{t.minutes} минут</div>
-            <div className="tarif__item--subscriptions__title">
+            <div className="tarif__item--name">
+              {`${t.price}₽   `}{" "}
+              <span>{` ${Math.round(t.price / 12)}₽  в месяц `}</span>
+            </div>
+            <div className="tarif__item--time">{t.minutes} в год</div>
+            <div className="tarif__item--time__month">
+              {Math.round(t.minutes / 12)} в месяц
+            </div>
+            {/* <div className="tarif__item--subscriptions__title">
               Подписка включает в себя:
             </div>
             <ul className="tarif__item--subscriptions">
@@ -86,7 +92,7 @@ const TarifCard = () => {
                 <img src="/round-check.svg" alt="icon" />
                 <span>Мне не хватает текстов</span>
               </li>
-            </ul>
+            </ul> */}
 
             <button
               className="tarif__item--btn btn-outline"

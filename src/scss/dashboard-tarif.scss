@@ -12,6 +12,22 @@
   .section-title {
     text-align: left;
   }
+
+  .description {
+    display: none;
+
+    @media (max-width: 576px) {
+      display: block;
+      color: #7b8a99;
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 120%; /* 16.8px */
+      margin-bottom: 30px;
+      margin-top: 20px;
+    }
+  }
+
   .section-actions {
     display: flex;
     justify-content: flex-start;

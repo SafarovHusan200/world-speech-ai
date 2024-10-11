@@ -44,7 +44,11 @@ const Tarif = () => {
   return (
     <div className="dashboard__tarif">
       <div className="section-title">Тарифы</div>
-
+      <p className="description">
+        Искусственный интеллект, который подключится к звонку, запишет встречу,
+        расскажет об итогах, даст точную транскрибацию встречи и зафиксирует
+        задачи
+      </p>
       <div className="section-actions">
         <div className="monthly">Ежемесячно</div>
         <input type="checkbox" name="monthly" id="monthly" />

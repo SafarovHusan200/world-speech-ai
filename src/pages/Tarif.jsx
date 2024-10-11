@@ -27,8 +27,60 @@ const Tarif = () => {
 
         <TarifCard />
 
+        <div className="tarif__bottom">
+          <div className="tarif__bottom__col tarif__bottom__col-1">
+            <small>Корпоративный</small>
+            <h4>Индивидуальные условия и использование собственного сервера</h4>
+
+            <ul className="tarif__bottom__col--item">
+              <li className="tarif__item--subscription">
+                <img src="/checked__light.svg" alt="icon" />
+                <span>Гибкая система скидок</span>
+              </li>
+              <li className="tarif__item--subscription">
+                <img src="/checked__light.svg" alt="icon" />
+                <span>
+                  Возможность использования API для автоматизации процессов
+                </span>
+              </li>
+              <li className="tarif__item--subscription">
+                <img src="/checked__light.svg" alt="icon" />
+                <span>
+                  Круглосуточная поддержка и возможность интеграции с другими
+                  корпоративными системами
+                </span>
+              </li>
+            </ul>
+
+            <button className="btn btn-outline">Купить</button>
+          </div>
+          <div className="tarif__bottom__col tarif__bottom__col-2">
+            <small>Включено во всех тарифы</small>
+
+            <h4>Дополнительные функции</h4>
+
+            <div className="btns">
+              <button className="btn btn-outline">
+                Интеграция с Google Calendar
+              </button>
+              <button className="btn btn-outline">Автоматический обмен</button>
+              <button className="btn btn-outline">AI-резюме и задачи</button>
+              <button className="btn btn-outline">
+                Круглосуточная поддержка
+              </button>
+              <button className="btn btn-outline">
+                Интеграция с Zoom, Яндекс.Телемост и Google Meet
+              </button>
+              <button className="btn btn-outline">
+                Неограниченное хранилище
+              </button>
+              <button className="btn btn-outline">Экспорт в PDF, DOCX</button>
+            </div>
+          </div>
+        </div>
+
         {/* Section cards */}
-        <div className="tarif__section--cards">
+        {/* <div className="tarif__section--cards">
           <div className="tarif__section--card">
             <div className="tarif__section--card__left">
               <div className="tarif__section--card__left--title">
@@ -85,7 +137,7 @@ const Tarif = () => {
               />
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     </section>
   );

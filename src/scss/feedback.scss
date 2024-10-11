@@ -103,34 +103,62 @@
       max-width: 420px;
       width: 100%;
       min-height: 355px;
-      padding: 20px 15px;
+      padding: 20px;
       flex-direction: column;
       align-items: flex-start;
+      justify-content: space-between;
 
       transition: 0.25s;
 
-      border-radius: 5px;
+      // background: url("/keys-1.jpg");
+      background-position: top;
+      background-repeat: no-repeat;
+      background-size: cover;
+
+      border-radius: 10px;
       border: 1px solid rgba(0, 0, 0, 0.2);
       backdrop-filter: blur(15px);
 
-      @media (max-width: 576px) {
+      @media (max-width: 676px) {
         max-width: 100%;
+        padding: 10px;
       }
 
       &--name {
-        color: #1a1a1a;
-        font-size: 22px;
-        font-weight: 400;
-        margin-bottom: 12px;
+        display: inline-flex;
+        padding: 10px;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+
+        border-radius: 30px;
+        background: #fff;
+
+        color: #7b8a99;
+        font-size: 18px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 120%; /* 21.6px */
       }
 
       &--date {
-        color: #1a1a1a;
-        font-size: 16px;
-        font-weight: 400;
-        margin-bottom: 30px;
+        color: #fff;
+        font-size: 23px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 120%; /* 27.6px */
+
+        @media (max-width: 1000px) {
+          font-size: 18px;
+        }
       }
 
+      .keys__card__bottom {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+      }
       &--descr {
         overflow: hidden;
         color: #7b8a99;
@@ -143,12 +171,20 @@
       }
 
       &--btn {
-        padding: 0;
-        color: #007bff;
-        background: none;
-        font-size: 16px;
+        border-radius: 10px;
+        background: #fff;
 
-        font-weight: 400;
+        color: #007bff;
+        text-align: center;
+        font-size: 18px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: normal;
+        letter-spacing: 0.72px;
+
+        @media (max-width: 676px) {
+          padding: 10px;
+        }
       }
     }
   }

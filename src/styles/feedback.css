@@ -100,31 +100,56 @@
   max-width: 420px;
   width: 100%;
   min-height: 355px;
-  padding: 20px 15px;
+  padding: 20px;
   flex-direction: column;
   align-items: flex-start;
+  justify-content: space-between;
   transition: 0.25s;
-  border-radius: 5px;
+  background-position: top;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 10px;
   border: 1px solid rgba(0, 0, 0, 0.2);
   -webkit-backdrop-filter: blur(15px);
           backdrop-filter: blur(15px);
 }
-@media (max-width: 576px) {
+@media (max-width: 676px) {
   .feedback .feedback__cards .feedback__card {
     max-width: 100%;
+    padding: 10px;
   }
 }
 .feedback .feedback__cards .feedback__card--name {
-  color: #1a1a1a;
-  font-size: 22px;
-  font-weight: 400;
-  margin-bottom: 12px;
+  display: inline-flex;
+  padding: 10px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  border-radius: 30px;
+  background: #fff;
+  color: #7b8a99;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 120%; /* 21.6px */
 }
 .feedback .feedback__cards .feedback__card--date {
-  color: #1a1a1a;
-  font-size: 16px;
-  font-weight: 400;
-  margin-bottom: 30px;
+  color: #fff;
+  font-size: 23px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 120%; /* 27.6px */
+}
+@media (max-width: 1000px) {
+  .feedback .feedback__cards .feedback__card--date {
+    font-size: 18px;
+  }
+}
+.feedback .feedback__cards .feedback__card .keys__card__bottom {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
 }
 .feedback .feedback__cards .feedback__card--descr {
   overflow: hidden;
@@ -135,9 +160,18 @@
   margin-bottom: 50px;
 }
 .feedback .feedback__cards .feedback__card--btn {
-  padding: 0;
+  border-radius: 10px;
+  background: #fff;
   color: #007bff;
-  background: none;
-  font-size: 16px;
-  font-weight: 400;
+  text-align: center;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: 0.72px;
+}
+@media (max-width: 676px) {
+  .feedback .feedback__cards .feedback__card--btn {
+    padding: 10px;
+  }
 }/*# sourceMappingURL=feedback.css.map */

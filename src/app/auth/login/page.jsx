@@ -37,8 +37,8 @@ const Login = () => {
       }
     );
 
-    console.log("res => ", error);
-    const err = result?.error || result?.code || error || null;
+    console.log("res => ", result);
+    const err = (!result && error) || null;
 
     if (err === "Account is not active.") {
       message.warning(err);
@@ -144,18 +144,6 @@ const Login = () => {
                 <img src="/google-icon.svg" alt="" />
                 <span>Войти через Google</span>
               </button>
-              {/* <button
-                className="with__google"
-                onClick={() =>
-                  signIn("google", {
-                    callbackUrl:
-                      "https://worldspeechai.com/api/v1/auth/o/google-oauth2/",
-                  })
-                }
-              >
-                <img src="/google-icon.svg" alt="" />
-                <span>Войти через Google</span>
-              </button> */}
 
               <p className="or">или</p>
 

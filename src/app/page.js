@@ -6,6 +6,8 @@ import Safety from "@/pages/Safety";
 import Feedback from "@/pages/Feedback";
 import News from "@/pages/News";
 import Faq from "@/pages/Faq";
+import Advantages from "@/components/Advantages";
+import ContactUs from "@/pages/Contact-us";
 
 export default function Home() {
   return (
@@ -14,14 +16,17 @@ export default function Home() {
         <Header />
 
         <Hero />
+        <Advantages />
 
         <Tarif />
 
-        <Safety />
+        {/* <Safety /> */}
 
         <Feedback />
 
         <News />
+
+        <ContactUs />
 
         <Faq />
 

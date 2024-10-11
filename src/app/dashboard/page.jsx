@@ -103,107 +103,44 @@ const Dashboard = () => {
   }, []);
 
   return (
-    <div className="dashbord__content">
-      <div className="dashbord__content--left">
-        <h2 className="section-title">Новая встреча</h2>
-        <div className="dashbord__content--left__description">
-          <b>Загрузить аудио/видео файл встречи</b>
-          <p className="date">
-            Обработка займет от 5 до 10 минут, и отчет будет доступен в списке
-            ваших встреч
-          </p>
-        </div>
-        {/* ============ */}
+    <>
+      <h2 className="section-title main">Новая встреча</h2>
 
-        <DraggerComponent />
-
-        {/* ============= */}
-
-        <div className="mobile-content">
-          <p className="file__type">
-            Аудиоформаты: MP3, M4A, OGG, WAV, WMA, M4A
-          </p>
-          <label htmlFor="file" className="btn btn-outline">
-            Загрузить файлы
-            <input
-              type="file"
-              id="file"
-              onChange={handleFileChange}
-              className="file-upload-mobile"
-            />
-          </label>
-        </div>
-      </div>
-      <div className="dashbord__content--right">
-        <div className="meeting-form">
-          <div className="conference-section">
-            <h3>
-              Отправить бота на конференцию
-              <div className="links">
-                <Link href={"#!"}>
-                  <img src="/camera-icon.svg" alt="camera" />
-                </Link>
-                <Link href={"#!"}>
-                  <img src="/zoom-icon.svg" alt="camera" />
-                </Link>
-                <Link href={"#!"}>
-                  <img src="/meeting-icon.svg" alt="camera" />
-                </Link>
-              </div>
-            </h3>
-            <p className="descr">
-              Наш бот подключится к вашей встрече и автоматически запишет важный
-              разговор, преобразует аудио в текст и подготовит отчет
+      <div className="dashbord__content">
+        <div className="dashbord__content--left">
+          <div className="dashbord__content--left__description">
+            <b>Загрузить аудио/видео файл встречи</b>
+            <p className="date">
+              Обработка займет от 5 до 10 минут, и отчет будет доступен в списке
+              ваших встреч
             </p>
-            <form className="form" onSubmit={submitForm}>
-              <label htmlFor="name">Название</label>
-              <input
-                id="name"
-                type="text"
-                name="meeting_name"
-                placeholder="Например: Созвон с Ильей по сайту"
-                required
-                value={formData.name}
-                onChange={handleChange}
-              />
-              <label>Площадка</label>
-              <select
-                name="meeting_type"
-                value={formData.platform}
-                onChange={handleChange}
-              >
-                <option value="yandex">Yandex</option>
-                <option value="zoom">Zoom</option>
-                <option value="google">Google Meet</option>
-              </select>
+          </div>
+          {/* ============ */}
 
-              <label>Ссылка на конференцию</label>
-              <input
-                type="text"
-                name="meeting_url"
-                placeholder="Zoom, Google Meet, Telemost"
-                autoComplete="current-text"
-                required
-                value={formData.conferenceLink}
-                onChange={handleChange}
-              />
-              <label>Пароль</label>
-              <input
-                type="password"
-                name="password"
-                autoComplete="current-password"
-                value={formData.password}
-                onChange={handleChange}
-              />
+          <DraggerComponent />
 
-              <div className="row row1">
-                <Link href={"#!"}>Только для Zoom</Link>
-                <span>Если нету, оставьте поле пустым</span>
-              </div>
-              <div className="row row2">
-                <button type="submit" className="btn-primary">
-                  Отправить
-                </button>
+          {/* ============= */}
+
+          <div className="mobile-content">
+            <p className="file__type">
+              Аудиоформаты: MP3, M4A, OGG, WAV, WMA, M4A
+            </p>
+            <label htmlFor="file" className="btn btn-outline">
+              Загрузить файлы
+              <input
+                type="file"
+                id="file"
+                onChange={handleFileChange}
+                className="file-upload-mobile"
+              />
+            </label>
+          </div>
+        </div>
+        <div className="dashbord__content--right">
+          <div className="meeting-form">
+            <div className="conference-section">
+              <h3>
+                Отправить бота на конференцию
                 <div className="links">
                   <Link href={"#!"}>
                     <img src="/camera-icon.svg" alt="camera" />
@@ -215,12 +152,78 @@ const Dashboard = () => {
                     <img src="/meeting-icon.svg" alt="camera" />
                   </Link>
                 </div>
-              </div>
-            </form>
+              </h3>
+              <p className="descr">
+                Наш бот подключится к вашей встрече и автоматически запишет
+                важный разговор, преобразует аудио в текст и подготовит отчет
+              </p>
+              <form className="form" onSubmit={submitForm}>
+                <label htmlFor="name">Название</label>
+                <input
+                  id="name"
+                  type="text"
+                  name="meeting_name"
+                  placeholder="Например: Созвон с Ильей по сайту"
+                  required
+                  value={formData.name}
+                  onChange={handleChange}
+                />
+                <label>Площадка</label>
+                <select
+                  name="meeting_type"
+                  value={formData.platform}
+                  onChange={handleChange}
+                >
+                  <option value="yandex">Yandex</option>
+                  <option value="zoom">Zoom</option>
+                  <option value="google">Google Meet</option>
+                </select>
+
+                <label>Ссылка на конференцию</label>
+                <input
+                  type="text"
+                  name="meeting_url"
+                  placeholder="Zoom, Google Meet, Telemost"
+                  autoComplete="current-text"
+                  required
+                  value={formData.conferenceLink}
+                  onChange={handleChange}
+                />
+                <label>Пароль</label>
+                <input
+                  type="password"
+                  name="password"
+                  autoComplete="current-password"
+                  value={formData.password}
+                  onChange={handleChange}
+                />
+
+                <div className="row row1">
+                  <Link href={"#!"}>Только для Zoom</Link>
+                  <span>Если нету, оставьте поле пустым</span>
+                </div>
+                <div className="row row2">
+                  <button type="submit" className="btn-primary">
+                    Отправить
+                  </button>
+                  <div className="links">
+                    <Link href={"#!"}>
+                      <img src="/camera-icon.svg" alt="camera" />
+                    </Link>
+                    <Link href={"#!"}>
+                      <img src="/zoom-icon.svg" alt="camera" />
+                    </Link>
+                    <Link href={"#!"}>
+                      <img src="/meeting-icon.svg" alt="camera" />
+                    </Link>
+                  </div>
+                </div>
+              </form>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

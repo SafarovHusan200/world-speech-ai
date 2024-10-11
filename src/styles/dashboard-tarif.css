@@ -15,6 +15,21 @@
 .dashboard__tarif .section-title {
   text-align: left;
 }
+.dashboard__tarif .description {
+  display: none;
+}
+@media (max-width: 576px) {
+  .dashboard__tarif .description {
+    display: block;
+    color: #7b8a99;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 120%; /* 16.8px */
+    margin-bottom: 30px;
+    margin-top: 20px;
+  }
+}
 .dashboard__tarif .section-actions {
   display: flex;
   justify-content: flex-start;

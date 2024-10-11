@@ -93,6 +93,7 @@ const ProjectNewsOne = () => {
           {fullNews?.map((n, i) => (
             <NewsCard
               key={i}
+              id={n.id}
               img={n.image || "/news-img.jpg"}
               name={
                 n.title || "Название новости Название новостиНазвание новости"

@@ -52,7 +52,7 @@ const Header = () => {
                   <Link href="/#safety">Безопасность</Link>
                 </li>
                 <li>
-                  <Link href="/#feedback">Отзывы</Link>
+                  <Link href="/#feedback">Кейсы</Link>
                 </li>
                 <li>
                   <Link href="/#faq">FAQ</Link>

@@ -44,6 +44,18 @@ const Sidebar = ({ sidebar, handleScroll }) => {
       name: "Настройки",
       url: "/dashboard/settings",
     },
+    {
+      name: "Модули",
+      url: "/dashboard/modules",
+    },
+    {
+      name: "Ассистент",
+      url: "/dashboard/assistant",
+    },
+    {
+      name: "Инструкции",
+      url: "/dashboard/instructions",
+    },
   ];
 
   const sendAudioFile = async (file) => {
@@ -149,6 +161,23 @@ const Sidebar = ({ sidebar, handleScroll }) => {
 
       <div className="sidebar__bottom">
         <div className="row">
+          <p>Запросы</p>
+          <span>
+            {workTime.total_prompts} из {workTime.initial_prompts}
+          </span>
+        </div>
+        <div className="progress-bar">
+          <div
+            className="progress"
+            style={{
+              width: `${
+                (workTime.total_prompts * 100) / workTime.initial_prompts
+              }%`,
+            }}
+          ></div>
+        </div>
+
+        <div className="row">
           <p>Осталось встреч</p>
           <span>
             {workTime.total_meetings} из {workTime.initial_meetings}
@@ -159,7 +188,7 @@ const Sidebar = ({ sidebar, handleScroll }) => {
             className="progress"
             style={{
               width: `${
-                (workTime.total_minutes * 100) / workTime.initial_minutes
+                (workTime.total_meetings * 100) / workTime.initial_meetings
               }%`,
             }}
           ></div>

@@ -2,7 +2,7 @@
   width: 100%;
   padding: 80px 0;
 
-  padding-top: 130px;
+  padding-top: 80px;
   margin-top: -50px;
 
   @media (max-width: 1200px) {
@@ -12,7 +12,7 @@
     margin-top: -20px;
   }
   @media (max-width: 576px) {
-    padding: 80px 0;
+    padding: 20px 0;
   }
 
   background: #fff;
@@ -134,7 +134,7 @@
       flex-wrap: wrap;
       gap: 20px;
 
-      margin-bottom: 179px;
+      margin-bottom: 50px;
 
       @media (max-width: 1200px) {
         margin-bottom: 70px;
@@ -179,6 +179,15 @@
           letter-spacing: 0.88px;
           margin-bottom: 20px;
 
+          span {
+            color: #7b8a99;
+            font-size: 22px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: 120%; /* 26.4px */
+            letter-spacing: 0.88px;
+          }
+
           @media (max-width: 576px) {
             font-size: 18px;
             font-weight: 500;
@@ -193,8 +202,17 @@
           font-weight: 400;
           line-height: 21.6px; /* 21.6px */
           letter-spacing: 0.72px;
+          margin-bottom: 20px;
 
-          margin-bottom: 40px;
+          &__month {
+            color: #7b8a99;
+            font-size: 18px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 120%; /* 21.6px */
+            letter-spacing: 0.72px;
+            margin-bottom: 20px;
+          }
 
           @media (max-width: 576px) {
             font-size: 18px;
@@ -238,7 +256,7 @@
         }
 
         &--btn {
-          margin-top: 40px;
+          margin-top: 20px;
 
           text-align: center;
           font-size: 18px;
@@ -255,137 +273,278 @@
       }
     }
 
-    .tarif__section--cards {
+    .tarif__bottom {
       width: 100%;
       display: flex;
-      flex-direction: column;
+      justify-content: space-between;
+      gap: 20px;
 
-      gap: 80px 0;
-
-      @media (max-width: 576px) {
-        gap: 30px 0;
+      @media (max-width: 920px) {
+        flex-direction: column;
       }
 
-      .tarif__section--card {
-        width: 100%;
-        min-height: 500px;
-        overflow: hidden;
-        display: flex;
+      .tarif__bottom__col {
+        width: calc(50% - 10px);
 
-        border-radius: 10px;
-        border: 1px solid rgba(0, 0, 0, 0.2);
-
-        display: flex;
-        // align-items: center;
-
-        @media (max-width: 800px) {
-          min-height: 500px;
-          flex-direction: column-reverse;
-          justify-content: flex-end;
-        }
-        @media (max-width: 800px) {
-          min-height: 350px;
-          height: auto;
+        @media (max-width: 920px) {
+          width: 100%;
         }
 
-        &__left {
-          width: 50%;
-          padding: 131px 20px;
-
-          @media (max-width: 800px) {
-            width: 100%;
-            padding: 20px;
-          }
-          @media (max-width: 800px) {
-            padding: 20px 10px;
-          }
-
-          &--title {
-            color: #212833;
-
-            font-size: 48px;
-            font-weight: 500;
-            line-height: 57.6px; /* 57.6px */
-
-            @media (max-width: 920px) {
-              font-size: 32px;
-              line-height: normal;
-              margin-bottom: 35px;
-            }
-            @media (max-width: 576px) {
-              font-size: 20px;
-              font-style: normal;
-              font-weight: 600;
-
-              line-height: normal;
-
-              margin-bottom: 30px;
-            }
-          }
-
-          &--descr {
-            color: #7b8a99;
-            font-size: 20px;
-            font-weight: 400;
-            line-height: 120%; /* 24px */
-
-            @media (max-width: 576px) {
-              color: #121212;
-
-              font-family: "Lato", sans-serif;
-              font-size: 16px;
-              font-style: normal;
-              font-weight: 400;
-              line-height: 19px; /* 19.2px */
-            }
-          }
-        }
-
-        &__right {
-          width: 50%;
-          // height: 100%;
-          background: #007bff;
-
+        &.tarif__bottom__col-1 {
           display: flex;
-          justify-content: center;
 
-          position: relative;
+          padding: 25px;
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 10px;
+          border-radius: 20px;
+          border: 1px solid rgba(33, 40, 51, 0.2);
+          background: #007bff;
+          color: #fff;
 
-          @media (max-width: 800px) {
-            width: 100%;
-            height: 50%;
+          small {
+            color: #fff;
+            font-size: 18px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 120%; /* 21.6px */
+            letter-spacing: 0.72px;
+            margin-bottom: 20px;
           }
-          @media (max-width: 576px) {
-            height: 300px;
+
+          h4 {
+            color: #fff;
+            font-size: 22px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: 120%; /* 26.4px */
+            letter-spacing: 0.88px;
+
+            margin-bottom: 20px;
           }
 
-          .tarif__section--card__icon {
-            width: 100%;
-            &.microphone {
-              width: 100%;
-              // height: 100%;
-              object-fit: cover;
-            }
-            &.calendar {
-              max-width: 363px !important;
-              width: 100%;
+          ul {
+            margin-bottom: 20px;
+            li {
+              display: flex;
+              align-items: center;
+              margin-bottom: 20px;
 
-              @media (max-width: 800px) {
-                width: 50%;
+              gap: 10px;
+              span {
+                color: #fff;
+
+                font-size: 18px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: 120%; /* 21.6px */
+                letter-spacing: 0.72px;
               }
             }
-
-            &.settings {
-              object-fit: cover;
-            }
           }
-          .microphone-line {
-            position: absolute;
-            top: 0;
-            z-index: 1;
+
+          .btn {
+            border-radius: 10px;
+            border: 1px solid #fff;
+            color: #fff;
+            text-align: center;
+            font-size: 18px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: normal;
+            letter-spacing: 0.72px;
+          }
+        }
+
+        &.tarif__bottom__col-2 {
+          small {
+            color: #007bff;
+            font-size: 18px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 120%; /* 21.6px */
+            letter-spacing: 0.72px;
+            display: block;
+            margin-bottom: 20px;
+          }
+
+          h4 {
+            color: #212833;
+            font-size: 22px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: 120%; /* 26.4px */
+            letter-spacing: 0.88px;
+            margin-bottom: 20px;
+          }
+
+          .btns {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+
+            .btn {
+              border-radius: 10px;
+              border: 1px solid rgba(0, 0, 0, 0.2);
+
+              display: inline-flex;
+              min-height: 40px;
+              padding: 0px 24px;
+              justify-content: center;
+              align-items: center;
+
+              color: #1a1a1a;
+              text-align: center;
+              font-size: 18px;
+              font-style: normal;
+              font-weight: 400;
+              line-height: normal;
+              letter-spacing: 0.72px;
+
+              @media (max-width: 576px) {
+                padding: 10px 24px;
+              }
+              &:hover {
+                color: #fff;
+                border-color: #007bff;
+              }
+            }
           }
         }
       }
     }
+
+    // .tarif__section--cards {
+    //   width: 100%;
+    //   display: flex;
+    //   flex-direction: column;
+
+    //   gap: 80px 0;
+
+    //   @media (max-width: 576px) {
+    //     gap: 30px 0;
+    //   }
+
+    //   .tarif__section--card {
+    //     width: 100%;
+    //     min-height: 500px;
+    //     overflow: hidden;
+    //     display: flex;
+
+    //     border-radius: 10px;
+    //     border: 1px solid rgba(0, 0, 0, 0.2);
+
+    //     display: flex;
+    //     // align-items: center;
+
+    //     @media (max-width: 800px) {
+    //       min-height: 500px;
+    //       flex-direction: column-reverse;
+    //       justify-content: flex-end;
+    //     }
+    //     @media (max-width: 800px) {
+    //       min-height: 350px;
+    //       height: auto;
+    //     }
+
+    //     &__left {
+    //       width: 50%;
+    //       padding: 131px 20px;
+
+    //       @media (max-width: 800px) {
+    //         width: 100%;
+    //         padding: 20px;
+    //       }
+    //       @media (max-width: 800px) {
+    //         padding: 20px 10px;
+    //       }
+
+    //       &--title {
+    //         color: #212833;
+
+    //         font-size: 48px;
+    //         font-weight: 500;
+    //         line-height: 57.6px; /* 57.6px */
+
+    //         @media (max-width: 920px) {
+    //           font-size: 32px;
+    //           line-height: normal;
+    //           margin-bottom: 35px;
+    //         }
+    //         @media (max-width: 576px) {
+    //           font-size: 20px;
+    //           font-style: normal;
+    //           font-weight: 600;
+
+    //           line-height: normal;
+
+    //           margin-bottom: 30px;
+    //         }
+    //       }
+
+    //       &--descr {
+    //         color: #7b8a99;
+    //         font-size: 20px;
+    //         font-weight: 400;
+    //         line-height: 120%; /* 24px */
+
+    //         @media (max-width: 576px) {
+    //           color: #121212;
+
+    //           font-family: "Lato", sans-serif;
+    //           font-size: 16px;
+    //           font-style: normal;
+    //           font-weight: 400;
+    //           line-height: 19px; /* 19.2px */
+    //         }
+    //       }
+    //     }
+
+    //     &__right {
+    //       width: 50%;
+    //       // height: 100%;
+    //       background: #007bff;
+
+    //       display: flex;
+    //       justify-content: center;
+
+    //       position: relative;
+
+    //       @media (max-width: 800px) {
+    //         width: 100%;
+    //         height: 50%;
+    //       }
+    //       @media (max-width: 576px) {
+    //         height: 300px;
+    //       }
+
+    //       .tarif__section--card__icon {
+    //         width: 100%;
+    //         &.microphone {
+    //           width: 100%;
+    //           // height: 100%;
+    //           object-fit: cover;
+    //         }
+    //         &.calendar {
+    //           max-width: 363px !important;
+    //           width: 100%;
+
+    //           @media (max-width: 800px) {
+    //             width: 50%;
+    //           }
+    //         }
+
+    //         &.settings {
+    //           object-fit: cover;
+    //         }
+    //       }
+    //       .microphone-line {
+    //         position: absolute;
+    //         top: 0;
+    //         z-index: 1;
+    //       }
+    //     }
+    //   }
+    // }
   }
 }

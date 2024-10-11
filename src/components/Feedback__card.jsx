@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 
-const FeedbackCard = ({ name, date, descr }) => {
+const FeedbackCard = ({ id, title, name, date, descr }) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   const descriptionFunction = (descr) => {
@@ -18,13 +18,24 @@ const FeedbackCard = ({ name, date, descr }) => {
   };
 
   return (
-    <div className="feedback__card">
-      <div className="feedback__card--name">{name}</div>
-      <div className="feedback__card--date">{date}</div>
-      <div className="feedback__card--descr">{descriptionFunction(descr)}</div>
-      <button className="feedback__card--btn" onClick={handleClick}>
-        {isExpanded ? "Скрыть" : "Посмотреть полностью"}
-      </button>
+    <div
+      className="feedback__card"
+      style={{ backgroundImage: `url(/keys-${id}.jpg)` }}
+    >
+      <div className="feedback__card--name">Кейс {id}</div>
+      {/* <div className="feedback__card--date">{date}</div> */}
+
+      <div className="keys__card__bottom">
+        <div className="feedback__card--date">{title}</div>
+
+        <button
+          className="feedback__card--btn"
+          onClick={handleClick}
+          aria-expanded={isExpanded}
+        >
+          {isExpanded ? "Скрыть" : "Смотреть"}
+        </button>
+      </div>
     </div>
   );
 };

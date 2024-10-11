@@ -27,4 +27,5 @@ export const URLS = {
   statistic: "/api/v1/users/statistics/",
   google: "/api/v1/auth/link/google/",
   connect_calendar: "/api/v1/users/social_auth/",
+  asistants: "/api/v1/assistants/",
 };
