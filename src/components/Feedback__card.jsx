@@ -4,17 +4,19 @@ import React, { useState } from "react";
 const FeedbackCard = ({ id, title, name, date, descr }) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
-  const descriptionFunction = (descr) => {
-    const words = descr.split(" ");
-    if (words.length > 83 && !isExpanded) {
-      const shortDescr = words.slice(0, 83).join(" ");
-      return `${shortDescr}...`;
-    }
-    return descr;
-  };
+  // const descriptionFunction = (descr) => {
+  //   const words = descr.split(" ");
+  //   if (words.length > 83 && !isExpanded) {
+  //     const shortDescr = words.slice(0, 83).join(" ");
+  //     return `${shortDescr}...`;
+  //   }
+  //   return descr;
+  // };
 
   const handleClick = () => {
     setIsExpanded(!isExpanded);
+
+    console.log("object");
   };
 
   return (
@@ -23,7 +25,6 @@ const FeedbackCard = ({ id, title, name, date, descr }) => {
       style={{ backgroundImage: `url(/keys-${id}.jpg)` }}
     >
       <div className="feedback__card--name">Кейс {id}</div>
-      {/* <div className="feedback__card--date">{date}</div> */}
 
       <div className="keys__card__bottom">
         <div className="feedback__card--date">{title}</div>

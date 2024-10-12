@@ -74,7 +74,7 @@ const Tarif = () => {
           type="checkbox"
           name="monthly"
           id="monthly"
-          checked={discount}
+          checked={!discount}
           onChange={handleCheked}
         />
         <label htmlFor="monthly" className="monthly__label">

@@ -17,7 +17,7 @@ const ContactUs = () => {
 
               <form className="contact-us__form">
                 <input type="text" name="name" placeholder="Имя" />
-                <input type="text" name="name" placeholder="Почта" />
+                <input type="email" name="name" placeholder="Почта" />
                 <button className="btn btn-primary">Отправить</button>
               </form>
             </div>

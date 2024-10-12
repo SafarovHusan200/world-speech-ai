@@ -1,12 +1,11 @@
 "use client";
 
-import FeedbackCard from "@/components/Feedback__card";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import "../styles/feedback.css";
 import SwiperFeedbackComponent from "@/components/SwiperFeedbackComponent";
 
-const Feedback = () => {
+const Case = () => {
   const [title, setTitle] = useState("Кейсы");
 
   // useEffect(() => {
@@ -37,4 +36,4 @@ const Feedback = () => {
   );
 };
 
-export default Feedback;
+export default Case;
