@@ -63,6 +63,7 @@
 
         &:checked + .monthly__label span {
           left: calc(100% - 33px);
+          // left: 3px;
 
           @media (max-width: 576px) {
             left: calc(100% - 25px);

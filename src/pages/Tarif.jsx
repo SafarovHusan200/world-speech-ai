@@ -1,8 +1,54 @@
-import React from "react";
+"use client";
+
+import React, { useEffect, useState } from "react";
 import "/src/styles/tarif.css";
 import TarifCard from "@/components/TarifCard";
+import axios from "axios";
+import { baseAPI } from "@/constants/domain";
+import { URLS } from "@/constants/url";
 
 const Tarif = () => {
+  const [tarif, setTarif] = useState();
+  const [discount, setDiscount] = useState(true);
+  const [loading, setLoading] = useState(false);
+
+  const handleCheked = () => {
+    setDiscount((prevDiscount) => !prevDiscount); // discountni o'zgartirish
+
+    const newTarif = tarif.map((t) => {
+      const discountValue = 1.15; // 15% ga teng
+      if (discount) {
+        // Agar chegirma mavjud bo'lsa, narxni kamaytirish
+        return { ...t, price: Math.round(t.price * discountValue) };
+      } else {
+        // Agar chegirma olinmasa, narxni tiklash
+        return { ...t, price: Math.round(t.price / discountValue) };
+      }
+    });
+
+    setTarif(newTarif); // Yangilangan tariflar bilan setTarif
+  };
+
+  const getTarif = async () => {
+    setLoading(true);
+    const url = baseAPI + URLS.tarif;
+
+    const result = await axios
+      .get(url)
+      .then((response) => {
+        setTarif(response.data);
+        console.log(response.data);
+        return response.data;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    getTarif();
+  }, []);
   return (
     <section className="tarif" id="tarif">
       <div className="container">
@@ -15,7 +61,12 @@ const Tarif = () => {
 
         <div className="section-actions">
           <div className="monthly">Ежемесячно</div>
-          <input type="checkbox" name="monthly" id="monthly" />
+          <input
+            type="checkbox"
+            name="monthly"
+            id="monthly"
+            onChange={handleCheked}
+          />
           <label htmlFor="monthly" className="monthly__label">
             <span></span>
           </label>
@@ -25,7 +76,7 @@ const Tarif = () => {
 
         {/* Section items */}
 
-        <TarifCard />
+        <TarifCard tarif={tarif} loading={loading} />
 
         <div className="tarif__bottom">
           <div className="tarif__bottom__col tarif__bottom__col-1">

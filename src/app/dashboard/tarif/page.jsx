@@ -10,6 +10,7 @@ import { URLS } from "@/constants/url";
 const Tarif = () => {
   const [tarif, setTarif] = useState(null);
   const { request, loading, error } = useHttp();
+  const [discount, setDiscount] = useState(true);
 
   const getTarif = async () => {
     const url = baseAPI + URLS.tarif;
@@ -21,6 +22,23 @@ const Tarif = () => {
       .catch((err) => {
         console.log(err);
       });
+  };
+
+  const handleCheked = () => {
+    setDiscount((prevDiscount) => !prevDiscount); // discountni o'zgartirish
+
+    const newTarif = tarif.map((t) => {
+      const discountValue = 1.15; // 15% ga teng
+      if (discount) {
+        // Agar chegirma mavjud bo'lsa, narxni kamaytirish
+        return { ...t, price: Math.round(t.price * discountValue) };
+      } else {
+        // Agar chegirma olinmasa, narxni tiklash
+        return { ...t, price: Math.round(t.price / discountValue) };
+      }
+    });
+
+    setTarif(newTarif); // Yangilangan tariflar bilan setTarif
   };
 
   const handlePerchase = (id) => {
@@ -38,6 +56,7 @@ const Tarif = () => {
       console.log(err);
     }
   };
+
   useEffect(() => {
     getTarif();
   }, []);
@@ -51,7 +70,13 @@ const Tarif = () => {
       </p>
       <div className="section-actions">
         <div className="monthly">Ежемесячно</div>
-        <input type="checkbox" name="monthly" id="monthly" />
+        <input
+          type="checkbox"
+          name="monthly"
+          id="monthly"
+          checked={discount}
+          onChange={handleCheked}
+        />
         <label htmlFor="monthly" className="monthly__label">
           <span></span>
         </label>

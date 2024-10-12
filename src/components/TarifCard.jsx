@@ -5,32 +5,13 @@ import "../styles/tarif.css";
 import { useRouter } from "next/navigation";
 import { baseAPI } from "@/constants/domain";
 import { URLS } from "@/constants/url";
-import axios from "axios";
+
 import Loading from "./Loading";
 import useHttp from "@/app/hooks/useHttp";
 
-const TarifCard = () => {
+const TarifCard = ({ tarif, loading }) => {
   const { request } = useHttp();
   const router = useRouter();
-  const [loading, setLoading] = useState(false);
-  const [tarif, setTarif] = useState();
-
-  const getTarif = async () => {
-    setLoading(true);
-    const url = baseAPI + URLS.tarif;
-
-    const result = await axios
-      .get(url)
-      .then((response) => {
-        setTarif(response.data);
-        console.log(response.data);
-        return response.data;
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    setLoading(false);
-  };
 
   const handleTarif = (id) => {
     const login = JSON.parse(localStorage.getItem("isLogin"));
@@ -45,9 +26,6 @@ const TarifCard = () => {
     }
   };
 
-  useEffect(() => {
-    getTarif();
-  }, []);
   return (
     <div className="tarif__items">
       {loading ? <Loading /> : null}
