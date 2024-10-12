@@ -10,7 +10,7 @@ import { URLS } from "@/constants/url";
 const Tarif = () => {
   const [tarif, setTarif] = useState();
   const [discount, setDiscount] = useState(true);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const handleCheked = () => {
     setDiscount((prevDiscount) => !prevDiscount); // discountni o'zgartirish
@@ -65,6 +65,7 @@ const Tarif = () => {
             type="checkbox"
             name="monthly"
             id="monthly"
+            checked={discount}
             onChange={handleCheked}
           />
           <label htmlFor="monthly" className="monthly__label">

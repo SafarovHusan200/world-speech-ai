@@ -110,9 +110,9 @@ const Sidebar = ({ sidebar, handleScroll }) => {
   return (
     <div className="sidebar" style={{ left: sidebar ? "0" : "-250px" }}>
       <div className="sidebar__top">
-        <div className="logo">
+        <a href="/" className="logo">
           <img src="/logo-full-icon.svg" alt="logo" />
-        </div>
+        </a>
         <div className="dropdown">
           <button className="btn-primary" onClick={toggleDropdown}>
             Начать встречу
