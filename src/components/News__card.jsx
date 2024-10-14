@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
 const NewsCard = ({ id, img, name, date, descr }) => {
-  console.log(id);
   const [isExpanded, setIsExpanded] = useState(false);
   const router = useRouter();
 

@@ -1,5 +1,5 @@
-import { Button, Modal } from "antd";
-import { useState } from "react";
+import { Modal } from "antd";
+import React from "react";
 import "../styles/modal.css";
 
 const MyModal = ({ isModalVisible, setIsModalVisible }) => {

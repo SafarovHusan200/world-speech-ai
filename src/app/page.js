@@ -7,7 +7,7 @@ import News from "@/pages/News";
 import Faq from "@/pages/Faq";
 import Advantages from "@/components/Advantages";
 import ContactUs from "@/pages/Contact-us";
-import Case from "@/pages/Feedback";
+import Case from "@/components/Case";
 
 export default function Home() {
   return (
