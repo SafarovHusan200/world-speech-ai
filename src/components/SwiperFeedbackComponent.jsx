@@ -59,10 +59,6 @@ const SwiperFeedbackComponent = () => {
       spaceBetween={50}
       slidesPerView={4}
       navigation
-      // direction="ltr"
-      // direction="rtl" // RTL for right-to-left direction
-      // onSwiper={(swiper) => console.log(swiper)}
-
       breakpoints={{
         0: {
           slidesPerView: 1,
@@ -79,7 +75,7 @@ const SwiperFeedbackComponent = () => {
           spaceBetween: 15,
         },
 
-        9200: {
+        920: {
           slidesPerView: 3,
           spaceBetween: 15,
         },

@@ -1,22 +1,13 @@
 "use client";
+
 import React, { useState } from "react";
+import MyModal from "./Modal";
 
 const FeedbackCard = ({ id, title, name, date, descr }) => {
-  const [isExpanded, setIsExpanded] = useState(false);
-
-  // const descriptionFunction = (descr) => {
-  //   const words = descr.split(" ");
-  //   if (words.length > 83 && !isExpanded) {
-  //     const shortDescr = words.slice(0, 83).join(" ");
-  //     return `${shortDescr}...`;
-  //   }
-  //   return descr;
-  // };
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
   const handleClick = () => {
-    setIsExpanded(!isExpanded);
-
-    console.log("object");
+    setIsModalVisible(!isModalVisible);
   };
 
   return (
@@ -32,11 +23,16 @@ const FeedbackCard = ({ id, title, name, date, descr }) => {
         <button
           className="feedback__card--btn"
           onClick={handleClick}
-          aria-expanded={isExpanded}
+          // aria-expanded={isModalVisible}
         >
-          {isExpanded ? "Скрыть" : "Смотреть"}
+          Смотреть
         </button>
       </div>
+
+      <MyModal
+        isModalVisible={isModalVisible}
+        setIsModalVisible={setIsModalVisible}
+      />
     </div>
   );
 };
