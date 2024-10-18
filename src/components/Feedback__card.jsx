@@ -1,9 +1,9 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import MyModal from "./Modal";
 
-const FeedbackCard = ({ id, title, name, date, descr }) => {
+const FeedbackCard = ({ id, title, problem, solution, image, results }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const handleClick = () => {
@@ -13,12 +13,12 @@ const FeedbackCard = ({ id, title, name, date, descr }) => {
   return (
     <div
       className="feedback__card"
-      style={{ backgroundImage: `url(/keys-${id}.jpg)` }}
+      style={{ backgroundImage: `url(${image})` }}
     >
       <div className="feedback__card--name">Кейс {id}</div>
 
       <div className="keys__card__bottom">
-        <div className="feedback__card--date">{title}</div>
+        <div className="feedback__card--title">{title}</div>
 
         <button
           className="feedback__card--btn"
@@ -32,6 +32,11 @@ const FeedbackCard = ({ id, title, name, date, descr }) => {
       <MyModal
         isModalVisible={isModalVisible}
         setIsModalVisible={setIsModalVisible}
+        title={title}
+        problem={problem}
+        solution={solution}
+        image={image}
+        results={results}
       />
     </div>
   );

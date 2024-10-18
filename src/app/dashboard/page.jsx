@@ -20,6 +20,9 @@ const Dashboard = () => {
     meeting_type: "yandex",
     meeting_url: "",
     password: "",
+
+    bitrix: "",
+    name: "",
   });
 
   const handleChange = (e) => {
@@ -123,7 +126,7 @@ const Dashboard = () => {
 
           <div className="mobile-content">
             <p className="file__type">
-              Аудиоформаты: MP3, M4A, OGG, WAV, WMA, M4A
+              Аудиоформаты: MP3, MP4, OGG, WAV, WMA, M4A
             </p>
             <label htmlFor="file" className="btn btn-outline">
               Загрузить файлы
@@ -181,7 +184,7 @@ const Dashboard = () => {
 
                 <label>Ссылка на конференцию</label>
                 <input
-                  type="text"
+                  type="url"
                   name="meeting_url"
                   placeholder="Zoom, Google Meet, Telemost"
                   autoComplete="current-text"
@@ -200,8 +203,49 @@ const Dashboard = () => {
 
                 <div className="row row1">
                   <Link href={"#!"}>Только для Zoom</Link>
-                  <span>Если нету, оставьте поле пустым</span>
+                  <span>Если пароль отсутствует, оставьте это поле пустым</span>
                 </div>
+
+                <div className="row row__bitrix">
+                  <input
+                    type="url"
+                    className="bitrix"
+                    name="bitrix"
+                    placeholder="Ссылка на групповой чат Bitrix 24"
+                    value={formData.bitrix}
+                    onChange={handleChange}
+                  />
+                  <div className="information">
+                    <div className="information__head">i</div>
+                    <div className="information__body">
+                      Проведет анализ встречи, поставит задачи и подготовит
+                      отчет. Выберите встречу в таблице или воспользуйтесь
+                      поиском, выберите тип ассистента и получите готовый
+                      результат
+                    </div>
+                  </div>
+                </div>
+
+                <div className="row row__bitrix">
+                  <input
+                    type="text"
+                    placeholder="Имя лида"
+                    className="lida"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                  />
+                  <div className="information">
+                    <div className="information__head">i</div>
+                    <div className="information__body">
+                      Проведет анализ встречи, поставит задачи и подготовит
+                      отчет. Выберите встречу в таблице или воспользуйтесь
+                      поиском, выберите тип ассистента и получите готовый
+                      результат
+                    </div>
+                  </div>
+                </div>
+
                 <div className="row row2">
                   <button type="submit" className="btn-primary">
                     Отправить

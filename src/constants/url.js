@@ -11,7 +11,9 @@ export const URLS = {
   sendCodeForActive: "/api/v1/users/send_activation_code/",
   activeProfile: "/api/v1/users/activate_account/",
 
-  tarif: "/api/v1/plans/",
+  tarif__yearly: "/api/v1/plans/?plan_type=yearly",
+  tarif__monthly: "/api/v1/plans/?plan_type=monthly",
+
   payment_history: "/api/v1/users/history/",
 
   send_url: "/api/v1/send_url/",
@@ -28,4 +30,8 @@ export const URLS = {
   google: "/api/v1/auth/link/google/",
   connect_calendar: "/api/v1/users/social_auth/",
   asistants: "/api/v1/assistants/",
+
+  module: "/api/v1/instructions/",
+
+  cases: "/api/v1/cases/",
 };

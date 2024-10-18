@@ -75,6 +75,7 @@
   border-radius: 25px;
   position: relative;
   padding: 3px;
+  cursor: pointer;
 }
 .tarif .container .section-actions label span {
   position: absolute;
@@ -110,11 +111,14 @@
   }
 }
 .tarif .container .section-actions span {
-  color: #0d9655;
+  padding: 8px 12px;
+  border-radius: 40px;
+  background: #0d9655;
+  color: #fff;
   font-size: 18px;
   font-style: normal;
-  font-weight: 500;
-  line-height: 21.6px; /* 21.6px */
+  font-weight: 550;
+  line-height: 120%; /* 21.6px */
   letter-spacing: 0.72px;
 }
 @media (max-width: 576px) {
@@ -142,9 +146,9 @@
   }
 }
 .tarif .container .tarif__items .tarif__item {
-  max-width: 420px;
+  max-width: 313px;
   width: 100%;
-  padding: 25px;
+  padding: 50px 30px;
   border-radius: 20px;
   border: 1px solid rgba(33, 40, 51, 0.2);
 }
@@ -153,13 +157,43 @@
     padding: 10px;
   }
 }
-.tarif .container .tarif__items .tarif__item--top__text {
-  color: #7b8a99;
+.tarif .container .tarif__items .tarif__item .position__type {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+.tarif .container .tarif__items .tarif__item .position__type span {
+  display: block;
+  width: 13px;
+  height: 13px;
+  background-color: #007bff;
+  border-radius: 50%;
+}
+.tarif .container .tarif__items .tarif__item .position__type h4 {
+  color: #212833;
   font-size: 18px;
-  font-weight: 400;
-  line-height: 21.6px; /* 21.6px */
+  font-weight: 700;
+  line-height: 120%; /* 21.6px */
   letter-spacing: 0.72px;
-  margin-bottom: 20px;
+}
+.tarif .container .tarif__items .tarif__item--top__year {
+  color: #212833;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 120%; /* 16.8px */
+  letter-spacing: 0.56px;
+  margin-bottom: 5px;
+}
+.tarif .container .tarif__items .tarif__item--top__text {
+  color: #9aaebd;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 120%; /* 16.8px */
+  letter-spacing: 0.56px;
+  margin-bottom: 10px;
 }
 @media (max-width: 576px) {
   .tarif .container .tarif__items .tarif__item--top__text {
@@ -174,13 +208,21 @@
   letter-spacing: 0.88px;
   margin-bottom: 20px;
 }
+.tarif .container .tarif__items .tarif__item--name h3 {
+  color: #007bff;
+  font-size: 40px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 120%; /* 48px */
+  letter-spacing: 1.6px;
+}
 .tarif .container .tarif__items .tarif__item--name span {
-  color: #7b8a99;
-  font-size: 22px;
+  color: #9aaebd;
+  font-size: 20px;
   font-style: normal;
   font-weight: 500;
-  line-height: 120%; /* 26.4px */
-  letter-spacing: 0.88px;
+  line-height: 120%; /* 24px */
+  letter-spacing: 0.8px;
 }
 @media (max-width: 576px) {
   .tarif .container .tarif__items .tarif__item--name {
@@ -246,7 +288,16 @@
     font-size: 14px;
   }
 }
+.tarif .container .tarif__items .tarif__item--subscription span {
+  color: #9aaebd;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 120%; /* 16.8px */
+  letter-spacing: 0.56px;
+}
 .tarif .container .tarif__items .tarif__item--btn {
+  width: 100%;
   margin-top: 20px;
   text-align: center;
   font-size: 18px;

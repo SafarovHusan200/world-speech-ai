@@ -8,10 +8,6 @@ import { useRouter } from "next/navigation";
 const Hero = () => {
   const router = useRouter();
 
-  const handleTranscription = () => {
-    router.push("/auth/login");
-  };
-
   const handleWork = () => {
     const login = JSON.parse(localStorage.getItem("isLogin")) || null;
 
@@ -45,10 +41,7 @@ const Hero = () => {
         </div>
 
         <div className="btns">
-          <button
-            className="btn btn-primary"
-            onClick={() => handleTranscription()}
-          >
+          <button className="btn btn-primary" onClick={() => handleWork()}>
             Начать транскрибацию
           </button>
         </div>
@@ -93,12 +86,6 @@ const Hero = () => {
                 <img src="/download.svg" alt="svg" />
               </div>
             </div>
-          </div>
-
-          <div className="btns">
-            <button className="btn btn-primary" onClick={() => handleWork()}>
-              Начать бесплатно
-            </button>
           </div>
         </div>
       </div>

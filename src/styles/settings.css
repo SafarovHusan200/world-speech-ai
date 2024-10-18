@@ -209,27 +209,67 @@
     margin-bottom: 20px;
   }
 }
-.settings .form__elements .settings-item__btn {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 20px;
-  margin-bottom: 50px;
+.settings .form__elements .accordion {
+  width: 100%;
+  border-radius: 10px 10px 0 0;
+  background: #fff;
+  overflow: hidden;
 }
-.settings .form__elements .settings-item__btn .calendar,
-.settings .form__elements .settings-item__btn .api-key {
+.settings .form__elements .accordionItem {
+  width: 100%;
+  overflow: hidden;
+}
+.settings .form__elements .accordionItem .accordionHeader {
+  cursor: pointer;
+  color: #1a1a1a;
+  font-family: "Montserrat", sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  transition: background-color 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.settings .form__elements .accordionItem .accordionHeader .calendar {
   color: #121212;
   font-size: 16px;
-  font-weight: 500;
+  font-style: normal;
+  font-weight: 550;
   line-height: 120%; /* 19.2px */
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
-.settings .form__elements .settings-item__btn .not {
+.settings .form__elements .accordionItem .accordionHeader .calendar img.active {
+  transform: rotate(180deg);
+}
+.settings .form__elements .accordionItem .accordionContent {
+  max-height: 0;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  padding: 0 15px;
+  background-color: #fff;
+  color: #1a1a1a;
+  font-family: "Montserrat", sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  margin-bottom: 27px;
+}
+.settings .form__elements .accordionItem .accordionContent .nav__link {
+  color: #007bff;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 120%; /* 21.6px */
+}
+.settings .form__elements .accordionItem .accordionContent .not {
   color: #7b8a99;
   font-size: 16px;
   font-weight: 400;
   line-height: 120%; /* 19.2px */
+  margin-bottom: 10px;
 }
-.settings .form__elements .settings-item__btn .connect-google {
+.settings .form__elements .accordionItem .accordionContent .connect-google {
   color: #007bff;
   font-size: 16px;
   font-style: normal;
@@ -237,6 +277,55 @@
   line-height: 120%; /* 19.2px */
   text-decoration-line: underline;
   cursor: pointer;
+}
+.settings .form__elements .accordionItem .accordionContent form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+.settings .form__elements .accordionItem .accordionContent form .form__input {
+  width: 211px;
+  height: 39px;
+  padding: 8px 16px;
+  border-radius: 10px;
+  border: 1px solid #b3b3b3;
+  overflow: hidden;
+  color: #7b8a99;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 160%; /* 25.6px */
+  letter-spacing: 0.32px;
+}
+.settings .form__elements .accordionItem .accordionContent form .btn-primary {
+  display: inline-flex;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 39px;
+}
+.settings .form__elements .accordionItem .accordionContent.active {
+  max-height: 100vh; /* Adjust based on content height */
+  padding: 10px 0;
+}
+.settings .form__elements .settings-item__btn {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
+  margin-bottom: 30px;
+}
+.settings .form__elements .settings-item__btn .connect__body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.settings .form__elements .settings-item__btn .api-key {
+  color: #121212;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 550;
+  line-height: 120%; /* 19.2px */
 }
 .settings .form__elements .settings-item__btn .key {
   color: #121212;

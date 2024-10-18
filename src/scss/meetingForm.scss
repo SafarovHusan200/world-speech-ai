@@ -279,12 +279,6 @@
   }
 
   &--right {
-    margin-top: 100px;
-
-    @media (max-width: 1000px) {
-      margin-top: 20px;
-    }
-
     .meeting-form {
       width: 100%;
       max-width: 800px;
@@ -402,8 +396,71 @@
             }
           }
 
+          .information {
+            position: relative;
+            width: 29px;
+            height: 29px;
+            border: 1px solid #7b8a99;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+
+            .information__head {
+              color: #7b8a99;
+            }
+
+            .information__body {
+              display: none;
+              position: absolute;
+              z-index: 2;
+
+              width: 340px;
+              height: 120px;
+              padding: 16px 10px;
+              border-radius: 0px 10px 10px 10px;
+              background: #7b8a99;
+
+              top: 26px;
+              left: 15px;
+
+              color: #fff;
+
+              font-size: 16px;
+              font-style: normal;
+              font-weight: 400;
+              line-height: normal;
+              letter-spacing: 0.32px;
+
+              @media (max-width: 1850px) {
+                left: auto;
+                right: 16px;
+                border-radius: 10px 0px 10px 10px;
+              }
+            }
+
+            &:hover {
+              .information__body {
+                display: block;
+              }
+            }
+          }
+
           .row {
             display: flex;
+
+            &.row__bitrix {
+              gap: 10px;
+              align-items: center;
+
+              margin-bottom: 20px;
+
+              input {
+                margin-bottom: 0;
+                width: calc(100% - 45px);
+              }
+            }
 
             &.row1 {
               gap: 16px;
@@ -417,7 +474,7 @@
                 gap: 10px;
               }
               a {
-                color: #4085fe;
+                color: #000;
 
                 font-size: 14px;
                 font-style: normal;

@@ -90,6 +90,14 @@
         &.active {
           max-height: 100vh; /* Adjust based on content height */
           padding: 15px 15px;
+
+          color: #1a1a1a;
+
+          font-family: "Montserrat", sans-serif;
+          font-size: 14px;
+          font-style: normal;
+          font-weight: 400;
+          line-height: normal;
         }
       }
     }

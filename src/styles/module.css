@@ -14,7 +14,7 @@
 }
 .modul .section-title {
   text-align: left;
-  margin-bottom: 50px;
+  margin-bottom: 36px;
 }
 .modul .modul__block {
   min-height: calc(100vh - 300px);
@@ -27,18 +27,23 @@
 .modul .modul__block .card {
   max-width: 369px;
   width: 100%;
-  height: 369px;
+  height: 390px;
   border-radius: 10px;
   background: #fcfcfc;
   background: url("/module__card__bg.png");
   background-position: top;
-  background-size: contain;
+  background-size: cover;
   background-repeat: no-repeat;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  padding: 20px;
   position: relative;
+}
+.modul .modul__block .card:nth-child(2) {
+  background: url("/module__card__bg2.png");
+}
+.modul .modul__block .card:nth-child(3) {
+  background: url("/module__card__bg3.png");
 }
 .modul .modul__block .card .social__media {
   position: absolute;
@@ -51,17 +56,24 @@
   width: 20px;
   height: 20px;
 }
+.modul .modul__block .card .bottom__content {
+  padding: 20px;
+  border-radius: 10px;
+  background: rgba(252, 252, 252, 0.2);
+  -webkit-backdrop-filter: blur(15px);
+          backdrop-filter: blur(15px);
+}
 .modul .modul__block .card h4 {
-  color: #121212;
+  color: #fff;
   font-size: 22px;
   font-style: normal;
-  font-weight: 500;
+  font-weight: 550;
   line-height: 120%; /* 26.4px */
   letter-spacing: 1.1px;
   margin-bottom: 5px;
 }
 .modul .modul__block .card p {
-  color: #7b8a99;
+  color: #c1d3e5;
   font-size: 16px;
   font-style: normal;
   font-weight: 500;

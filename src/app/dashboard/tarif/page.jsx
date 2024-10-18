@@ -6,60 +6,38 @@ import "../../../styles/dashboard-tarif.css";
 import useHttp from "@/app/hooks/useHttp";
 import { baseAPI } from "@/constants/domain";
 import { URLS } from "@/constants/url";
+import axios from "axios";
 
 const Tarif = () => {
   const [tarif, setTarif] = useState(null);
-  const { request, loading, error } = useHttp();
+  const { request, error } = useHttp();
   const [discount, setDiscount] = useState(true);
 
-  const getTarif = async () => {
-    const url = baseAPI + URLS.tarif;
-    request(url, "GET")
-      .then((response) => {
-        console.log(response);
-        setTarif(response);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+  const [loading, setLoading] = useState(true);
 
   const handleCheked = () => {
     setDiscount((prevDiscount) => !prevDiscount); // discountni o'zgartirish
-
-    const newTarif = tarif.map((t) => {
-      const discountValue = 1.15; // 15% ga teng
-      if (discount) {
-        // Agar chegirma mavjud bo'lsa, narxni kamaytirish
-        return { ...t, price: Math.round(t.price * discountValue) };
-      } else {
-        // Agar chegirma olinmasa, narxni tiklash
-        return { ...t, price: Math.round(t.price / discountValue) };
-      }
-    });
-
-    setTarif(newTarif); // Yangilangan tariflar bilan setTarif
-  };
-
-  const handlePerchase = (id) => {
-    const url = baseAPI + URLS.purchases_create;
-    try {
-      request(url, "POST", { plan: id })
-        .then((response) => {
-          console.log(response);
-          window.location.href = response.payment_url;
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    } catch (err) {
-      console.log(err);
-    }
   };
 
   useEffect(() => {
+    const getTarif = async () => {
+      setLoading(true);
+
+      const url = discount ? URLS.tarif__yearly : URLS.tarif__monthly;
+
+      try {
+        const response = await axios.get(baseAPI + url);
+        setTarif(response.data);
+        console.log(response.data);
+      } catch (err) {
+        console.log("Error fetching data: ", err);
+      }
+
+      setLoading(false);
+    };
+
     getTarif();
-  }, []);
+  }, [discount]);
   return (
     <div className="dashboard__tarif">
       <div className="section-title">Тарифы</div>
@@ -85,7 +63,7 @@ const Tarif = () => {
       </div>
 
       <div className="tarif__items">
-        {tarif &&
+        {/* {tarif &&
           tarif?.length > 0 &&
           tarif?.map((t) => (
             <div key={t.id} className="tarif__item">
@@ -129,7 +107,9 @@ const Tarif = () => {
                 Купить
               </button>
             </div>
-          ))}
+          ))} */}
+
+        <TarifCard tarif={tarif} loading={loading} discount={discount} />
       </div>
 
       {!tarif && tarif?.length === 0 && <TarifCard />}

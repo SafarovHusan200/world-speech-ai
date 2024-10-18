@@ -12,67 +12,81 @@ import Accordion from "@/components/Accordion";
 const Instructions = () => {
   const items = [
     {
-      title: "Как преобразовать видео в текст?",
+      title: "Можно ли транскрибировать аудио/видео в текст?",
       content:
-        "Lorem ipsum dolor sit amet consectetur. Ipsum dictum neque vulputate suspendisse odio. Lorem ipsum dolor sit amet consectetur. Ipsum dictum neque vulputate suspendisse odio. Lorem ipsum dolor sit amet consectetur. Ipsum dictum neque vulputate suspendisse odio. Lorem ipsum dolor sit amet consectetur. ",
+        "Да, WorldSpeechAI поддерживает транскрибацию аудио и видео. Просто загрузите аудио- или видеофайл, и наша система быстро преобразует его в текстовый документ.",
     },
     {
-      title: "Как преобразовать видео в текст?",
+      title:
+        "Как получить больше минут, встреч и запросов для транскрибации/анализа?",
       content:
-        "Lorem ipsum dolor sit amet consectetur. Ipsum dictum neque vulputate suspendisse odio. Lorem ipsum dolor sit amet consectetur. Ipsum dictum neque vulputate suspendisse odio. Lorem ipsum dolor sit amet consectetur. Ipsum dictum neque vulputate suspendisse odio. Lorem ipsum dolor sit amet consectetur. ",
+        "Вы можете приобрести дополнительные минуты, встречи и запросы через личный кабинет на нашем сайте или обновить тарифный план, чтобы увеличить их лимит.",
     },
     {
-      title: "Как преобразовать видео в текст?",
+      title: "Сгорают ли приобретённые минуты, встречи и запросы?",
       content:
-        "Lorem ipsum dolor sit amet consectetur. Ipsum dictum neque vulputate suspendisse odio. Lorem ipsum dolor sit amet consectetur. Ipsum dictum neque vulputate suspendisse odio. Lorem ipsum dolor sit amet consectetur. Ipsum dictum neque vulputate suspendisse odio. Lorem ipsum dolor sit amet consectetur. ",
+        "Да, оставшиеся минуты, встречи и запросы, предоставленные по тарифу, сгорают в конце периода действия подписки.",
     },
     {
-      title: "Как преобразовать видео в текст?",
+      title: "Как получить тестовый доступ к WorldSpeechAI?",
       content:
-        "Lorem ipsum dolor sit amet consectetur. Ipsum dictum neque vulputate suspendisse odio. Lorem ipsum dolor sit amet consectetur. Ipsum dictum neque vulputate suspendisse odio. Lorem ipsum dolor sit amet consectetur. Ipsum dictum neque vulputate suspendisse odio. Lorem ipsum dolor sit amet consectetur. ",
+        "Для получения тестового доступа зарегистрируйтесь на нашем сайте. Вы получите ограниченное количество минут, встреч и запросов для проверки возможностей WorldSpeechAI.",
     },
     {
-      title: "Как преобразовать видео в текст?",
+      title: "Какие форматы встреч поддерживает WorldSpeechAI?",
       content:
-        "Lorem ipsum dolor sit amet consectetur. Ipsum dictum neque vulputate suspendisse odio. Lorem ipsum dolor sit amet consectetur. Ipsum dictum neque vulputate suspendisse odio. Lorem ipsum dolor sit amet consectetur. Ipsum dictum neque vulputate suspendisse odio. Lorem ipsum dolor sit amet consectetur. ",
+        "WorldSpeechAI поддерживает встречи в Yandex Telemost, Zoom и Google Meet с последующим экспортом данных в формате текстовых стенограмм. Кроме того, система может интегрироваться с CRM-системами, такими как Bitrix24 и AmoCRM.",
     },
     {
-      title: "Как преобразовать видео в текст?",
+      title: "Сколько встреч можно записывать одновременно?",
       content:
-        "Lorem ipsum dolor sit amet consectetur. Ipsum dictum neque vulputate suspendisse odio. Lorem ipsum dolor sit amet consectetur. Ipsum dictum neque vulputate suspendisse odio. Lorem ipsum dolor sit amet consectetur. Ipsum dictum neque vulputate suspendisse odio. Lorem ipsum dolor sit amet consectetur. ",
+        "На текущий момент WorldSpeechAI может записывать только одну встречу одновременно. Для записи нескольких встреч потребуется завершить текущую или использовать дополнительные аккаунты.",
     },
     {
-      title: "Как преобразовать видео в текст?",
+      title: "Какие форматы отчётов поддерживаются?",
       content:
-        "Lorem ipsum dolor sit amet consectetur. Ipsum dictum neque vulputate suspendisse odio. Lorem ipsum dolor sit amet consectetur. Ipsum dictum neque vulputate suspendisse odio. Lorem ipsum dolor sit amet consectetur. Ipsum dictum neque vulputate suspendisse odio. Lorem ipsum dolor sit amet consectetur. ",
+        "WorldSpeechAI поддерживает экспорт отчётов в текстовые форматы, такие как TXT, PDF и DOCX.",
     },
     {
-      title: "Как преобразовать видео в текст?",
+      title:
+        "Как система работает с долгими встречами? Есть ли ограничения по времени?",
       content:
-        "Lorem ipsum dolor sit amet consectetur. Ipsum dictum neque vulputate suspendisse odio. Lorem ipsum dolor sit amet consectetur. Ipsum dictum neque vulputate suspendisse odio. Lorem ipsum dolor sit amet consectetur. Ipsum dictum neque vulputate suspendisse odio. Lorem ipsum dolor sit amet consectetur. ",
+        "Ограничений по времени для проведения встреч нет. В системе работает счётчик минут, которые расходуются в соответствии с вашим тарифом.",
     },
     {
-      title: "Как преобразовать видео в текст?",
+      title: "Какие языки поддерживает платформа?",
       content:
-        "Lorem ipsum dolor sit amet consectetur. Ipsum dictum neque vulputate suspendisse odio. Lorem ipsum dolor sit amet consectetur. Ipsum dictum neque vulputate suspendisse odio. Lorem ipsum dolor sit amet consectetur. Ipsum dictum neque vulputate suspendisse odio. Lorem ipsum dolor sit amet consectetur. ",
+        "WorldSpeechAI поддерживает распознавание речи на более чем 99 языках, включая английский, русский, французский и многие другие. Вы можете выбрать нужный язык в настройках перед началом встречи.",
+    },
+    {
+      title: "Есть ли в системе возможность анализа встреч?",
+      content:
+        "Да, система WorldSpeechAI предоставляет возможность анализа встреч. С помощью встроенных ассистентов можно получить детальный отчёт с ключевыми моментами, основными выводами и другими важными деталями встречи.",
+    },
+    {
+      title: "Как связаться с поддержкой, если возникли вопросы?",
+      content:
+        "Если у вас возникли вопросы или сложности, вы можете обратиться в службу поддержки через контактную форму на сайте или по электронной почте. Также на сайте доступен раздел с часто задаваемыми вопросами (FAQ).",
     },
   ];
-  const { request, loading, error } = useHttp();
-  const [transcriptions, setTranscriptions] = useState([]);
-  const token =
-    typeof window !== "undefined"
-      ? JSON.parse(localStorage.getItem("token")) || null
-      : null;
 
-  const getInstructions = async () => {
-    const url = baseAPI + URLS.transcriptions;
+  const { request, loading, error } = useHttp();
+  const [smartGPT, setSmartGPT] = useState([]);
+
+  const getSmartGPT = async () => {
+    const url = baseAPI + URLS.module;
     try {
       const response = await request(url, "GET");
-      setTranscriptions(response);
+      console.log("setSmartGPT", response[0]);
+      setSmartGPT(response[0]);
     } catch (err) {
       console.error("Error fetching data:", err);
     }
   };
+
+  useEffect(() => {
+    getSmartGPT();
+  }, []);
 
   return (
     <div className="questions">
@@ -87,25 +101,26 @@ const Instructions = () => {
           </div>
           <div className="smartGPT__block">
             <div className="video__part">
-              <button className="play__btn">
-                <img src="/play__icon.svg" alt="svg" />
-              </button>
+              {/* <video src={smartGPT.video_url} controls loop muted autoplay /> */}
+
+              <iframe
+                width="100%"
+                height="100%"
+                src={`https://rutube.ru/play/embed/${
+                  smartGPT?.video_url?.split("/")[4] // 4-indeks bo'lib, video_id shu yerda bo'ladi
+                }`}
+                frameBorder="0"
+                allow="clipboard-write; autoplay"
+                webkitAllowFullScreen
+                mozAllowFullScreen
+                allowFullScreen
+              ></iframe>
             </div>
 
-            <h3 className="smart__title">SmartGPT</h3>
+            <h3 className="smart__title">{smartGPT?.title}</h3>
 
-            <p className="descr">
-              Добро пожаловать в WorldspeechAI. Пожалуйста, прочтите дальше,
-              чтобы ознакомиться с правилами и ограничениями, регулирующими
-              использование вами наших веб-сайтов, продуктов, услуг и
-              приложений, которые включают, но не ограничиваются, веб-приложение
-              WorldspeechAI (“Сервис”). Услуги предоставляются и оплачиваются
-              через ИП Жилкин Федор Игоревич. Если у вас есть какие-либо
-              вопросы, комментарии или опасения относительно настоящих условий
-              или Услуг, пожалуйста, свяжитесь с нами по адресу
-              hello@WorldspeechAI.ai
-            </p>
-            <p className="descr">
+            <p className="descr">{smartGPT?.description}</p>
+            {/* <p className="descr">
               Настоящие Условия предоставления услуг (“Условия”) являются
               обязательным договором между вами и WorldspeechAI.ai (“мы” и
               “нас”). Вы должны согласиться и принять все Условия, в противном
@@ -114,24 +129,24 @@ const Instructions = () => {
               этими Условиями, и эти Условия будут оставаться в силе, пока вы
               пользуетесь Сервисом. Эти Условия включают положения настоящего
               документа, а также положения Политики конфиденциальности.
-            </p>
+            </p> */}
 
-            <p className="descr">
+            {/* <p className="descr">
               Изменятся ли когда-нибудь эти условия? Мы постоянно пытаемся
               улучшить наши услуги, поэтому, возможно, потребуется изменить эти
               Условия вместе с Услугами. Мы оставляем за собой право изменять
               Условия в любое время, но если мы это сделаем, мы доведем это до
               вашего сведения, разместив уведомление на веб-сайте WorldspeechAI,
               отправив вам электронное письмо и/или каким-либо другим способом.
-            </p>
+            </p> */}
 
-            <p className="descr">
+            {/* <p className="descr">
               Если вы не согласны с новыми Условиями, вы можете отклонить их; к
               сожалению, это означает, что вы больше не сможете пользоваться
               Услугами. Если вы каким-либо образом пользуетесь Услугами после
               вступления в силу изменений в Условиях, это означает, что вы
               согласны со всеми изменениями.
-            </p>
+            </p> */}
           </div>
         </div>
       </div>

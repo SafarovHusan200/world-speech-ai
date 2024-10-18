@@ -79,7 +79,7 @@ const Support = () => {
               ></textarea>
 
               <button className="btn btn-primary" type="submit">
-                Продолжить
+                Отправить
               </button>
             </form>
           </div>

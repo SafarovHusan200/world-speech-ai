@@ -10,42 +10,27 @@ import { message } from "antd";
 import { URLS } from "@/constants/url";
 
 const Modules = () => {
-  const { request, loading, error } = useHttp();
-  const [transcriptions, setTranscriptions] = useState([]);
-  const token =
-    typeof window !== "undefined"
-      ? JSON.parse(localStorage.getItem("token")) || null
-      : null;
-
-  const getModules = async () => {
-    const url = baseAPI + URLS.transcriptions;
-    try {
-      const response = await request(url, "GET");
-      setTranscriptions(response);
-    } catch (err) {
-      console.error("Error fetching data:", err);
-    }
-  };
-
   return (
     <div className="modul">
       <div className="section-title">Модули</div>
       <div className="modul__block">
-        {loading && <Loading />}
-        {error && <p>{error}</p>}
-
         <div className="card">
-          <h4>SmartGPT</h4>
-          <p>
-            Собственный ИИ на серверах в РФ. Ответит на вопросы, поможет с
-            текстом
-          </p>
+          <div className="bottom__content">
+            <h4>SmartGPT</h4>
+            <p>
+              Собственный ИИ на серверах в РФ. Ответит на вопросы, поможет с
+              текстом
+            </p>
+          </div>
         </div>
         <div className="card">
-          <h4>Личный ассистент</h4>
-          <p>
-            Создайте ИИ-асситента, который запланирует встречу и поставит задачи
-          </p>
+          <div className="bottom__content">
+            <h4>Личный ассистент</h4>
+            <p>
+              Создайте ИИ-асситента, который запланирует встречу и поставит
+              задачи
+            </p>
+          </div>
         </div>
         <div className="card">
           <div className="social__media">
@@ -62,8 +47,11 @@ const Modules = () => {
               <img src="/meeting-icon.svg" alt="svg" />
             </a>
           </div>
-          <h4> Анализ эмоций</h4>
-          <p>Оценка и анализ эмоционального состояния сотрудников</p>
+
+          <div className="bottom__content">
+            <h4> Анализ эмоций</h4>
+            <p>Оценка и анализ эмоционального состояния сотрудников</p>
+          </div>
         </div>
       </div>
     </div>

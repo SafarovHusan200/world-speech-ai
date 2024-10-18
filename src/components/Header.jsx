@@ -48,9 +48,7 @@ const Header = () => {
                 <li>
                   <Link href="/#tarif">Тарифы</Link>
                 </li>
-                <li>
-                  <Link href="/#safety">Безопасность</Link>
-                </li>
+
                 <li>
                   <Link href="/#feedback">Кейсы</Link>
                 </li>
@@ -70,7 +68,7 @@ const Header = () => {
               <div className="auth">
                 {isLogin ? (
                   <Link href="/dashboard" className="btn btn-outline">
-                    Панель управления
+                    Личный кабинет
                   </Link>
                 ) : (
                   <>
@@ -90,7 +88,7 @@ const Header = () => {
             <div className="auth">
               {isLogin ? (
                 <Link href="/dashboard" className="btn btn-outline">
-                  Панель управления
+                  Личный кабинет
                 </Link>
               ) : (
                 <>

@@ -8,56 +8,64 @@ import "../styles/faq.css";
 const Faq = () => {
   const items = [
     {
-      title: "Как преобразовать видео в текст?",
+      title: "Можно ли транскрибировать аудио/видео в текст?",
       content:
-        "Lorem ipsum dolor sit amet consectetur. Ipsum dictum neque vulputate suspendisse odio. Lorem ipsum dolor sit amet consectetur. Ipsum dictum neque vulputate suspendisse odio. Lorem ipsum dolor sit amet consectetur. Ipsum dictum neque vulputate suspendisse odio. Lorem ipsum dolor sit amet consectetur. Ipsum dictum neque vulputate suspendisse odio. Lorem ipsum dolor sit amet consectetur. Ipsum dictum neque vulputate suspendisse odio. Lorem ipsum dolor sit amet consectetur. Ipsum dictum neque vulputate suspendisse odio. ",
+        "Да, WorldSpeechAI поддерживает транскрибацию аудио и видео. Просто загрузите аудио- или видеофайл, и наша система быстро преобразует его в текстовый документ.",
     },
     {
-      title: "Можно транскрибировать аудио в текст?",
+      title:
+        "Как получить больше минут, встреч и запросов для транскрибации/анализа?",
       content:
-        "Lorem ipsum dolor sit amet consectetur. Ipsum dictum neque vulputate suspendisse odio. Lorem ipsum dolor sit amet consectetur. Ipsum dictum neque vulputate suspendisse odio. Lorem ipsum dolor sit amet consectetur. Ipsum dictum neque vulputate suspendisse odio. Lorem ipsum dolor sit amet consectetur. Ipsum dictum neque vulputate suspendisse odio. Lorem ipsum dolor sit amet consectetur. Ipsum dictum neque vulputate suspendisse odio. Lorem ipsum dolor sit amet consectetur. Ipsum dictum neque vulputate suspendisse odio. ",
+        "Вы можете приобрести дополнительные минуты, встречи и запросы через личный кабинет на нашем сайте или обновить тарифный план, чтобы увеличить их лимит.",
     },
     {
-      title: "Максимальная продолжительность видео для преобразования в текст?",
+      title: "Сгорают ли приобретённые минуты, встречи и запросы?",
       content:
-        "Lorem ipsum dolor sit amet consectetur. Ipsum dictum neque vulputate suspendisse odio. Lorem ipsum dolor sit amet consectetur. Ipsum dictum neque vulputate suspendisse odio. Lorem ipsum dolor sit amet consectetur. Ipsum dictum neque vulputate suspendisse odio. Lorem ipsum dolor sit amet consectetur. Ipsum dictum neque vulputate suspendisse odio. Lorem ipsum dolor sit amet consectetur. Ipsum dictum neque vulputate suspendisse odio. Lorem ipsum dolor sit amet consectetur. Ipsum dictum neque vulputate suspendisse odio. ",
+        "Да, оставшиеся минуты, встречи и запросы, предоставленные по тарифу, сгорают в конце периода действия подписки.",
     },
     {
-      title: "Какие форматы файлов принимает Teamlogs?",
+      title: "Как получить тестовый доступ к WorldSpeechAI?",
       content:
-        "Lorem ipsum dolor sit amet consectetur. Ipsum dictum neque vulputate suspendisse odio. Lorem ipsum dolor sit amet consectetur. Ipsum dictum neque vulputate suspendisse odio. Lorem ipsum dolor sit amet consectetur. Ipsum dictum neque vulputate suspendisse odio. Lorem ipsum dolor sit amet consectetur. Ipsum dictum neque vulputate suspendisse odio. Lorem ipsum dolor sit amet consectetur. Ipsum dictum neque vulputate suspendisse odio. Lorem ipsum dolor sit amet consectetur. Ipsum dictum neque vulputate suspendisse odio. ",
+        "Для получения тестового доступа зарегистрируйтесь на нашем сайте. Вы получите ограниченное количество минут, встреч и запросов для проверки возможностей WorldSpeechAI.",
     },
     {
-      title: "Как получить тестовый доступ к журналам Teamlogs? ",
+      title: "Какие форматы встреч поддерживает WorldSpeechAI?",
       content:
-        "Lorem ipsum dolor sit amet consectetur. Ipsum dictum neque vulputate suspendisse odio. Lorem ipsum dolor sit amet consectetur. Ipsum dictum neque vulputate suspendisse odio. Lorem ipsum dolor sit amet consectetur. Ipsum dictum neque vulputate suspendisse odio. Lorem ipsum dolor sit amet consectetur. Ipsum dictum neque vulputate suspendisse odio. Lorem ipsum dolor sit amet consectetur. Ipsum dictum neque vulputate suspendisse odio. Lorem ipsum dolor sit amet consectetur. Ipsum dictum neque vulputate suspendisse odio. ",
+        "WorldSpeechAI поддерживает встречи в Yandex Telemost, Zoom и Google Meet с последующим экспортом данных в формате текстовых стенограмм. Кроме того, система может интегрироваться с CRM-системами, такими как Bitrix24 и AmoCRM.",
     },
     {
-      title: "Как получить больше минут для транскрибации?",
+      title: "Сколько встреч можно записывать одновременно?",
       content:
-        "Lorem ipsum dolor sit amet consectetur. Ipsum dictum neque vulputate suspendisse odio. Lorem ipsum dolor sit amet consectetur. Ipsum dictum neque vulputate suspendisse odio. Lorem ipsum dolor sit amet consectetur. Ipsum dictum neque vulputate suspendisse odio. Lorem ipsum dolor sit amet consectetur. Ipsum dictum neque vulputate suspendisse odio. Lorem ipsum dolor sit amet consectetur. Ipsum dictum neque vulputate suspendisse odio. Lorem ipsum dolor sit amet consectetur. Ipsum dictum neque vulputate suspendisse odio. ",
+        "На текущий момент WorldSpeechAI может записывать только одну встречу одновременно. Для записи нескольких встреч потребуется завершить текущую или использовать дополнительные аккаунты.",
     },
     {
-      title: "Сгорают ли приобретенные минуты?",
+      title: "Какие форматы отчётов поддерживаются?",
       content:
-        "Lorem ipsum dolor sit amet consectetur. Ipsum dictum neque vulputate suspendisse odio. Lorem ipsum dolor sit amet consectetur. Ipsum dictum neque vulputate suspendisse odio. Lorem ipsum dolor sit amet consectetur. Ipsum dictum neque vulputate suspendisse odio. Lorem ipsum dolor sit amet consectetur. Ipsum dictum neque vulputate suspendisse odio. Lorem ipsum dolor sit amet consectetur. Ipsum dictum neque vulputate suspendisse odio. Lorem ipsum dolor sit amet consectetur. Ipsum dictum neque vulputate suspendisse odio. ",
+        "WorldSpeechAI поддерживает экспорт отчётов в текстовые форматы, такие как TXT, PDF и DOCX.",
     },
     {
-      title: "Как я могу оплатить сервис со счета ООО или ИП?",
+      title:
+        "Как система работает с долгими встречами? Есть ли ограничения по времени?",
       content:
-        "Lorem ipsum dolor sit amet consectetur. Ipsum dictum neque vulputate suspendisse odio. Lorem ipsum dolor sit amet consectetur. Ipsum dictum neque vulputate suspendisse odio. Lorem ipsum dolor sit amet consectetur. Ipsum dictum neque vulputate suspendisse odio. Lorem ipsum dolor sit amet consectetur. Ipsum dictum neque vulputate suspendisse odio. Lorem ipsum dolor sit amet consectetur. Ipsum dictum neque vulputate suspendisse odio. Lorem ipsum dolor sit amet consectetur. Ipsum dictum neque vulputate suspendisse odio. ",
+        "Ограничений по времени для проведения встреч нет. В системе работает счётчик минут, которые расходуются в соответствии с вашим тарифом.",
     },
     {
-      title: "Как команды используют Worldspeechai?",
+      title: "Какие языки поддерживает платформа?",
       content:
-        "Lorem ipsum dolor sit amet consectetur. Ipsum dictum neque vulputate suspendisse odio. Lorem ipsum dolor sit amet consectetur. Ipsum dictum neque vulputate suspendisse odio. Lorem ipsum dolor sit amet consectetur. Ipsum dictum neque vulputate suspendisse odio. Lorem ipsum dolor sit amet consectetur. Ipsum dictum neque vulputate suspendisse odio. Lorem ipsum dolor sit amet consectetur. Ipsum dictum neque vulputate suspendisse odio. Lorem ipsum dolor sit amet consectetur. Ipsum dictum neque vulputate suspendisse odio. ",
+        "WorldSpeechAI поддерживает распознавание речи на более чем 99 языках, включая английский, русский, французский и многие другие. Вы можете выбрать нужный язык в настройках перед началом встречи.",
     },
     {
-      title: "Как получить тестовый доступ к Teamlogs?",
+      title: "Есть ли в системе возможность анализа встреч?",
       content:
-        "Lorem ipsum dolor sit amet consectetur. Ipsum dictum neque vulputate suspendisse odio. Lorem ipsum dolor sit amet consectetur. Ipsum dictum neque vulputate suspendisse odio. Lorem ipsum dolor sit amet consectetur. Ipsum dictum neque vulputate suspendisse odio. Lorem ipsum dolor sit amet consectetur. Ipsum dictum neque vulputate suspendisse odio. Lorem ipsum dolor sit amet consectetur. Ipsum dictum neque vulputate suspendisse odio. Lorem ipsum dolor sit amet consectetur. Ipsum dictum neque vulputate suspendisse odio. ",
+        "Да, система WorldSpeechAI предоставляет возможность анализа встреч. С помощью встроенных ассистентов можно получить детальный отчёт с ключевыми моментами, основными выводами и другими важными деталями встречи.",
+    },
+    {
+      title: "Как связаться с поддержкой, если возникли вопросы?",
+      content:
+        "Если у вас возникли вопросы или сложности, вы можете обратиться в службу поддержки через контактную форму на сайте или по электронной почте. Также на сайте доступен раздел с часто задаваемыми вопросами (FAQ).",
     },
   ];
+
   return (
     <section className="faq" id="faq">
       <div className="container">

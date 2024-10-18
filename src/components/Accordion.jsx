@@ -12,7 +12,7 @@ const Accordion = ({ items }) => {
       {items.map((item, index) => (
         <div key={index} className="accordionItem">
           <div
-            className="accordionHeader"
+            className={`accordionHeader`}
             onClick={() => toggleAccordion(index)}
           >
             {item.title}

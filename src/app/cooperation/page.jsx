@@ -79,7 +79,7 @@ const Cooperation = () => {
               ></textarea>
 
               <button type="submit" className="btn btn-primary">
-                Продолжить
+                Отправить
               </button>
             </form>
           </div>

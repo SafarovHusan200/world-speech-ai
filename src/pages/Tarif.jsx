@@ -4,8 +4,9 @@ import React, { useEffect, useState } from "react";
 import "/src/styles/tarif.css";
 import TarifCard from "@/components/TarifCard";
 import axios from "axios";
-import { baseAPI } from "@/constants/domain";
+
 import { URLS } from "@/constants/url";
+import { baseAPI } from "@/constants/domain";
 
 const Tarif = () => {
   const [tarif, setTarif] = useState();
@@ -14,41 +15,26 @@ const Tarif = () => {
 
   const handleCheked = () => {
     setDiscount((prevDiscount) => !prevDiscount); // discountni o'zgartirish
-
-    const newTarif = tarif.map((t) => {
-      const discountValue = 1.15; // 15% ga teng
-      if (discount) {
-        // Agar chegirma mavjud bo'lsa, narxni kamaytirish
-        return { ...t, price: Math.round(t.price * discountValue) };
-      } else {
-        // Agar chegirma olinmasa, narxni tiklash
-        return { ...t, price: Math.round(t.price / discountValue) };
-      }
-    });
-
-    setTarif(newTarif); // Yangilangan tariflar bilan setTarif
-  };
-
-  const getTarif = async () => {
-    setLoading(true);
-    const url = baseAPI + URLS.tarif;
-
-    const result = await axios
-      .get(url)
-      .then((response) => {
-        setTarif(response.data);
-        console.log(response.data);
-        return response.data;
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    setLoading(false);
   };
 
   useEffect(() => {
+    const getTarif = async () => {
+      setLoading(true);
+
+      const url = discount ? URLS.tarif__yearly : URLS.tarif__monthly;
+
+      try {
+        const response = await axios.get(baseAPI + url);
+        setTarif(response.data);
+      } catch (err) {
+        console.log("Error fetching data: ", err);
+      }
+
+      setLoading(false);
+    };
+
     getTarif();
-  }, []);
+  }, [discount]);
   return (
     <section className="tarif" id="tarif">
       <div className="container">
@@ -77,7 +63,7 @@ const Tarif = () => {
 
         {/* Section items */}
 
-        <TarifCard tarif={tarif} loading={loading} />
+        <TarifCard tarif={tarif} loading={loading} discount={discount} />
 
         <div className="tarif__bottom">
           <div className="tarif__bottom__col tarif__bottom__col-1">

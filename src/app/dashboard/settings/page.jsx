@@ -21,6 +21,10 @@ const Setting = () => {
     name: user?.name,
     email: user?.email,
   });
+  const [activeIndex, setActiveIndex] = useState(null);
+  const toggleAccordion = (index) => {
+    setActiveIndex(activeIndex === index ? null : index);
+  };
 
   const router = useRouter();
   const { request, loading, error } = useHttp();
@@ -399,28 +403,161 @@ const Setting = () => {
             </label>
           </div>
         </div>
+
+        {/* =================== */}
         <div className="settings-item__btn ">
-          <p className="calendar">Google Calendar</p>
-          <p className="not">
-            {googleCalendar ? `Подключен  ${googleCalendar}` : "Отсутствует"}
+          <p className="calendar">
+            Google Calendar <img src="/up_icon.svg" alt="icon" />
           </p>
-          <span
-            className="connect-google"
-            onClick={() => handleCalendarConnect()}
-          >
-            {googleCalendar ? "Отключить" : "Подключить"}
-          </span>
+          <div className="connect__body">
+            <p className="not">
+              {googleCalendar ? `Подключен  ${googleCalendar}` : "Отсутствует"}
+            </p>
+            <span
+              className="connect-google"
+              onClick={() => handleCalendarConnect()}
+            >
+              {googleCalendar ? "Отключить" : "Подключить"}
+            </span>
+          </div>
         </div>
+
+        {/* =================== */}
+
+        <div className="accordion">
+          <div className="accordionItem">
+            <div
+              className={`accordionHeader`}
+              onClick={() => toggleAccordion(0)}
+            >
+              <p className="calendar">
+                Google Calendar{" "}
+                <img
+                  src="/up_icon.svg"
+                  alt="icon"
+                  className={` ${activeIndex === 0 ? "active" : ""}`}
+                />
+              </p>
+            </div>
+            <div
+              className={`accordionContent ${
+                activeIndex === 0 ? "active" : ""
+              }`}
+            >
+              {/* {item.content} */}
+              <p className="not">
+                {googleCalendar
+                  ? `Подключен  ${googleCalendar}`
+                  : "Отсутствует"}
+              </p>
+              <span
+                className="connect-google"
+                onClick={() => handleCalendarConnect()}
+              >
+                {googleCalendar ? "Отключить" : "Подключить"}
+              </span>
+            </div>
+          </div>
+          {/* item2 */}
+          <div className="accordionItem">
+            <div
+              className={`accordionHeader`}
+              onClick={() => toggleAccordion(1)}
+            >
+              <p className="calendar">
+                Telegram{" "}
+                <img
+                  src="/up_icon.svg"
+                  alt="icon"
+                  className={` ${activeIndex === 1 ? "active" : ""}`}
+                />
+              </p>
+            </div>
+            <div
+              className={`accordionContent ${
+                activeIndex === 1 ? "active" : ""
+              }`}
+            >
+              {/* {item.content} */}
+              <p className="not">
+                {googleCalendar
+                  ? `Подключен  ${googleCalendar}`
+                  : "Отсутствует"}
+              </p>
+              <span
+                className="connect-google"
+                onClick={() => handleCalendarConnect()}
+              >
+                {googleCalendar ? "Отключить" : "Подключить"}
+              </span>
+            </div>
+          </div>
+          {/* item3 */}
+          <div className="accordionItem">
+            <div
+              className={`accordionHeader`}
+              onClick={() => toggleAccordion(2)}
+            >
+              <p className="calendar">
+                Bitrix24{" "}
+                <img
+                  src="/up_icon.svg"
+                  alt="icon"
+                  className={` ${activeIndex === 2 ? "active" : ""}`}
+                />
+              </p>
+            </div>
+            <div
+              className={`accordionContent ${
+                activeIndex === 2 ? "active" : ""
+              }`}
+            >
+              <form>
+                <input
+                  type="email"
+                  placeholder={user?.email || "Никнейм"}
+                  name="email"
+                  value={editUser?.email || ""}
+                  className="form__input"
+                />
+
+                <button className="btn btn-primary">Сохранить</button>
+              </form>
+            </div>
+          </div>
+          {/* item4 */}
+          <div className="accordionItem">
+            <div
+              className={`accordionHeader`}
+              onClick={() => toggleAccordion(3)}
+            >
+              <p className="calendar">
+                AmoCRM{" "}
+                <img
+                  src="/up_icon.svg"
+                  alt="icon"
+                  className={` ${activeIndex === 3 ? "active" : ""}`}
+                />
+              </p>
+            </div>
+            <div
+              className={`accordionContent ${
+                activeIndex === 3 ? "active" : ""
+              }`}
+            >
+              {/* {item.content} */}
+              <a className="nav__link" href="#!">
+                Перейти на сайт
+              </a>
+            </div>
+          </div>
+        </div>
+
         <div className="settings-item__btn">
           <p className="api-key">API key</p>
           {/* <p className="key">{user?.api_key}</p> */}
 
           <CopyText text={user?.api_key} />
-
-          {/* <div className="settings-item">
-            <button className="btn-primary">Скопировать</button>
-            <Link href="#documentation">Документация</Link>
-          </div> */}
         </div>
         <div className="settings-item">
           <button className="btn btn-outline" onClick={() => Logout()}>

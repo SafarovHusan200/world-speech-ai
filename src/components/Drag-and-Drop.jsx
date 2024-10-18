@@ -120,7 +120,7 @@ const DraggerComponent = () => {
         <button type="button" id="files" className="none" />
         <p className="drag__and__drop">Или перетащите файлы сюда</p>
 
-        <p className="file__type">Аудиоформаты: MP3, M4A, OGG, WAV, WMA, M4A</p>
+        <p className="file__type">Аудиоформаты: MP3, MP4, OGG, WAV, WMA, M4A</p>
       </Dragger>
 
       <label htmlFor="spekers" className="spekers">

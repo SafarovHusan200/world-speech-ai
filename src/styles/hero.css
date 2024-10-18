@@ -153,6 +153,15 @@
   justify-content: center;
   align-items: center;
 }
+.hero .btns .btn {
+  width: 306px;
+  height: 71px;
+  padding: 13px 24px;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 500;
+  letter-spacing: 0.72px;
+}
 .hero .hero__how {
   width: 100%;
   border-radius: 10px;
@@ -184,7 +193,6 @@
   align-items: center;
   justify-content: space-between;
   gap: 15px;
-  margin-bottom: 40px;
   position: relative;
 }
 .hero .hero__how__items::before {

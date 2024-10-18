@@ -2,17 +2,27 @@
 .sidebar {
   width: 250px;
   background-color: #fcfcfc;
-  padding: 20px;
+
   height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+
+  height: 100vh;
+  overflow: auto;
 
   @media (max-width: 768px) {
     position: absolute;
     left: -250px;
     z-index: 2;
     top: 0;
+  }
+
+  .sidebar__block {
+    width: 100%;
+    min-height: 100vh;
+    padding: 20px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
   }
 
   .logo {
@@ -112,6 +122,8 @@
     display: flex;
     flex-direction: column;
     gap: 4px;
+
+    margin-bottom: 20px;
 
     li {
       a {

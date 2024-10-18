@@ -109,110 +109,118 @@ const Sidebar = ({ sidebar, handleScroll }) => {
 
   return (
     <div className="sidebar" style={{ left: sidebar ? "0" : "-250px" }}>
-      <div className="sidebar__top">
-        <a href="/" className="logo">
-          <img src="/logo-full-icon.svg" alt="logo" />
-        </a>
-        <div className="dropdown">
-          <button className="btn-primary" onClick={toggleDropdown}>
-            Начать встречу
-            <img src={dropdownOpen ? "/down.svg" : "/up.svg"} alt="icon" />
-          </button>
-          {dropdownOpen && (
-            <div className="dropdown-content">
-              <div className="dropdown-content-item">
-                <img src="/cloud-upload.svg" alt="svg" />
+      <div className="sidebar__block">
+        <div className="sidebar__top">
+          <a href="/" className="logo">
+            <img src="/logo-full-icon.svg" alt="logo" />
+          </a>
+          <div className="dropdown">
+            <button className="btn-primary" onClick={toggleDropdown}>
+              Начать встречу
+              <img src={dropdownOpen ? "/down.svg" : "/up.svg"} alt="icon" />
+            </button>
+            {dropdownOpen && (
+              <div className="dropdown-content">
+                <div className="dropdown-content-item">
+                  <img src="/cloud-upload.svg" alt="svg" />
 
-                <label htmlFor="transcription__upload">Загрузить файлы</label>
-                <input
-                  type="file"
-                  id="transcription__upload"
-                  onChange={handleFileChange}
-                />
+                  <label htmlFor="transcription__upload">Загрузить файлы</label>
+                  <input
+                    type="file"
+                    id="transcription__upload"
+                    onChange={handleFileChange}
+                  />
+                </div>
+                <div className="dropdown-content-item">
+                  <img src="/meeting-icon.svg" alt="camera" />
+                  <a target="_blank" href="https://meet.google.com/landing">
+                    Google Meet
+                  </a>
+                </div>
+                <div className="dropdown-content-item">
+                  <img src="/zoom-icon.svg" alt="camera" />
+                  <a target="_blank" href="https://zoom.us/">
+                    Zoom
+                  </a>
+                </div>
+                <div className="dropdown-content-item">
+                  <img src="/camera-icon.svg" alt="" />
+                  <a target="_blank" href="https://telemost.yandex.ru/">
+                    Telemost
+                  </a>
+                </div>
               </div>
-              <div className="dropdown-content-item">
-                <img src="/meeting-icon.svg" alt="camera" />
-                <a href="https://meet.google.com/landing">Google Meet</a>
-              </div>
-              <div className="dropdown-content-item">
-                <img src="/zoom-icon.svg" alt="camera" />
-                <a href="https://zoom.us/">Zoom</a>
-              </div>
-              <div className="dropdown-content-item">
-                <img src="/camera-icon.svg" alt="" />
-                <a href="https://telemost.yandex.ru/">Telemost</a>
-              </div>
-            </div>
-          )}
-        </div>
-        <ul>
-          {menuData.map((menu, i) => (
-            <li key={i} onClick={() => handleScroll()}>
-              <Link
-                className={pathname === menu.url ? "active" : ""}
-                href={menu.url}
-              >
-                {menu.name}
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </div>
-
-      <div className="sidebar__bottom">
-        <div className="row">
-          <p>Запросы</p>
-          <span>
-            {workTime.total_prompts} из {workTime.initial_prompts}
-          </span>
-        </div>
-        <div className="progress-bar">
-          <div
-            className="progress"
-            style={{
-              width: `${
-                (workTime.total_prompts * 100) / workTime.initial_prompts
-              }%`,
-            }}
-          ></div>
+            )}
+          </div>
+          <ul>
+            {menuData.map((menu, i) => (
+              <li key={i} onClick={() => handleScroll()}>
+                <Link
+                  className={pathname === menu.url ? "active" : ""}
+                  href={menu.url}
+                >
+                  {menu.name}
+                </Link>
+              </li>
+            ))}
+          </ul>
         </div>
 
-        <div className="row">
-          <p>Осталось встреч</p>
-          <span>
-            {workTime.total_meetings} из {workTime.initial_meetings}
-          </span>
-        </div>
-        <div className="progress-bar">
-          <div
-            className="progress"
-            style={{
-              width: `${
-                (workTime.total_meetings * 100) / workTime.initial_meetings
-              }%`,
-            }}
-          ></div>
-        </div>
+        <div className="sidebar__bottom">
+          <div className="row">
+            <p>Запросы</p>
+            <span>
+              {workTime?.total_prompts} из {workTime?.initial_prompts}
+            </span>
+          </div>
+          <div className="progress-bar">
+            <div
+              className="progress"
+              style={{
+                width: `${
+                  (workTime.total_prompts * 100) / workTime.initial_prompts
+                }%`,
+              }}
+            ></div>
+          </div>
 
-        <div className="row">
-          <p>Осталось минут</p>
-          <span>
-            {workTime.total_minutes} из {workTime.initial_minutes}
-          </span>
+          <div className="row">
+            <p>Встречи </p>
+            <span>
+              {workTime?.total_meetings} из {workTime?.initial_meetings}
+            </span>
+          </div>
+          <div className="progress-bar">
+            <div
+              className="progress"
+              style={{
+                width: `${
+                  (workTime.total_meetings * 100) / workTime.initial_meetings
+                }%`,
+              }}
+            ></div>
+          </div>
+
+          <div className="row">
+            <p>Минуты </p>
+            <span>
+              {workTime.total_minutes} из {workTime.initial_minutes}
+            </span>
+          </div>
+          <div className="progress-bar">
+            <div
+              className="progress"
+              style={{
+                width: `${
+                  (workTime.total_minutes * 100) / workTime.initial_minutes
+                }%`,
+              }}
+            ></div>
+          </div>
+          <Link href={"/dashboard/tarif"} className="btn btn-outline">
+            Расширить тариф
+          </Link>
         </div>
-        <div className="progress-bar">
-          <div
-            className="progress"
-            style={{
-              width: `${
-                (workTime.total_minutes * 100) / workTime.initial_minutes
-              }%`,
-            }}
-          ></div>
-        </div>
-        <Link href={"/dashboard/tarif"} className="btn btn-outline">
-          Расширить тариф
-        </Link>
       </div>
     </div>
   );

@@ -10,7 +10,7 @@ const useHttp = () => {
   const [error, setError] = useState(null);
   const token =
     typeof window !== "undefined"
-      ? localStorage.getItem("token") || null
+      ? JSON.parse(localStorage.getItem("token")) || null
       : null; // localStorage faqat client-side da mavjud
 
   // Yangi accessTokens olish uchun funksiyani yaratish
@@ -64,15 +64,14 @@ const useHttp = () => {
           data: body,
         });
         setLoading(false);
-        return response.data || response;
+
+        return response?.data || response;
       } catch (error) {
         setLoading(false);
 
-        // console.log("1-eror", error);
-
         if (
-          error.response?.data?.detail ===
-            "Учетные данные не были предоставлены." ||
+          // error.response?.data?.detail ===
+          "Учетные данные не были предоставлены." ||
           error.response?.data?.code === "token_not_valid"
         ) {
           try {
