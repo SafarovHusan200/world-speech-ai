@@ -404,26 +404,6 @@ const Setting = () => {
           </div>
         </div>
 
-        {/* =================== */}
-        <div className="settings-item__btn ">
-          <p className="calendar">
-            Google Calendar <img src="/up_icon.svg" alt="icon" />
-          </p>
-          <div className="connect__body">
-            <p className="not">
-              {googleCalendar ? `Подключен  ${googleCalendar}` : "Отсутствует"}
-            </p>
-            <span
-              className="connect-google"
-              onClick={() => handleCalendarConnect()}
-            >
-              {googleCalendar ? "Отключить" : "Подключить"}
-            </span>
-          </div>
-        </div>
-
-        {/* =================== */}
-
         <div className="accordion">
           <div className="accordionItem">
             <div
