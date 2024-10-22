@@ -70,8 +70,8 @@ const useHttp = () => {
         setLoading(false);
 
         if (
-          // error.response?.data?.detail ===
-          "Учетные данные не были предоставлены." ||
+          error.response?.data?.detail ===
+            "Учетные данные не были предоставлены." ||
           error.response?.data?.code === "token_not_valid"
         ) {
           try {
@@ -102,11 +102,13 @@ const useHttp = () => {
             error?.response?.data.error ||
             error?.response?.data?.code ||
             error?.response?.data.detail ||
+            error?.response?.data.name ||
+            error?.response?.data.email ||
             error?.response?.data.non_field_errors;
           ("An error occurred");
           setError(err);
           console.log("2-eror", err);
-          // throw err;
+          throw err;
         }
       }
     },

@@ -20,7 +20,12 @@ const CopyText = ({ text }) => {
         <button className="btn-primary" onClick={copyContent}>
           Скопировать
         </button>
-        <Link href="#documentation">Документация</Link>
+        <Link
+          target="_blank"
+          href="https://documenter.getpostman.com/view/28274540/2sAXjQ1q8k"
+        >
+          Документация
+        </Link>
       </div>
     </>
   );

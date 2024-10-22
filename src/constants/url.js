@@ -30,8 +30,13 @@ export const URLS = {
   google: "/api/v1/auth/link/google/",
   connect_calendar: "/api/v1/users/social_auth/",
   asistants: "/api/v1/assistants/",
+  file_analysis: "/api/v1/file_analysis",
 
   module: "/api/v1/instructions/",
 
   cases: "/api/v1/cases/",
+
+  update_bitrix: "/api/v1/users/update_bitrix_webhook/",
+  telegram_id_update: "/api/v1/users/user_manage_telegram_id/",
+  upload_analysis: "/api/v1/upload_analysis/",
 };

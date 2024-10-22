@@ -1,4 +1,6 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {};
+const nextConfig = {
+  // Konfiguratsiya parametrlarini shu yerga qo'shing
+};
 
-export default nextConfig;
+export default nextConfig; // ES6 sintaksisidan foydalanayapsiz

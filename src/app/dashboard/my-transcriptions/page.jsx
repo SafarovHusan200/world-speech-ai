@@ -70,7 +70,7 @@ const MyTranscriptions = () => {
       `wss://worldspeechai.com/ws/connect/?token=${token}`
     );
 
-    socket.onopen = () => {};
+    // x.onopen = () => {};
 
     socket.onmessage = (event) => {
       const data = JSON.parse(event.data);

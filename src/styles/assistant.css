@@ -43,8 +43,44 @@
 .assistant form .search__row.last {
   gap: 10px;
 }
-.assistant form .search__row input[type=text],
-.assistant form .search__row input[type=number] {
+.assistant form .search__row .css-13cymwt-control,
+.assistant form .search__row .css-t3ipsp-control {
+  width: 470px;
+  height: 100%;
+  border-radius: 10px;
+  border: 1px solid #b3b3b3;
+  background: #fff;
+  overflow: hidden;
+  color: #7b8a99;
+  font-size: 16px !important;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 160%; /* 25.6px */
+  letter-spacing: 0.32px;
+}
+@media (max-width: 500px) {
+  .assistant form .search__row .css-13cymwt-control,
+  .assistant form .search__row .css-t3ipsp-control {
+    width: 100%;
+  }
+}
+.assistant form .search__row .css-hlgwow {
+  height: 100%;
+}
+.assistant form .search__row .css-1u9des2-indicatorSeparator {
+  display: none;
+}
+.assistant form .search__row .css-1xc3v61-indicatorContainer {
+  display: none;
+}
+.assistant form .search__row .css-1nmdiq5-menu {
+  position: absolute;
+  z-index: 2;
+}
+.assistant form .search__row .css-15lsz6c-indicatorContainer svg {
+  display: none;
+}
+.assistant form .search__row input {
   width: 470px;
   height: 56px;
   padding: 8px 16px;
@@ -61,82 +97,61 @@
   color: #000;
 }
 @media (max-width: 500px) {
-  .assistant form .search__row input[type=text],
-  .assistant form .search__row input[type=number] {
+  .assistant form .search__row input {
     width: 100%;
   }
 }
-.assistant form .search__row input[type=text].bitrix,
-.assistant form .search__row input[type=number].bitrix {
+.assistant form .search__row input.bitrix {
   width: 297px;
   height: 56px;
   padding: 8px 16px;
 }
-.assistant form .search__row input[type=text].lida,
-.assistant form .search__row input[type=number].lida {
+.assistant form .search__row input.lida {
   width: 139px;
 }
-.assistant form .search__row input[type=text].search,
-.assistant form .search__row input[type=number].search {
+.assistant form .search__row input.search {
   height: 46px;
   max-width: 420px;
   width: 100%;
 }
-.assistant form .search__row input[type=text]::-moz-placeholder, .assistant form .search__row input[type=number]::-moz-placeholder {
+.assistant form .search__row input::-moz-placeholder {
   color: #7b8a99;
   font-size: 16px;
 }
-.assistant form .search__row input[type=text]::placeholder,
-.assistant form .search__row input[type=number]::placeholder {
+.assistant form .search__row input::placeholder {
   color: #7b8a99;
   font-size: 16px;
 }
-.assistant form .search__row input[type=text].minut,
-.assistant form .search__row input[type=number].minut {
+.assistant form .search__row input.minut {
   display: flex;
   width: 80px;
   height: 56px;
-  padding: 8px 16px;
+  padding: 8px 4px;
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
   gap: 10px;
 }
-.assistant form .search__row input[type=text].hour,
-.assistant form .search__row input[type=number].hour {
+.assistant form .search__row input.hour {
   display: flex;
   width: 80px;
   height: 56px;
-  padding: 8px 16px;
+  padding: 8px 4px;
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
   gap: 10px;
   position: relative;
 }
-.assistant form .search__row input[type=text].po-date,
-.assistant form .search__row input[type=number].po-date {
+.assistant form .search__row input.po-date {
   max-width: 127px;
   width: 100%;
 }
-.assistant form .search__row input[type=text]::before,
-.assistant form .search__row input[type=number]::before {
-  position: absolute;
-  z-index: 1;
-  content: ":";
-  right: -10px;
-  top: 0;
-  width: 20px;
-  height: 20px;
-  background-color: #007bff;
-}
-.assistant form .search__row input[type=text].name,
-.assistant form .search__row input[type=number].name {
+.assistant form .search__row input.name {
   padding-right: 30px;
   position: relative;
 }
-.assistant form .search__row input[type=text].name::before,
-.assistant form .search__row input[type=number].name::before {
+.assistant form .search__row input.name::before {
   width: 24px;
   height: 24px;
   border: 1px solid;
@@ -207,6 +222,7 @@
   top: 55%;
   transform: translateY(-50%);
   right: 20px;
+  z-index: 1;
 }
 .assistant form .search__row .ant-form-item label.ab {
   right: auto;

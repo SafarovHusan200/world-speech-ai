@@ -56,7 +56,7 @@ const Login = () => {
         }
       } catch (error) {
         console.log(error);
-        message.error(error.response.data.email);
+        message.error(error);
       }
     } else if (err) {
       message.error(err);

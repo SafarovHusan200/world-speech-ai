@@ -18,8 +18,9 @@ const SwiperNewsComponent = () => {
     const url = baseAPI + URLS.news;
     try {
       const response = await axios.get(url);
-
-      setNewsSlides(response.data);
+      if (response.data) {
+        setNewsSlides(response?.data);
+      }
     } catch (err) {
       console.log(err);
     }
@@ -71,7 +72,7 @@ const SwiperNewsComponent = () => {
           },
         }}
       >
-        {newsSlides.map((newsItem, slideIndex) => (
+        {newsSlides?.map((newsItem, slideIndex) => (
           <SwiperSlide key={slideIndex}>
             <NewsCard
               key={newsItem.id}

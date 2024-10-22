@@ -72,12 +72,14 @@ const Instructions = () => {
 
   const { request, loading, error } = useHttp();
   const [smartGPT, setSmartGPT] = useState([]);
+  const [allData, setAllData] = useState([]);
 
   const getSmartGPT = async () => {
     const url = baseAPI + URLS.module;
     try {
       const response = await request(url, "GET");
-      console.log("setSmartGPT", response[0]);
+
+      setAllData(response);
       setSmartGPT(response[0]);
     } catch (err) {
       console.error("Error fetching data:", err);
@@ -97,7 +99,7 @@ const Instructions = () => {
 
         <div className="questions__row">
           <div className="faq__block">
-            <Accordion items={items} />
+            <Accordion allData={allData} setSmartGPT={setSmartGPT} />
           </div>
           <div className="smartGPT__block">
             <div className="video__part">

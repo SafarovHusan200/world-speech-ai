@@ -88,18 +88,21 @@
           margin-bottom: 20px;
 
           input {
-            display: flex;
             width: 250px;
             height: 40px;
             padding: 0px 24px;
-            justify-content: center;
-            align-items: center;
-            gap: 10px;
 
             text-align: center;
 
             border-radius: 10px;
             border: 1px solid #212833;
+
+            color: #7b8a99;
+            font-size: 18px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: normal;
+            letter-spacing: 0.72px;
           }
 
           .btn {

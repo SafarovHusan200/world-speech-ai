@@ -16,8 +16,10 @@ const Sidebar = ({ sidebar, handleScroll }) => {
   const [workTime, setWorkTime] = useState({
     initial_minutes: 300,
     initial_meetings: 9,
+    initial_prompts: 10,
     total_minutes: 0,
     total_meetings: 0,
+    total_prompts: 0,
   });
   const { request } = useHttp();
   const { user } = useDashboard();

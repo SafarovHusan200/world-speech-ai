@@ -20,6 +20,8 @@ const Setting = () => {
   const [editUser, setEditUser] = useState({
     name: user?.name,
     email: user?.email,
+    bitrix24_webhook: user?.bitrix24_webhook,
+    telegram_id: user?.telegram_id,
   });
   const [activeIndex, setActiveIndex] = useState(null);
   const toggleAccordion = (index) => {
@@ -194,6 +196,54 @@ const Setting = () => {
           // handleCalendarConnect();
         });
     }
+  };
+
+  const handleSubmitBitrix24 = (e) => {
+    e.preventDefault();
+
+    if (editUser.bitrix24_webhook == "") {
+      return message.warning("пожалуйста, заполните поле");
+    }
+
+    const obj = {
+      bitrix24_webhook: editUser.bitrix24_webhook,
+    };
+    url = `${baseAPI + URLS.update_bitrix}`;
+    request(url, "PATCH", obj)
+      .then((response) => {
+        message.success(response?.detail);
+        return response;
+      })
+      .catch((error) => {
+        message.error(error.response.data?.bitrix24_webhook[0]);
+        console.error(
+          "Error fetching data:",
+          error.response.data.bitrix24_webhook[0]
+        );
+        return error;
+      });
+  };
+  const handleSubmitTelegram = (e) => {
+    e.preventDefault();
+
+    if (editUser.telegram_id == "") {
+      return message.warning("пожалуйста, заполните поле");
+    }
+
+    const obj = {
+      telegram_id: editUser.telegram_id,
+    };
+    url = `${baseAPI + URLS.telegram_id_update}`;
+    request(url, "PATCH", obj)
+      .then((response) => {
+        message.success(response?.detail);
+        return response;
+      })
+      .catch((error) => {
+        message.error(error.response.data?.error);
+        console.error("Error fetching data:", error.response.data.error);
+        return error;
+      });
   };
 
   const subscribedNewsletter = () => {
@@ -459,17 +509,23 @@ const Setting = () => {
               }`}
             >
               {/* {item.content} */}
-              <p className="not">
-                {googleCalendar
-                  ? `Подключен  ${googleCalendar}`
-                  : "Отсутствует"}
-              </p>
-              <span
-                className="connect-google"
-                onClick={() => handleCalendarConnect()}
-              >
-                {googleCalendar ? "Отключить" : "Подключить"}
-              </span>
+              <form onSubmit={handleSubmitTelegram}>
+                <input
+                  type="number"
+                  placeholder={user?.telegram_id || "Telegram_id"}
+                  name="telegram_id"
+                  value={editUser?.telegram_id || ""}
+                  className="form__input"
+                  onChange={(e) =>
+                    setEditUser({
+                      ...editUser,
+                      telegram_id: e.target.value,
+                    })
+                  }
+                />
+
+                <button className="btn btn-primary">Сохранить</button>
+              </form>
             </div>
           </div>
           {/* item3 */}
@@ -492,13 +548,19 @@ const Setting = () => {
                 activeIndex === 2 ? "active" : ""
               }`}
             >
-              <form>
+              <form onSubmit={handleSubmitBitrix24}>
                 <input
-                  type="email"
-                  placeholder={user?.email || "Никнейм"}
-                  name="email"
-                  value={editUser?.email || ""}
+                  type="url"
+                  placeholder={user?.bitrix24_webhook || "Никнейм"}
+                  name="bitrix24_webhook"
+                  value={editUser?.bitrix24_webhook || ""}
                   className="form__input"
+                  onChange={(e) =>
+                    setEditUser({
+                      ...editUser,
+                      bitrix24_webhook: e.target.value,
+                    })
+                  }
                 />
 
                 <button className="btn btn-primary">Сохранить</button>
@@ -526,7 +588,11 @@ const Setting = () => {
               }`}
             >
               {/* {item.content} */}
-              <a className="nav__link" href="#!">
+              <a
+                className="nav__link"
+                target="_blank"
+                href="https://www.amocrm.ru/"
+              >
                 Перейти на сайт
               </a>
             </div>

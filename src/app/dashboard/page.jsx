@@ -21,8 +21,8 @@ const Dashboard = () => {
     meeting_url: "",
     password: "",
 
-    bitrix: "",
-    name: "",
+    bitrix_chat_url: "",
+    bitrix_lead_name: "",
   });
 
   const handleChange = (e) => {
@@ -53,6 +53,8 @@ const Dashboard = () => {
     formDataObj.append("meeting_type", formData.meeting_type);
     formDataObj.append("meeting_url", formData.meeting_url);
     formDataObj.append("password", formData.password);
+    formDataObj.append("bitrix_chat_url", formData.bitrix_chat_url);
+    formDataObj.append("bitrix_lead_name", formData.bitrix_lead_name);
 
     const url = baseAPI + URLS.send_url;
 
@@ -212,7 +214,7 @@ const Dashboard = () => {
                     className="bitrix"
                     name="bitrix"
                     placeholder="Ссылка на групповой чат Bitrix 24"
-                    value={formData.bitrix}
+                    value={formData.bitrix_chat_url}
                     onChange={handleChange}
                   />
                   <div className="information">
@@ -232,7 +234,7 @@ const Dashboard = () => {
                     placeholder="Имя лида"
                     className="lida"
                     name="name"
-                    value={formData.name}
+                    value={formData.bitrix_lead_name}
                     onChange={handleChange}
                   />
                   <div className="information">

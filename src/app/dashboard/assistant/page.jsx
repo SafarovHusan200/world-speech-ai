@@ -8,66 +8,237 @@ import Loading from "@/components/Loading";
 
 import { URLS } from "@/constants/url";
 import moment from "moment";
+import { message } from "antd";
+import Select from "react-select";
 
 const Asistant = () => {
   const { request, loading, error } = useHttp();
   const [asistant, setAsistants] = useState([]);
-  const [search, setSearch] = useState("");
-  const [assistantType, setAssistantType] = useState("");
-  const [timing, setTiming] = useState({ hours: "00", minutes: "00" });
-  const [chatLink, setChatLink] = useState("");
-  const [leadName, setLeadName] = useState("");
+  const [fileAnalysis, setFileAnalists] = useState([]);
+  const [filterData, setFilterData] = useState([]);
+  const [search, setSearch] = useState({
+    transcription_name: "", //nazvanie
+    assistant_name: "", //tip analiza
+    created_at: "",
+  });
 
-  const [searchTerm, setSearchTerm] = useState("");
+  const [uploadState, setUploadState] = useState({
+    transcription_id: "",
+    assistant_id: "",
+    bitrix_lead_name: "",
+    bitrix_chat_url: "",
+    start_time: "",
+    end_time: "",
+  });
 
-  const handleSearch = (event) => {
-    setSearchTerm(event.target.value);
-  };
+  const [transcriptions, setTranscriptions] = useState([]);
+
+  const token =
+    typeof window !== "undefined"
+      ? JSON.parse(localStorage.getItem("token")) || null
+      : null;
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    console.log({
-      search,
-      assistantType,
-      timing,
-      chatLink,
-      leadName,
-    });
+    // Form validation
+    if (
+      uploadState.transcription_id === "" ||
+      uploadState.assistant_id === "" ||
+      uploadState.bitrix_lead_name === "" ||
+      uploadState.bitrix_chat_url === "" ||
+      uploadState.start_time === "" ||
+      uploadState.end_time === ""
+    ) {
+      return message.warning("Пожалуйста, заполните поле");
+    }
+
+    const url = `${baseAPI + URLS.upload_analysis}`;
+
+    // POST request
+    request(url, "POST", uploadState)
+      .then((response) => {
+        console.log(response);
+        message.success(response?.status || "Processing started");
+
+        // Reset form state
+        setUploadState({
+          transcription_id: "",
+          assistant_id: "",
+          bitrix_lead_name: "",
+          bitrix_chat_url: "",
+          start_time: "",
+          end_time: "",
+        });
+
+        // Clear form fields
+        e.target.reset();
+        return response;
+      })
+      .catch((error) => {
+        const errorMessage =
+          error?.response?.data?.message || "Ошибка загрузки";
+        message.error(errorMessage);
+        console.error("Error fetching data:", error);
+        return error;
+      });
   };
 
-  const data = [
-    {
-      id: 1,
-      title: "Lorem Ipsum",
-      date: "12.03.24",
-      analysisType: "Анализ встречи и постановка задач",
-      status: "В обработке",
-    },
-    {
-      id: 2,
-      title: "Lorem Ipsum",
-      date: "12.03.24",
-      analysisType: "Анализ встречи и постановка задач",
-      status: "В обработке",
-    },
-    // Ko'proq ma'lumotlar qo'shish...
-  ];
+  // Select uchun variantlar
+  const transcriptionOptions = transcriptions?.map((t) => ({
+    value: t.id,
+    label: t.name,
+  }));
 
-  const getAsistant = async () => {
-    const url = baseAPI + URLS.asistants;
+  const assistantOptions = asistant?.map((t) => ({
+    value: t.id,
+    label: t.name,
+  }));
+
+  const getFileAnalists = async () => {
+    const url = baseAPI + URLS.file_analysis;
     try {
       const response = await request(url, "GET");
 
+      setFileAnalists(response);
+      setFilterData(response);
+    } catch (err) {
+      console.error("Error fetching data:", err);
+    }
+  };
+
+  const getMyTranscriptions = async () => {
+    const url = baseAPI + URLS.transcriptions;
+    try {
+      const response = await request(url, "GET");
+      setTranscriptions(response);
+    } catch (err) {
+      console.error("Error fetching data:", err);
+    }
+  };
+  const getAsistent = async () => {
+    const url = baseAPI + URLS.asistants;
+    try {
+      const response = await request(url, "GET");
       setAsistants(response);
     } catch (err) {
       console.error("Error fetching data:", err);
     }
   };
 
+  const sendMessageEmail = (id) => {
+    const url = `${
+      baseAPI + "/api/v1/file_analysis/" + id + "/send_analysis_email/"
+    }`;
+
+    request(url, "POST")
+      .then((response) => {
+        message.success(response?.detail);
+        return response;
+      })
+      .catch((error) => {
+        message.error(error);
+        console.error("Error fetching data:", error);
+        return error;
+      });
+  };
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    const { name, value } = e.target;
+
+    // Yangi qidiruv qiymatlarini olish
+    setSearch((prevState) => ({
+      ...prevState,
+      [name]: value,
+    })); // Yangi filtrlash natijalarini yangilash
+  };
+
   useEffect(() => {
-    getAsistant();
+    getFileAnalists();
+    getMyTranscriptions();
+    getAsistent();
   }, []);
+
+  useEffect(() => {
+    const { transcription_name, assistant_name, created_at } = search;
+    let filteredData = [...fileAnalysis];
+
+    // Agar barcha qidiruv maydonlari bo'sh bo'lsa, barcha ma'lumotni ko'rsatish
+    if (
+      transcription_name === "" &&
+      assistant_name === "" &&
+      created_at === ""
+    ) {
+      setFileAnalists(fileAnalysis); // Barcha ma'lumotni qaytarish
+    } else {
+      filteredData = fileAnalysis.filter(
+        (f) =>
+          (transcription_name === "" ||
+            f.transcription_name
+              .toString()
+              .toLowerCase()
+              .includes(transcription_name.toLowerCase())) &&
+          (assistant_name === "" ||
+            f.assistant_name
+              .toString()
+              .toLowerCase()
+              .includes(assistant_name.toLowerCase())) &&
+          (created_at === "" ||
+            new Date(f.created_at)
+              .toISOString()
+              .slice(0, 16) // 2024-10-08T21:03 formatiga mos bo'lishi uchun kesiladi
+              .includes(created_at))
+      );
+
+      setFilterData(filteredData); // Filtrlash natijalarini yangilash
+    }
+  }, [search]);
+
+  useEffect(() => {
+    const socket = new WebSocket(
+      `wss://worldspeechai.com/ws/connect/?token=${token}`
+    );
+
+    // x.onopen = () => {};
+
+    socket.onmessage = (event) => {
+      const data = JSON.parse(event.data);
+
+      if (data.type === "transcription_result") {
+        if (data.data.status === "processing") {
+          getFileAnalists();
+        }
+        if (data.data.status === "completed") {
+          message.success(`${data.data.name} ${data.data.status}`);
+          getFileAnalists();
+        }
+      }
+    };
+
+    socket.onclose = (event) => {
+      if (event.wasClean) {
+        console.log(
+          `[close] Connection closed cleanly, code=${event.code} reason=${event.reason}`
+        );
+      } else {
+        console.error("[close] Connection died. Reconnecting...");
+        // WebSocket avtomatik ravishda qayta ulanadi
+        // initializeWebSocket(); // Bu qator kerak emas, yangi soket avtomatik ishga tushadi
+      }
+    };
+
+    socket.onerror = (error) => {
+      console.error(`[error]`, error); // To'liq error ob'ektini konsolga chiqarish
+    };
+
+    // Cleanup: komponent unmount qilinganda ulanishni yopish
+    return () => {
+      if (socket) {
+        socket.close();
+      }
+    };
+  }, [token]); // tokenni dependency arrayda saqlash kerak bo'lishi mumkin
 
   return (
     <div className="assistant">
@@ -76,26 +247,42 @@ const Asistant = () => {
       </div>
       <div className="asistant__block">
         {loading && <Loading />}
-        {error && <p>{error}</p>}
 
         <form onSubmit={handleSubmit}>
           <div className="search__row">
             <div className="ant-form-item">
-              <label htmlFor="name">
+              <label htmlFor="transcription">
                 <img src="/searchIcon.svg" alt="icon" />
               </label>
-              <input
-                id="name"
-                type="text"
-                placeholder={"Например: Встреча с Анастасом"}
-                name="name"
+              <Select
+                className="datalist"
+                id="transcription"
+                options={transcriptionOptions}
+                placeholder="Например: Встреча с Анастасом"
+                onChange={(selectedOption) =>
+                  setUploadState({
+                    ...uploadState,
+                    transcription_id: selectedOption.value,
+                  })
+                }
               />
             </div>
+
             <div className="ant-form-item">
-              <label htmlFor="tip">
+              <label htmlFor="assistant">
                 <img src="/robot.svg" alt="icon" />
               </label>
-              <input type="text" id="tip" placeholder={"Тип ассистента"} />
+              <Select
+                className="datalist"
+                options={assistantOptions}
+                placeholder="Тип ассистента"
+                onChange={(selectedOption) =>
+                  setUploadState({
+                    ...uploadState,
+                    assistant_id: selectedOption.value,
+                  })
+                }
+              />
             </div>
           </div>
 
@@ -103,31 +290,41 @@ const Asistant = () => {
             <label className="timer__label">Тайминг в мин</label>
             <div className="search__row">
               <input
-                type="number"
+                type="time"
                 className="hour"
-                placeholder="00"
-                value={timing.hours}
+                value={uploadState.start_time}
                 onChange={(e) =>
-                  setTiming({ ...timing, hours: Number(e.target.value) })
+                  setUploadState({
+                    ...uploadState,
+                    start_time: e.target.value, // No need for Number here
+                  })
                 }
               />
 
               <input
-                type="number"
-                placeholder="00"
+                type="time"
                 className="minut"
-                value={timing.minutes}
+                value={uploadState.end_time}
                 onChange={(e) =>
-                  setTiming({ ...timing, minutes: Number(e.target.value) })
+                  setUploadState({
+                    ...uploadState,
+                    end_time: e.target.value, // No need for Number here
+                  })
                 }
               />
+
               <input
                 type="text"
                 className="bitrix"
                 placeholder="Ссылка на групповой чат Bitrix 24"
-                value={chatLink}
-                onChange={(e) => setChatLink(e.target.value)}
+                onChange={(e) =>
+                  setUploadState({
+                    ...uploadState,
+                    bitrix_chat_url: e.target.value,
+                  })
+                }
               />
+
               <div className="information">
                 <div className="information__head">i</div>
                 <div className="information__body">
@@ -136,13 +333,19 @@ const Asistant = () => {
                   выберите тип ассистента и получите готовый результат
                 </div>
               </div>
+
               <input
                 type="text"
                 placeholder="Имя лида"
                 className="lida"
-                value={leadName}
-                onChange={(e) => setLeadName(e.target.value)}
+                onChange={(e) =>
+                  setUploadState({
+                    ...uploadState,
+                    bitrix_lead_name: e.target.value,
+                  })
+                }
               />
+
               <div className="information">
                 <div className="information__head">i</div>
                 <div className="information__body">
@@ -151,7 +354,7 @@ const Asistant = () => {
                   выберите тип ассистента и получите готовый результат
                 </div>
               </div>
-              {/* Submit Button */}
+
               <button type="submit">Отправить</button>
             </div>
           </div>
@@ -164,7 +367,7 @@ const Asistant = () => {
         <div className="table-container">
           {/* Search and Filter */}
 
-          <form onSubmit={""} className="second">
+          <form onSubmit={handleSearch} className="second">
             <div className="search__row last">
               <div className="ant-form-item">
                 <label htmlFor="name">
@@ -174,25 +377,37 @@ const Asistant = () => {
                   id="name"
                   className="search"
                   type="text"
-                  placeholder={"Поиск"}
-                  name="name"
+                  placeholder="Поиск"
+                  name="transcription_name"
+                  onChange={handleSearch}
+                  value={search.transcription_name}
                 />
               </div>
               <div className="ant-form-item ab">
-                <label htmlFor="tip" className="ab">
+                <label htmlFor="ab" className="ab">
                   <img src="/ab.svg" alt="icon" />
                 </label>
-                <input type="text" id="tip" placeholder={"По названию"} />
+                <input
+                  type="text"
+                  id="ab"
+                  name="transcription_name"
+                  placeholder="По названию"
+                  onChange={handleSearch}
+                  value={search.transcription_name}
+                />
               </div>
               <div className="ant-form-item ab">
                 <label htmlFor="tip" className="ab">
                   <img src="/date__icon.svg" alt="icon" />
                 </label>
                 <input
-                  type="text"
+                  type="datetime-local"
                   id="tip"
+                  name="created_at"
                   className="po-date"
-                  placeholder={"По дате"}
+                  placeholder="По дате"
+                  onChange={handleSearch}
+                  value={search.created_at}
                 />
               </div>
               <div className="ant-form-item ab">
@@ -203,7 +418,10 @@ const Asistant = () => {
                   type="text"
                   className="po-request"
                   id="tip"
-                  placeholder={"По типу запроса"}
+                  name="assistant_name"
+                  placeholder="По типу запроса"
+                  onChange={handleSearch}
+                  value={search.assistant_name}
                 />
               </div>
             </div>
@@ -223,26 +441,33 @@ const Asistant = () => {
                 </tr>
               </thead>
               <tbody>
-                {asistant?.map((item) => (
+                {filterData?.map((item) => (
                   <tr key={item.id}>
-                    <td>{item.name}</td>
+                    <td>
+                      {item.transcription_name?.length > 45
+                        ? item?.transcription_name?.slice(0, 45) + "..."
+                        : item?.transcription_name}
+                    </td>
                     <td>{moment(item.created_at).format("DD.MM.YYY")}</td>
                     <td>
-                      {item.prompt?.length > 50
-                        ? item.prompt?.slice(0, 50) + "..."
-                        : item.prompt}
+                      {item.assistant_name?.length > 50
+                        ? item?.assistant_name?.slice(0, 50) + "..."
+                        : item?.assistant_name}
                     </td>
                     <td>{item?.status} В обработке</td>
                     <td>
                       <div className="btns">
                         <a
-                          href="#"
+                          href={item?.analysis_file}
                           download={"#"}
                           className="btn btn__download"
                         >
                           Скачать
                         </a>
-                        <button className="btn btn__send__email">
+                        <button
+                          className="btn btn__send__email"
+                          onClick={() => sendMessageEmail(item.id)}
+                        >
                           Отправить на почту
                         </button>
                       </div>

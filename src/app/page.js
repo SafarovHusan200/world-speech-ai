@@ -6,8 +6,9 @@ import Tarif from "@/pages/Tarif";
 import News from "@/pages/News";
 import Faq from "@/pages/Faq";
 import Advantages from "@/components/Advantages";
-import ContactUs from "@/pages/Contact-us";
+
 import Case from "@/components/Case";
+import ContactUs from "@/components/Contact-us";
 
 export default function Home() {
   return (
