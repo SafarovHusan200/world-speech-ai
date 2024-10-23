@@ -1,15 +1,21 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-const Accordion = ({ allData, setSmartGPT }) => {
+const Accordion = ({ allData, setSmartGPT, smartGPT }) => {
   const [activeIndex, setActiveIndex] = useState(null);
 
   const toggleAccordion = (index) => {
     setActiveIndex(activeIndex === index ? null : index);
 
-    console.log(index);
-
-    setSmartGPT(allData[index]);
+    if (index == allData.indexOf(smartGPT)) {
+      setSmartGPT([]);
+    } else {
+      setSmartGPT(allData[index]);
+    }
   };
+
+  useEffect(() => {
+    smartGPT ? setActiveIndex(0) : null;
+  }, []);
 
   return (
     <div className="accordion">
@@ -41,13 +47,6 @@ const Accordion = ({ allData, setSmartGPT }) => {
               </svg>
             </div>
           </div>
-          {/* <div
-            className={`accordionContent ${
-              activeIndex === index ? "active" : ""
-            }`}
-          >
-            {item.content}
-          </div> */}
         </div>
       ))}
     </div>

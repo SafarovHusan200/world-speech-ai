@@ -65,7 +65,7 @@ const Dashboard = () => {
         message.success("URL successfully sent");
       }
     } catch (err) {
-      message.error(err[0] || "Failed to send URL");
+      message.error(err || "Failed to send URL");
     }
   };
 
@@ -114,7 +114,7 @@ const Dashboard = () => {
       <div className="dashbord__content">
         <div className="dashbord__content--left">
           <div className="dashbord__content--left__description">
-            <b>Загрузить аудио/видео файл встречи</b>
+            <b>Загрузить аудио/видеофайл встречи</b>
             <p className="date">
               Обработка займет от 5 до 10 минут, и отчет будет доступен в списке
               ваших встреч
@@ -212,7 +212,7 @@ const Dashboard = () => {
                   <input
                     type="url"
                     className="bitrix"
-                    name="bitrix"
+                    name="bitrix_chat_url"
                     placeholder="Ссылка на групповой чат Bitrix 24"
                     value={formData.bitrix_chat_url}
                     onChange={handleChange}
@@ -233,7 +233,7 @@ const Dashboard = () => {
                     type="text"
                     placeholder="Имя лида"
                     className="lida"
-                    name="name"
+                    name="bitrix_lead_name"
                     value={formData.bitrix_lead_name}
                     onChange={handleChange}
                   />

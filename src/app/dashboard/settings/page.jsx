@@ -12,10 +12,12 @@ import useHttp from "@/app/hooks/useHttp";
 import { useDashboard } from "@/app/hooks/context/dashboardContext";
 import CopyText from "@/components/CopyText";
 import moment from "moment";
+import "moment/locale/ru"; // Rus tilini ulash
 import { useRouter } from "next/navigation";
 import axios from "axios";
 
 const Setting = () => {
+  moment.locale("ru"); // Tilni rus tiliga o'zgartirish
   const { setUser, user } = useDashboard();
   const [editUser, setEditUser] = useState({
     name: user?.name,
@@ -23,6 +25,7 @@ const Setting = () => {
     bitrix24_webhook: user?.bitrix24_webhook,
     telegram_id: user?.telegram_id,
   });
+  const [bitrix24Form, setBitrix24Form] = useState(true);
   const [activeIndex, setActiveIndex] = useState(null);
   const toggleAccordion = (index) => {
     setActiveIndex(activeIndex === index ? null : index);
@@ -212,14 +215,12 @@ const Setting = () => {
     request(url, "PATCH", obj)
       .then((response) => {
         message.success(response?.detail);
+        getUserData();
         return response;
       })
       .catch((error) => {
-        message.error(error.response.data?.bitrix24_webhook[0]);
-        console.error(
-          "Error fetching data:",
-          error.response.data.bitrix24_webhook[0]
-        );
+        message.error(error);
+        console.error("Error fetching data:", error);
         return error;
       });
   };
@@ -237,11 +238,27 @@ const Setting = () => {
     request(url, "PATCH", obj)
       .then((response) => {
         message.success(response?.detail);
+        getUserData();
         return response;
       })
       .catch((error) => {
-        message.error(error.response.data?.error);
-        console.error("Error fetching data:", error.response.data.error);
+        message.error(error);
+        console.error("Error fetching data:", error);
+        return error;
+      });
+  };
+
+  const deleteTelegramId = () => {
+    url = `${baseAPI + URLS.telegram_id_update}`;
+    request(url, "DELETE")
+      .then((response) => {
+        message.success("Идентификатор Telegram успешно удален");
+        getUserData();
+        return response;
+      })
+      .catch((error) => {
+        message.error(error);
+        console.error("Error fetching data:", error);
         return error;
       });
   };
@@ -274,7 +291,13 @@ const Setting = () => {
       setAutoPayment(user?.auto_payment);
       setFileFormat(user?.preferred_format);
       setCalendar(user?.is_subscribed_to_calendar);
-      setEditUser({ name: user?.name, email: user?.email });
+      setEditUser({
+        name: user?.name,
+        email: user?.email,
+        bitrix24_webhook: user?.bitrix24_webhook,
+      });
+
+      setBitrix24Form(user.bitrix24_webhook ? true : false);
     } else {
       getUserData();
     }
@@ -509,25 +532,40 @@ const Setting = () => {
               }`}
             >
               {/* {item.content} */}
-              <form onSubmit={handleSubmitTelegram}>
-                <input
-                  type="number"
-                  placeholder={user?.telegram_id || "Telegram_id"}
-                  name="telegram_id"
-                  value={editUser?.telegram_id || ""}
-                  className="form__input"
-                  onChange={(e) =>
-                    setEditUser({
-                      ...editUser,
-                      telegram_id: e.target.value,
-                    })
-                  }
-                />
 
-                <button className="btn btn-primary">Сохранить</button>
-              </form>
+              {user?.telegram_id ? (
+                <>
+                  <p className="tg__id">Telegram Id: {user.telegram_id}</p>
+
+                  <span
+                    className="connect-google telegram__logout"
+                    onClick={() => deleteTelegramId()}
+                  >
+                    Отключить
+                  </span>
+                </>
+              ) : (
+                <form onSubmit={handleSubmitTelegram}>
+                  <input
+                    type="number"
+                    placeholder={user?.telegram_id || "Telegram Id"}
+                    name="telegram_id"
+                    value={editUser?.telegram_id || ""}
+                    className="form__input tg__input"
+                    onChange={(e) =>
+                      setEditUser({
+                        ...editUser,
+                        telegram_id: e.target.value,
+                      })
+                    }
+                  />
+
+                  <button className="btn btn-primary">Сохранить</button>
+                </form>
+              )}
             </div>
           </div>
+
           {/* item3 */}
           <div className="accordionItem">
             <div
@@ -548,23 +586,36 @@ const Setting = () => {
                 activeIndex === 2 ? "active" : ""
               }`}
             >
-              <form onSubmit={handleSubmitBitrix24}>
-                <input
-                  type="url"
-                  placeholder={user?.bitrix24_webhook || "Никнейм"}
-                  name="bitrix24_webhook"
-                  value={editUser?.bitrix24_webhook || ""}
-                  className="form__input"
-                  onChange={(e) =>
-                    setEditUser({
-                      ...editUser,
-                      bitrix24_webhook: e.target.value,
-                    })
-                  }
-                />
+              {bitrix24Form ? (
+                <>
+                  <p className="tg__id">{user?.bitrix24_webhook}</p>
 
-                <button className="btn btn-primary">Сохранить</button>
-              </form>
+                  <span
+                    className="connect-google telegram__logout"
+                    onClick={() => setBitrix24Form(false)}
+                  >
+                    Pедактирование
+                  </span>
+                </>
+              ) : (
+                <form onSubmit={handleSubmitBitrix24}>
+                  <input
+                    type="url"
+                    placeholder={"Ссылка на групповой чат Bitrix 24"}
+                    name="bitrix24_webhook"
+                    value={editUser?.bitrix24_webhook || ""}
+                    className="form__input bitrix24"
+                    onChange={(e) =>
+                      setEditUser({
+                        ...editUser,
+                        bitrix24_webhook: e.target.value,
+                      })
+                    }
+                  />
+
+                  <button className="btn btn-primary">Сохранить</button>
+                </form>
+              )}
             </div>
           </div>
           {/* item4 */}
@@ -631,7 +682,7 @@ const Setting = () => {
                     <td>{payme.payment_id}</td>
                     <td>
                       {moment(payme.purchased_at).format(
-                        "MMMM Do YYYY, h:mm:ss "
+                        "MMMM D, YYYY, H:mm:ss"
                       )}
                     </td>
                     <td>Оплачено</td>

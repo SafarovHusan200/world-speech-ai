@@ -140,6 +140,13 @@
           justify-content: center;
           align-items: flex-start;
           gap: 10px;
+          position: relative;
+
+          &::before {
+            position: absolute;
+            content: "чч:мм";
+            top: -4px;
+          }
         }
 
         &.hour {
@@ -152,23 +159,25 @@
           align-items: flex-start;
           gap: 10px;
           position: relative;
+
+          &::before {
+            position: absolute;
+            content: "чч:мм";
+            top: -4px;
+          }
         }
 
         &.po-date {
-          max-width: 127px;
+          max-width: 250px;
           width: 100%;
+
+          // -webkit-appearance: none;
+          // -moz-appearance: none;
         }
 
-        // &::before {
-        //   position: absolute;
-        //   z-index: 1;
-        //   content: ":";
-        //   right: -10px;
-        //   top: 0;
-        //   width: 20px;
-        //   height: 20px;
-        //   background-color: #007bff;
-        // }
+        &.po-date::-webkit-calendar-picker-indicator {
+          display: none;
+        }
 
         &.name {
           padding-right: 30px;
@@ -241,7 +250,7 @@
 
         &.ab {
           input {
-            width: 168px;
+            width: 268px;
             height: 46px;
             padding: 8px 16px;
             flex-direction: column;
@@ -255,7 +264,7 @@
             padding-left: 45px;
 
             &.po-request {
-              width: 194px;
+              width: 250px;
               // width: 100%;
             }
           }
@@ -269,6 +278,7 @@
           z-index: 1;
 
           &.ab {
+            width: 250px;
             right: auto;
             left: 16px;
           }
@@ -422,6 +432,91 @@
             }
           }
         }
+      }
+    }
+  }
+
+  .ant-form-item.ab {
+    position: relative;
+
+    .po-date_x {
+      position: absolute;
+      background: none;
+      width: 30px;
+      height: 30px;
+      right: 10px;
+      top: 8px;
+      color: #000;
+      padding: 0 15px;
+
+      z-index: 2;
+    }
+  }
+
+  .ant-table-container {
+    width: 100%;
+    overflow: auto;
+
+    .ant-table-content {
+      min-width: 1185px;
+
+      .ant-table-cell {
+        color: #7b8a99;
+
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 160%; /* 25.6px */
+        letter-spacing: 0.32px;
+      }
+
+      .ant-table-cell .btn {
+        display: flex;
+        width: 170px;
+        height: 30px;
+        padding: 13px 10px;
+        justify-content: center;
+        align-items: center;
+
+        border-radius: 10px;
+
+        border: 1px solid #007bff;
+        background: none;
+
+        color: #007bff;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 120%; /* 16.8px */
+      }
+
+      .ant-table-cell a {
+        width: 100px !important;
+      }
+
+      .ant-table-thead .ant-table-cell {
+        color: #121212;
+
+        font-size: 18px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 35.971px; /* 179.856% */
+      }
+    }
+  }
+
+  .tableupdateData {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+
+    .updownbtn {
+      width: 20px;
+      padding: 0;
+      background: none;
+
+      img {
+        width: 100%;
       }
     }
   }

@@ -269,6 +269,9 @@
   line-height: 120%; /* 19.2px */
   margin-bottom: 10px;
 }
+.settings .form__elements .accordionItem .accordionContent .tg__id {
+  font-size: 17px;
+}
 .settings .form__elements .accordionItem .accordionContent .connect-google {
   color: #007bff;
   font-size: 16px;
@@ -278,10 +281,15 @@
   text-decoration-line: underline;
   cursor: pointer;
 }
+.settings .form__elements .accordionItem .accordionContent .connect-google.telegram__logout {
+  display: block;
+  margin-top: 10px;
+}
 .settings .form__elements .accordionItem .accordionContent form {
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
+  /* Chrome, Safari, Edge, Opera uchun */
 }
 .settings .form__elements .accordionItem .accordionContent form .form__input {
   width: 211px;
@@ -296,6 +304,15 @@
   font-weight: 400;
   line-height: 160%; /* 25.6px */
   letter-spacing: 0.32px;
+}
+.settings .form__elements .accordionItem .accordionContent form .form__input.bitrix24 {
+  max-width: 450px;
+  width: 100%;
+}
+.settings .form__elements .accordionItem .accordionContent form input[type=number]::-webkit-inner-spin-button,
+.settings .form__elements .accordionItem .accordionContent form input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 .settings .form__elements .accordionItem .accordionContent form .btn-primary {
   display: inline-flex;

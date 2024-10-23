@@ -7,9 +7,11 @@ import { baseAPI } from "@/constants/domain";
 import Loading from "@/components/Loading";
 
 import { URLS } from "@/constants/url";
-import moment from "moment";
+
 import { message } from "antd";
-import Select from "react-select";
+import dynamic from "next/dynamic";
+const Select = dynamic(() => import("react-select"), { ssr: false });
+import FileAnalysisTable from "@/components/FileAnalysisTable";
 
 const Asistant = () => {
   const { request, loading, error } = useHttp();
@@ -31,6 +33,13 @@ const Asistant = () => {
     end_time: "",
   });
 
+  const [updownData, setUpDownData] = useState({
+    isTime: false,
+    time: "",
+    isAnaliza: false,
+    analiza: "",
+  });
+
   const [transcriptions, setTranscriptions] = useState([]);
 
   const token =
@@ -44,19 +53,32 @@ const Asistant = () => {
     // Form validation
     if (
       uploadState.transcription_id === "" ||
-      uploadState.assistant_id === "" ||
-      uploadState.bitrix_lead_name === "" ||
-      uploadState.bitrix_chat_url === "" ||
-      uploadState.start_time === "" ||
-      uploadState.end_time === ""
+      uploadState.assistant_id === ""
     ) {
       return message.warning("Пожалуйста, заполните поле");
     }
 
     const url = `${baseAPI + URLS.upload_analysis}`;
 
+    const obj = {
+      ...(uploadState.transcription_id && {
+        transcription_id: uploadState.transcription_id,
+      }),
+      ...(uploadState.assistant_id && {
+        assistant_id: uploadState.assistant_id,
+      }),
+      ...(uploadState.bitrix_lead_name && {
+        bitrix_lead_name: uploadState.bitrix_lead_name,
+      }),
+      ...(uploadState.bitrix_chat_url && {
+        bitrix_chat_url: uploadState.bitrix_chat_url,
+      }),
+      ...(uploadState.start_time && { start_time: uploadState.start_time }),
+      ...(uploadState.end_time && { end_time: uploadState.end_time }),
+    };
+
     // POST request
-    request(url, "POST", uploadState)
+    request(url, "POST", obj)
       .then((response) => {
         console.log(response);
         message.success(response?.status || "Processing started");
@@ -154,6 +176,13 @@ const Asistant = () => {
     })); // Yangi filtrlash natijalarini yangilash
   };
 
+  const handleClearDate = () => {
+    setSearch({
+      ...search,
+      created_at: "",
+    });
+  };
+
   useEffect(() => {
     getFileAnalists();
     getMyTranscriptions();
@@ -183,17 +212,63 @@ const Asistant = () => {
             f.assistant_name
               .toString()
               .toLowerCase()
-              .includes(assistant_name.toLowerCase())) &&
-          (created_at === "" ||
-            new Date(f.created_at)
-              .toISOString()
-              .slice(0, 16) // 2024-10-08T21:03 formatiga mos bo'lishi uchun kesiladi
-              .includes(created_at))
+              .includes(assistant_name.toLowerCase()))
       );
-
-      setFilterData(filteredData); // Filtrlash natijalarini yangilash
     }
+    setFilterData(filteredData); // Filtrlash natijalarini yangilash
   }, [search]);
+
+  useEffect(() => {
+    const getDateFilter = async () => {
+      const url = `${baseAPI}${URLS.file_analysis}?created_at=${search.created_at}`;
+
+      try {
+        const response = await request(url, "GET");
+        setFilterData(response);
+        // console.log(response);
+      } catch (err) {
+        console.error("Error fetching data:", err);
+      }
+    };
+
+    getDateFilter();
+    console.log(search.created_at);
+  }, [search.created_at]);
+
+  useEffect(() => {
+    const getDateFilter = async () => {
+      const url = `${baseAPI}${URLS.file_analysis}?ordering=${
+        updownData.isTime ? "created_at" : "-created_at"
+      }`;
+
+      try {
+        const response = await request(url, "GET");
+        setFilterData(response);
+        console.log(response);
+      } catch (err) {
+        console.error("Error fetching data:", err);
+      }
+    };
+
+    getDateFilter();
+  }, [updownData.isTime]);
+  useEffect(() => {
+    const getDateFilter = async () => {
+      const url = `${baseAPI}${URLS.file_analysis}?ordering=${
+        updownData.isTime ? "assistant__name" : "-assistant__name"
+      }`;
+
+      try {
+        const response = await request(url, "GET");
+        setFilterData(response);
+        console.log(response);
+      } catch (err) {
+        console.error("Error fetching data:", err);
+      }
+    };
+
+    getDateFilter();
+  }, [updownData.isAnaliza]);
 
   useEffect(() => {
     const socket = new WebSocket(
@@ -246,8 +321,6 @@ const Asistant = () => {
         Ассистент <img src="/i.svg" alt="" />
       </div>
       <div className="asistant__block">
-        {loading && <Loading />}
-
         <form onSubmit={handleSubmit}>
           <div className="search__row">
             <div className="ant-form-item">
@@ -287,12 +360,13 @@ const Asistant = () => {
           </div>
 
           <div className="search">
-            <label className="timer__label">Тайминг в мин</label>
+            <label className="timer__label">Тайминг</label>
             <div className="search__row">
               <input
                 type="time"
                 className="hour"
                 value={uploadState.start_time}
+                placeholder="hh:mm"
                 onChange={(e) =>
                   setUploadState({
                     ...uploadState,
@@ -364,25 +438,13 @@ const Asistant = () => {
 
         {/* data */}
 
+        {loading && <Loading />}
+
         <div className="table-container">
           {/* Search and Filter */}
 
           <form onSubmit={handleSearch} className="second">
             <div className="search__row last">
-              <div className="ant-form-item">
-                <label htmlFor="name">
-                  <img src="/searchIcon.svg" alt="icon" />
-                </label>
-                <input
-                  id="name"
-                  className="search"
-                  type="text"
-                  placeholder="Поиск"
-                  name="transcription_name"
-                  onChange={handleSearch}
-                  value={search.transcription_name}
-                />
-              </div>
               <div className="ant-form-item ab">
                 <label htmlFor="ab" className="ab">
                   <img src="/ab.svg" alt="icon" />
@@ -400,8 +462,12 @@ const Asistant = () => {
                 <label htmlFor="tip" className="ab">
                   <img src="/date__icon.svg" alt="icon" />
                 </label>
+
+                <button className="po-date_x" onClick={handleClearDate}>
+                  x
+                </button>
                 <input
-                  type="datetime-local"
+                  type="date"
                   id="tip"
                   name="created_at"
                   className="po-date"
@@ -411,13 +477,13 @@ const Asistant = () => {
                 />
               </div>
               <div className="ant-form-item ab">
-                <label htmlFor="tip" className="ab">
+                <label htmlFor="analis" className="ab">
                   <img src="/link__icon.svg" alt="icon" />
                 </label>
                 <input
                   type="text"
                   className="po-request"
-                  id="tip"
+                  id="analis"
                   name="assistant_name"
                   placeholder="По типу запроса"
                   onChange={handleSearch}
@@ -430,52 +496,12 @@ const Asistant = () => {
           {/* Table */}
 
           <div className="table__parent">
-            <table className="table" cellPadding={"10px"} cellSpacing={"10px"}>
-              <thead>
-                <tr>
-                  <th>Название</th>
-                  <th>Дата</th>
-                  <th>Тип анализа</th>
-                  <th>Статус</th>
-                  <th>Результат</th>
-                </tr>
-              </thead>
-              <tbody>
-                {filterData?.map((item) => (
-                  <tr key={item.id}>
-                    <td>
-                      {item.transcription_name?.length > 45
-                        ? item?.transcription_name?.slice(0, 45) + "..."
-                        : item?.transcription_name}
-                    </td>
-                    <td>{moment(item.created_at).format("DD.MM.YYY")}</td>
-                    <td>
-                      {item.assistant_name?.length > 50
-                        ? item?.assistant_name?.slice(0, 50) + "..."
-                        : item?.assistant_name}
-                    </td>
-                    <td>{item?.status} В обработке</td>
-                    <td>
-                      <div className="btns">
-                        <a
-                          href={item?.analysis_file}
-                          download={"#"}
-                          className="btn btn__download"
-                        >
-                          Скачать
-                        </a>
-                        <button
-                          className="btn btn__send__email"
-                          onClick={() => sendMessageEmail(item.id)}
-                        >
-                          Отправить на почту
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+            <FileAnalysisTable
+              filterData={filterData}
+              sendMessageEmail={sendMessageEmail}
+              updownData={updownData}
+              setUpDownData={setUpDownData}
+            />
           </div>
         </div>
       </div>

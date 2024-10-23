@@ -38,5 +38,6 @@ export const URLS = {
 
   update_bitrix: "/api/v1/users/update_bitrix_webhook/",
   telegram_id_update: "/api/v1/users/user_manage_telegram_id/",
+
   upload_analysis: "/api/v1/upload_analysis/",
 };
