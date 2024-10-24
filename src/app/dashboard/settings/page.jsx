@@ -215,11 +215,30 @@ const Setting = () => {
         return response;
       })
       .catch((error) => {
+        message.error(error || error.bitrix24_webhook[0] || "no");
+        console.error("Error fetching data:", error);
+        return error;
+      });
+  };
+
+  const deleteBitrix24 = () => {
+    const obj = {
+      bitrix24_webhook: null,
+    };
+    url = `${baseAPI + URLS.update_bitrix}`;
+    request(url, "PATCH", obj)
+      .then((response) => {
+        message.success(response?.detail);
+        getUserData();
+        return response;
+      })
+      .catch((error) => {
         message.error(error || error.bitrix24_webhook[0]);
         console.error("Error fetching data:", error);
         return error;
       });
   };
+
   const handleSubmitTelegram = (e) => {
     e.preventDefault();
 
@@ -582,15 +601,15 @@ const Setting = () => {
                 activeIndex === 2 ? "active" : ""
               }`}
             >
-              {bitrix24Form ? (
+              {user?.bitrix24_webhook ? (
                 <>
                   <p className="tg__id">{user?.bitrix24_webhook}</p>
 
                   <span
                     className="connect-google telegram__logout"
-                    onClick={() => setBitrix24Form(false)}
+                    onClick={() => deleteBitrix24()}
                   >
-                    Pедактирование
+                    Отключить
                   </span>
                 </>
               ) : (

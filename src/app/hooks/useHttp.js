@@ -105,8 +105,9 @@ const useHttp = () => {
             error?.response?.data.detail ||
             error?.response?.data.name ||
             error?.response?.data.email ||
+            error?.response?.data?.non_field_errors[0] ||
             error?.response?.data.bitrix24_webhook[0] ||
-            error?.response?.data.non_field_errors;
+            error?.response?.data?.non_field_errors;
           ("An error occurred");
           setError(err);
           console.log("2-eror", err);
