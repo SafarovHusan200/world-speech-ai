@@ -1,9 +1,9 @@
 "use client";
 
-import Accordion from "@/components/Accordion";
 import React from "react";
 
 import "../styles/faq.css";
+import AccordionFaq from "@/components/AccordionFaq";
 
 const Faq = () => {
   const items = [
@@ -71,7 +71,7 @@ const Faq = () => {
       <div className="container">
         <div className="section-title">Часто задаваемые вопросы</div>
 
-        <Accordion items={items} />
+        <AccordionFaq items={items} />
       </div>
     </section>
   );

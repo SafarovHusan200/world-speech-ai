@@ -58,7 +58,7 @@ const DashboardLayout = ({ children }) => {
 
           <div className="dashboard__main" onScroll={() => handleScroll()}>
             <div className="sidebar-header">
-              <Link href="/dashboard" className="logo">
+              <Link href="/" className="logo">
                 <img src="/logo-full-icon.svg" alt="icon" />
               </Link>
               <button className="sidebar-header-open" onClick={handleClick}>

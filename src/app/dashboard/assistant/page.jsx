@@ -130,7 +130,8 @@ const Asistant = () => {
   };
 
   const getMyTranscriptions = async () => {
-    const url = baseAPI + URLS.transcriptions;
+    const url = `${baseAPI}${URLS.transcriptions}?status=completed`;
+
     try {
       const response = await request(url, "GET");
       setTranscriptions(response);
@@ -255,7 +256,7 @@ const Asistant = () => {
   useEffect(() => {
     const getDateFilter = async () => {
       const url = `${baseAPI}${URLS.file_analysis}?ordering=${
-        updownData.isTime ? "assistant__name" : "-assistant__name"
+        updownData.isAnaliza ? "assistant__name" : "-assistant__name"
       }`;
 
       try {
@@ -272,7 +273,7 @@ const Asistant = () => {
 
   useEffect(() => {
     const socket = new WebSocket(
-      `wss://worldspeechai.com/ws/connect/?token=${token}`
+      `wss://worldspeechai.com/ws/connect/analysis/?token=${token}`
     );
 
     // x.onopen = () => {};

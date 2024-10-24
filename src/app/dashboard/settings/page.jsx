@@ -18,6 +18,7 @@ import axios from "axios";
 
 const Setting = () => {
   moment.locale("ru"); // Tilni rus tiliga o'zgartirish
+  const { request, loading, error } = useHttp();
   const { setUser, user } = useDashboard();
   const [editUser, setEditUser] = useState({
     name: user?.name,
@@ -32,7 +33,6 @@ const Setting = () => {
   };
 
   const router = useRouter();
-  const { request, loading, error } = useHttp();
 
   const [autoPayment, setAutoPayment] = useState(true);
   const [newsletter, setNewsletter] = useState(false);
@@ -204,10 +204,6 @@ const Setting = () => {
   const handleSubmitBitrix24 = (e) => {
     e.preventDefault();
 
-    if (editUser.bitrix24_webhook == "") {
-      return message.warning("пожалуйста, заполните поле");
-    }
-
     const obj = {
       bitrix24_webhook: editUser.bitrix24_webhook,
     };
@@ -219,7 +215,7 @@ const Setting = () => {
         return response;
       })
       .catch((error) => {
-        message.error(error);
+        message.error(error || error.bitrix24_webhook[0]);
         console.error("Error fetching data:", error);
         return error;
       });
@@ -682,7 +678,7 @@ const Setting = () => {
                     <td>{payme.payment_id}</td>
                     <td>
                       {moment(payme.purchased_at).format(
-                        "MMMM D, YYYY, H:mm:ss"
+                        "D MMMM , YYYY, H:mm:ss"
                       )}
                     </td>
                     <td>Оплачено</td>

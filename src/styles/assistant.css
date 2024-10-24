@@ -159,9 +159,6 @@
   max-width: 250px;
   width: 100%;
 }
-.assistant form .search__row input.po-date::-webkit-calendar-picker-indicator {
-  display: none;
-}
 .assistant form .search__row input.name {
   padding-right: 30px;
   position: relative;
@@ -240,7 +237,7 @@
   z-index: 1;
 }
 .assistant form .search__row .ant-form-item label.ab {
-  width: 250px;
+  width: 50px;
   right: auto;
   left: 16px;
 }
@@ -369,7 +366,7 @@
   background: none;
   width: 30px;
   height: 30px;
-  right: 10px;
+  right: 35px;
   top: 8px;
   color: #000;
   padding: 0 15px;

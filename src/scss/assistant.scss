@@ -176,7 +176,7 @@
         }
 
         &.po-date::-webkit-calendar-picker-indicator {
-          display: none;
+          // display: none;
         }
 
         &.name {
@@ -278,7 +278,7 @@
           z-index: 1;
 
           &.ab {
-            width: 250px;
+            width: 50px;
             right: auto;
             left: 16px;
           }
@@ -444,7 +444,7 @@
       background: none;
       width: 30px;
       height: 30px;
-      right: 10px;
+      right: 35px;
       top: 8px;
       color: #000;
       padding: 0 15px;

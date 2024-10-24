@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useLayoutEffect } from "react";
 import { Navigation, A11y, Autoplay } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -26,8 +26,29 @@ const SwiperNewsComponent = () => {
     }
   };
 
+  // Sahifa yuklanganda va o'lcham o'zgarganda Swiper'ni qayta yuklash uchun handleResize
+  const handleResize = () => {
+    if (window.Swiper) {
+      window.dispatchEvent(new Event("resize"));
+    }
+  };
+
+  useLayoutEffect(() => {
+    // Sahifa birinchi marta yuklanganda Swiper'ni qayta yuklash
+    handleResize();
+  }, []);
+
   useEffect(() => {
+    // Sahifa yuklanganda yangiliklarni olib kelish
     getNews();
+
+    // Ekran hajmi o'zgarganda Swiper'ni qayta yuklash uchun resize eventini qo'shish
+    window.addEventListener("resize", handleResize);
+
+    // Cleanup
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
   }, []);
 
   return (
@@ -36,43 +57,30 @@ const SwiperNewsComponent = () => {
         loop={true}
         modules={[Navigation, A11y, Autoplay]}
         spaceBetween={50}
-        slidesPerView={newsSlides.length < 4 ? newsSlides.length : 4} // Sla
+        slidesPerView={4}
         navigation
+        observer={true}
+        observeParents={true}
         breakpoints={{
-          0: {
+          320: {
             slidesPerView: 1,
             spaceBetween: 10,
           },
-
           576: {
             slidesPerView: 2,
-            spaceBetween: 10,
-          },
-
-          880: {
-            slidesPerView: 2,
             spaceBetween: 15,
           },
-
           920: {
-            slidesPerView: 3,
-            spaceBetween: 15,
-          },
-
-          1200: {
             slidesPerView: 3,
             spaceBetween: 20,
           },
-          1400: {
+          1200: {
             slidesPerView: 4,
             spaceBetween: 30,
           },
-          1920: {
-            spaceBetween: 50,
-          },
         }}
       >
-        {newsSlides?.map((newsItem, slideIndex) => (
+        {newsSlides.map((newsItem, slideIndex) => (
           <SwiperSlide key={slideIndex}>
             <NewsCard
               key={newsItem.id}

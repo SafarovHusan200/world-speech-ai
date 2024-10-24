@@ -37,7 +37,6 @@ const Login = () => {
       }
     );
 
-    console.log("res => ", result);
     const err = (!result && error) || null;
 
     if (err === "Account is not active.") {

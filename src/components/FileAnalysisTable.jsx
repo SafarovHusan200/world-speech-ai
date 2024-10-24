@@ -106,13 +106,13 @@ const FileAnalysisTable = ({
     },
     {
       title: "",
-      dataIndex: "id",
-      key: "id",
-      render: (text) =>
-        text !== "None" ? (
+      dataIndex: "status",
+      key: "status",
+      render: (text, record) =>
+        text === "completed" ? (
           <button
             className="btn btn__send__email"
-            onClick={() => sendMessageEmail(text)}
+            onClick={() => sendMessageEmail(record.id)} // using record.id here
           >
             Отправить на почту
           </button>
