@@ -76,7 +76,8 @@ const Asistant = () => {
       .then((response) => {
         message.success(response?.status || "Processing started");
         getFileAnalists();
-        // Reset form state
+
+        // Reset form state and clear Select values
         setUploadState({
           transcription_id: "",
           assistant_id: "",
@@ -88,6 +89,7 @@ const Asistant = () => {
 
         // Clear form fields
         e.target.reset();
+
         return response;
       })
       .catch((error) => {
@@ -178,7 +180,7 @@ const Asistant = () => {
   };
 
   useEffect(() => {
-    // getFileAnalists();
+    getFileAnalists();
     getMyTranscriptions();
     getAsistent();
   }, []);
@@ -282,6 +284,7 @@ const Asistant = () => {
       </div>
       <div className="asistant__block">
         <form onSubmit={handleSubmit}>
+          {/* submit bo'lgandan so'ng inputlar toza bo'lishi kerak */}
           <div className="search__row">
             <div className="ant-form-item">
               <label htmlFor="transcription">
@@ -298,6 +301,7 @@ const Asistant = () => {
                     transcription_id: selectedOption.value,
                   })
                 }
+                // value={uploadState.transcription_id}
               />
             </div>
 
@@ -315,10 +319,10 @@ const Asistant = () => {
                     assistant_id: selectedOption.value,
                   })
                 }
+                value={uploadState.assistant_id} // Boshqarilayotgan state
               />
             </div>
           </div>
-
           <div className="search">
             <label className="timer__label">Тайминг</label>
             <div className="search__row">
