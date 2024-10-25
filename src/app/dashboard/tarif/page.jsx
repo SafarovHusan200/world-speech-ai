@@ -28,7 +28,6 @@ const Tarif = () => {
       try {
         const response = await axios.get(baseAPI + url);
         setTarif(response.data);
-        console.log(response.data);
       } catch (err) {
         console.log("Error fetching data: ", err);
       }

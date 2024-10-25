@@ -67,7 +67,7 @@ const useHttp = () => {
 
         return response?.data || response;
       } catch (error) {
-        console.log("1-", error);
+        // console.log("1-", error);
         setLoading(false);
 
         if (
@@ -110,7 +110,7 @@ const useHttp = () => {
             error?.response?.data?.non_field_errors;
           ("An error occurred");
           setError(err);
-          console.log("2-eror", err);
+          // console.log("2-eror", err);
           throw err;
         }
       }

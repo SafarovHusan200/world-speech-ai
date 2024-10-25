@@ -27,7 +27,9 @@ const Asistant = () => {
 
   const [uploadState, setUploadState] = useState({
     transcription_id: "",
+    transcription_name: "",
     assistant_id: "",
+    assistant_name: "",
     bitrix_lead_name: "",
     bitrix_chat_url: "",
     start_time: "",
@@ -80,7 +82,9 @@ const Asistant = () => {
         // Reset form state and clear Select values
         setUploadState({
           transcription_id: "",
+          transcription_name: "",
           assistant_id: "",
+          assistant_name: "",
           bitrix_lead_name: "",
           bitrix_chat_url: "",
           start_time: "",
@@ -295,13 +299,21 @@ const Asistant = () => {
                 id="transcription"
                 options={transcriptionOptions}
                 placeholder="Например: Встреча с Анастасом"
+                value={
+                  uploadState.transcription_id
+                    ? {
+                        value: uploadState.transcription_id,
+                        label: uploadState.transcription_name,
+                      }
+                    : null // Agar transcription_id bo'sh bo'lsa, value null bo'ladi
+                }
                 onChange={(selectedOption) =>
                   setUploadState({
                     ...uploadState,
                     transcription_id: selectedOption.value,
+                    transcription_name: selectedOption.label,
                   })
                 }
-                // value={uploadState.transcription_id}
               />
             </div>
 
@@ -311,15 +323,24 @@ const Asistant = () => {
               </label>
               <Select
                 className="datalist"
+                id="assistant"
                 options={assistantOptions}
-                placeholder="Тип ассистента"
+                placeholder={"Тип ассистента"}
+                value={
+                  uploadState.assistant_id
+                    ? {
+                        value: uploadState.assistant_id,
+                        label: uploadState.assistant_name,
+                      }
+                    : null // Bu yerda null bo'lishi placeholderni ko'rsatishga yordam beradi
+                }
                 onChange={(selectedOption) =>
                   setUploadState({
                     ...uploadState,
                     assistant_id: selectedOption.value,
+                    assistant_name: selectedOption.label,
                   })
                 }
-                value={uploadState.assistant_id} // Boshqarilayotgan state
               />
             </div>
           </div>
