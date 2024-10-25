@@ -615,8 +615,8 @@ const Setting = () => {
               ) : (
                 <form onSubmit={handleSubmitBitrix24}>
                   <input
-                    type="url"
-                    placeholder={"Ссылка на групповой чат Bitrix 24"}
+                    type="text"
+                    placeholder={"ссылка на вебхук Bitrix 24"}
                     name="bitrix24_webhook"
                     value={editUser?.bitrix24_webhook || ""}
                     className="form__input bitrix24"

@@ -75,6 +75,8 @@ const MyTranscriptions = () => {
     socket.onmessage = (event) => {
       const data = JSON.parse(event.data);
 
+      console.log("websoket ishladi", data);
+
       if (data.type === "transcription_result") {
         if (data.data.status === "processing") {
           getMyTranscriptions();

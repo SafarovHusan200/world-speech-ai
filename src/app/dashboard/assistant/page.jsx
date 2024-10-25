@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "../../../styles/assistant.css";
 import useHttp from "@/app/hooks/useHttp";
 import { baseAPI } from "@/constants/domain";
@@ -14,6 +14,7 @@ const Select = dynamic(() => import("react-select"), { ssr: false });
 import FileAnalysisTable from "@/components/FileAnalysisTable";
 
 const Asistant = () => {
+  const isFirstRender = useRef(true);
   const { request, loading, error } = useHttp();
   const [asistant, setAsistants] = useState([]);
   const [fileAnalysis, setFileAnalists] = useState([]);
@@ -31,13 +32,6 @@ const Asistant = () => {
     bitrix_chat_url: "",
     start_time: "",
     end_time: "",
-  });
-
-  const [updownData, setUpDownData] = useState({
-    isTime: false,
-    time: "",
-    isAnaliza: false,
-    analiza: "",
   });
 
   const [transcriptions, setTranscriptions] = useState([]);
@@ -80,9 +74,8 @@ const Asistant = () => {
     // POST request
     request(url, "POST", obj)
       .then((response) => {
-        console.log(response);
         message.success(response?.status || "Processing started");
-
+        getFileAnalists();
         // Reset form state
         setUploadState({
           transcription_id: "",
@@ -185,7 +178,7 @@ const Asistant = () => {
   };
 
   useEffect(() => {
-    getFileAnalists();
+    // getFileAnalists();
     getMyTranscriptions();
     getAsistent();
   }, []);
@@ -226,50 +219,18 @@ const Asistant = () => {
       try {
         const response = await request(url, "GET");
         setFilterData(response);
-        // console.log(response);
       } catch (err) {
         console.error("Error fetching data:", err);
       }
     };
 
-    getDateFilter();
-    console.log(search.created_at);
+    if (isFirstRender.current) {
+      isFirstRender.current = false; // Birinchi renderdan keyin flagni o'zgartiramiz
+    } else {
+      getDateFilter();
+      console.log(search.created_at);
+    }
   }, [search.created_at]);
-
-  useEffect(() => {
-    const getDateFilter = async () => {
-      const url = `${baseAPI}${URLS.file_analysis}?ordering=${
-        updownData.isTime ? "created_at" : "-created_at"
-      }`;
-
-      try {
-        const response = await request(url, "GET");
-        setFilterData(response);
-        console.log(response);
-      } catch (err) {
-        console.error("Error fetching data:", err);
-      }
-    };
-
-    getDateFilter();
-  }, [updownData.isTime]);
-  useEffect(() => {
-    const getDateFilter = async () => {
-      const url = `${baseAPI}${URLS.file_analysis}?ordering=${
-        updownData.isAnaliza ? "assistant__name" : "-assistant__name"
-      }`;
-
-      try {
-        const response = await request(url, "GET");
-        setFilterData(response);
-        console.log(response);
-      } catch (err) {
-        console.error("Error fetching data:", err);
-      }
-    };
-
-    getDateFilter();
-  }, [updownData.isAnaliza]);
 
   useEffect(() => {
     const socket = new WebSocket(
@@ -281,14 +242,12 @@ const Asistant = () => {
     socket.onmessage = (event) => {
       const data = JSON.parse(event.data);
 
-      if (data.type === "transcription_result") {
-        if (data.data.status === "processing") {
-          getFileAnalists();
-        }
-        if (data.data.status === "completed") {
-          message.success(`${data.data.name} ${data.data.status}`);
-          getFileAnalists();
-        }
+      if (data?.data?.status === "completed") {
+        console.log("websoket finish", data);
+        message.success(
+          `${data?.data?.transcription_name} ${data?.data?.status}`
+        );
+        getFileAnalists();
       }
     };
 
@@ -500,8 +459,6 @@ const Asistant = () => {
             <FileAnalysisTable
               filterData={filterData}
               sendMessageEmail={sendMessageEmail}
-              updownData={updownData}
-              setUpDownData={setUpDownData}
             />
           </div>
         </div>

@@ -4,12 +4,7 @@ import React from "react";
 import { Table, Tag } from "antd";
 import moment from "moment";
 
-const FileAnalysisTable = ({
-  filterData,
-  sendMessageEmail,
-  updownData,
-  setUpDownData,
-}) => {
+const FileAnalysisTable = ({ filterData, sendMessageEmail }) => {
   const columns = [
     {
       title: "Название",
@@ -17,53 +12,13 @@ const FileAnalysisTable = ({
       key: "transcription_name",
     },
     {
-      title: (
-        <span className="tableupdateData">
-          Дата{" "}
-          <button
-            className="updownbtn"
-            onClick={() =>
-              setUpDownData({ ...updownData, isTime: !updownData.isTime })
-            }
-          >
-            <img
-              style={{
-                transform: updownData.isTime
-                  ? "rotate(180deg)"
-                  : "rotate(0deg)",
-              }}
-              src="/arrow-down.png"
-              alt="icon"
-            />
-          </button>
-        </span>
-      ),
+      title: <span className="tableupdateData">Дата </span>,
       dataIndex: "created_at",
       key: "created_at",
       render: (text) => moment(text).format("YYYY-MM-DD HH:mm:ss"),
     },
     {
-      title: (
-        <span className="tableupdateData">
-          Тип анализа{" "}
-          <button
-            className="updownbtn"
-            onClick={() =>
-              setUpDownData({ ...updownData, isAnaliza: !updownData.isAnaliza })
-            }
-          >
-            <img
-              style={{
-                transform: updownData.isAnaliza
-                  ? "rotate(180deg)"
-                  : "rotate(0deg)",
-              }}
-              src="/arrow-down.png"
-              alt="icon"
-            />
-          </button>
-        </span>
-      ),
+      title: <span className="tableupdateData">Тип анализа </span>,
       dataIndex: "assistant_name",
       key: "assistant_name",
     },
