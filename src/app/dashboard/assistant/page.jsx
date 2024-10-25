@@ -250,9 +250,9 @@ const Asistant = () => {
 
       if (data?.data?.status === "completed") {
         console.log("websoket finish", data);
-        message.success(
-          `${data?.data?.transcription_name} ${data?.data?.status}`
-        );
+        // message.success(
+        //   `${data?.data?.transcription_name} ${data?.data?.status}`
+        // );
         getFileAnalists();
       }
     };
