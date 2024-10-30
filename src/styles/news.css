@@ -61,11 +61,8 @@
     height: auto;
   }
 }
-.news__cards .feedback .feedback__cards .swiper {
-  left: 10px;
-  position: relative;
-}
-.news__cards .feedback .feedback__cards .swiper {
+.news__cards .swiper {
+  width: 100%;
   left: 10px;
   position: relative;
   padding-bottom: 80px;
